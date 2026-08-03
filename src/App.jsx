@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -120,3 +121,19 @@ function App() {
 }
 
 export default App
+=======
+import Navbar from "./components/Navbar";
+
+function App() {
+  return (
+    <div className="border-2 border-red-500">
+      <Navbar />
+      <h1 className="text-2xl font-bold">
+        WELCOME TO ONASIS LINKS RESOURCES LTD
+      </h1>
+    </div>
+  );
+}
+
+export default App;
+>>>>>>> d6d949c7914bb3e61ea6b849ebf72ef830fa5a02
