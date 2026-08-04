@@ -43,7 +43,7 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo Section - Links to Home */}
           <Link to="/" className="flex-shrink-0">
@@ -78,7 +78,7 @@ const Navbar = () => {
                     : `${
                         isActive(link.href)
                           ? "text-[#C3110C]"
-                          : "text-gray-700 hover:text-[#C3110C]"
+                          : "text-gray-950 hover:text-[#C3110C]"
                       }`
                 }`}
               >
@@ -108,7 +108,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`p-2 rounded-lg transition-colors md:hidden flex ${
+              className={`p-2 rounded-lg transition-colors md:hidden flex cursor-pointer ${
                 theme === "dark" ? "hover:bg-gray-800" : "hover:bg-gray-100"
               }`}
               aria-label="Toggle menu"
@@ -116,17 +116,17 @@ const Navbar = () => {
               <div className="w-6 h-5 flex flex-col justify-between">
                 <span
                   className={`block h-0.5 transition-all duration-300 ${
-                    theme === "dark" ? "bg-white" : "bg-[#280905]"
+                    theme === "dark" ? "bg-white" : "bg-white"
                   } ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
                 ></span>
                 <span
                   className={`block h-0.5 transition-all duration-300 ${
-                    theme === "dark" ? "bg-white" : "bg-[#280905]"
+                    theme === "dark" ? "bg-white" : "bg-white"
                   } ${isMobileMenuOpen ? "opacity-0" : ""}`}
                 ></span>
                 <span
                   className={`block h-0.5 transition-all duration-300 ${
-                    theme === "dark" ? "bg-white" : "bg-[#280905]"
+                    theme === "dark" ? "bg-white" : "bg-white"
                   } ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
                 ></span>
               </div>
@@ -136,12 +136,12 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 overflow-hidden ${
+          className={`md:hidden transition-all duration-300 overflow-hidden backdrop-blur-md ${
             isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div
-            className={`py-4 space-y-2 border-t ${
+            className={`py-4 space-y-2 border-t px-5 ${
               theme === "dark" ? "border-gray-700" : "border-gray-200"
             }`}
           >
@@ -159,7 +159,7 @@ const Navbar = () => {
                       }`
                     : `${
                         isActive(link.href)
-                          ? "text-[#C3110C] bg-gray-50"
+                          ? "text-[#C3110C] bg-gray-300"
                           : "text-gray-700 hover:text-[#C3110C] hover:bg-gray-50"
                       }`
                 }`}
