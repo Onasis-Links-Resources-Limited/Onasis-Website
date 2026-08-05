@@ -9,7 +9,7 @@ const AboutHero = () => {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover" 
       >
         <source 
           src="images/hero1.mp4" 
