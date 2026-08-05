@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import Navbar from './components/common/Navbar';
-import HeroSection from './components/sections/HeroSection';
+import Home from './pages/Home';
 
 import About from './pages/About';
 import Services from './pages/Services';
@@ -18,7 +18,7 @@ const AppContent = () => {
     }`}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HeroSection />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/products" element={<Products />} />
