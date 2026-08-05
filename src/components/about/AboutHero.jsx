@@ -1,32 +1,29 @@
-import React from 'react';
+import { useTheme } from "../../context/ThemeContext";
 
 const AboutHero = () => {
+  const { theme } = useTheme();
+
   return (
-    <div className="relative w-full h-[400px] sm:h-[500px] overflow-hidden rounded-b-3xl mb-10 bg-gray-900 ">
-      {/* Video - Full width and height */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      >
-        <source 
-          src="images/hero1.mp4" 
-          type="video/mp4" 
-        />
-      </video>
+    <section className="relative h-100 overflow-hidden">
+      {/* Image - Full width and height */}
+      <img src="/images/about-us.png" alt="about-us" className={`absolute inset-0 h-full w-full object-cover object-middle ${theme === 'dark' ? 'brightness-50' : 'brightness-70'}`} />
       
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/40 flex items-center justify-center flex-col text-center text-white p-4">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-2 drop-shadow-lg">
-          About Us
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl max-w-2xl drop-shadow-md">
-          Our mission is to provide businesses with the financial tools they need to thrive in today's market.
-        </p>
+      {/* Content */}
+      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-center">
+        <div className="max-w-2xl">
+
+          <h1 className="text-5xl leading-tight md:text-7xl font-bold dark:text-white">
+            About Us
+          </h1>
+
+          <div className="mt-2 h-1 w-24 rounded-full bg-[#E6501B]"></div>
+
+          <p className="mt-4 max-w-xl text-base text-gray-200">
+            Our mission is to provide businesses with the financial tools they need to thrive in today's market.
+          </p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
