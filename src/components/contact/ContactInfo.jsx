@@ -55,10 +55,10 @@ const ContactInfo = () => {
         isDark ? "bg-[#0a0a0a]" : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <p
-            className={`uppercase tracking-[6px] text-sm mb-4 transition-colors duration-300 ${
+            className={`uppercase tracking-[0.2em] text-sm mb-4 font-bold transition-colors duration-300 ${
               isDark ? "text-[#E6501B]" : "text-[#C3110C]"
             }`}
           >
@@ -73,7 +73,7 @@ const ContactInfo = () => {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {contactDetails.map((item) => {
             const Icon = item.icon;
             return (
@@ -83,14 +83,14 @@ const ContactInfo = () => {
                   rounded-2xl border p-8 transition-all duration-300
                   ${
                     isDark
-                      ? "border-gray-700 bg-[#141414] hover:bg-[#1a1a1a] hover:border-[#C3110C] hover:shadow-lg hover:shadow-[#C3110C]/10"
+                      ? "border-gray-700 bg-[#141414] hover:bg-[#1a1a1a] hover:border-[#E6501B] hover:shadow-lg hover:shadow-[#C3110C]/10"
                       : "border-gray-200 bg-white hover:shadow-xl hover:border-[#C3110C]"
                   }
                 `}
               >
                 <Icon
-                  className={`text-[#C3110C] mb-5 transition-transform duration-300 ${
-                    isDark ? "hover:scale-110" : ""
+                  className={`mb-5 transition-transform duration-300 ${
+                    isDark ? "hover:scale-110 text-[#E6501B]" : "text-[#C3110C]"
                   }`}
                   size={35}
                 />

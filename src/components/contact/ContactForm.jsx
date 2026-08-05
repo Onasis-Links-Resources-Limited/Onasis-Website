@@ -11,13 +11,13 @@ const ContactForm = () => {
         isDark ? "bg-[#0a0a0a]" : "bg-white"
       }`}
     >
-      <div className={`mx-auto max-w-7xl rounded-2xl shadow-2xl p-8 lg:p-16 z-10 transition-colors duration-300 ${
-        isDark ? "bg-[#141414] border border-gray-800" : "bg-white"
-      }`}>
+      <div className={`mx-auto max-w-5xl rounded-2xl p-8 lg:p-16 z-10 transition-colors duration-300`}>
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Left Side */}
           <div>
-            <p className="text-sm uppercase tracking-[5px] text-[#C3110C] mb-4">
+            <p className={`text-sm uppercase tracking-[0.2em] ${
+                theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+              } font-bold mb-4`}>
               Get In Touch
             </p>
 
@@ -123,7 +123,7 @@ const ContactForm = () => {
 
             <button
               type="submit"
-              className="bg-[#C3110C] text-white px-8 py-3 rounded-lg hover:bg-[#E6501B] transition-all duration-300 hover:shadow-lg hover:shadow-[#C3110C]/20 hover:-translate-y-0.5"
+              className={`${theme === "dark" ? "hover:bg-[#E6501B] bg-[#E6501B]" : "hover:bg-[#E6501B] bg-[#C3110C]"} text-white px-8 py-3 rounded-lg hover:bg-[#E6501B] cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-[#C3110C]/20 hover:-translate-y-0.5`}
             >
               Submit Inquiry
             </button>
