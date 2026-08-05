@@ -1,4 +1,5 @@
 import { useTheme } from "../../context/ThemeContext";
+import { Phone, Mail } from "lucide-react";
 
 const ContactMap = () => {
   const { theme } = useTheme();
@@ -10,10 +11,10 @@ const ContactMap = () => {
         isDark ? "bg-[#0a0a0a]" : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16 mt-24">
           <p
-            className={`uppercase tracking-[5px] text-sm mb-3 transition-colors duration-300 ${
+            className={`uppercase tracking-[0.2em] font-bold text-sm mb-3 transition-colors duration-300 ${
               isDark ? "text-[#E6501B]" : "text-[#C3110C]"
             }`}
           >
@@ -37,7 +38,7 @@ const ContactMap = () => {
           >
             <iframe
               title="Onasis Office"
-              src="https://www.google.com/maps?q=Lekki,Lagos&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.486540216153!2d3.553643273992329!3d6.459872923901527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf786b24163a3%3A0x3b15126bbe00b025!2sEleganza%20Gardens%20Estate!5e0!3m2!1sen!2sng!4v1785937065999!5m2!1sen!2sng"
               width="100%"
               height="450"
               loading="lazy"
@@ -93,14 +94,16 @@ const ContactMap = () => {
                   isDark ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                📞 +234 802 958 1337
+                <Phone size={20} className="inline mr-2" />
+                +234 802 958 1337
               </p>
               <p
                 className={`transition-colors duration-300 ${
                   isDark ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                📧 info@onasisltd.com
+                <Mail size={20} className="inline mr-2" />
+                info@onasisltd.com
               </p>
             </div>
           </div>
