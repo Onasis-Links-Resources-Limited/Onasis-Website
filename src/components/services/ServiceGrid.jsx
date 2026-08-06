@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
+import { useTheme } from "../../context/ThemeContext";
 
 const MotionLink = motion(Link);
 
@@ -12,7 +13,7 @@ const SERVICES = [
     hazardClass: "bg-hazard-orange",
     body: "We partner with individuals and organisations on their product needs. We supply quality materials timely for your projects. We are always open for partnership. Contact us today.",
     image:
-      "https://images.pexels.com/photos/11666903/pexels-photo-11666903.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80",
     alt: "A red forklift stationed at a warehouse loading dock, staged to move supplies for a project",
     points: [
       "Serves individuals & organisations",
@@ -29,7 +30,7 @@ const SERVICES = [
     hazardClass: "bg-hazard-red",
     body: "We supply high-quality Telecommunications, Power, and Electrical Equipment to individuals and organizations at competitive prices. All our products are backed by a manufacturer's warranty, ensuring quality, reliability, and peace of mind.",
     image:
-      "https://images.pexels.com/photos/4373997/pexels-photo-4373997.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     alt: "Close-up of fiber optic switch equipment with rows of bright, colour-coded connectors",
     points: [
       "Telecom, power & electrical equipment",
@@ -46,7 +47,7 @@ const SERVICES = [
     hazardClass: "bg-hazard-burgundy",
     body: "Our experienced technical team provides expert advice and recommendations to help you select the right materials for your project. Contact us today.",
     image:
-      "https://images.pexels.com/photos/3862135/pexels-photo-3862135.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.unsplash.com/photo-1531497258014-b5736f376b1b?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     alt: "Two engineers reviewing project blueprints together at a desk, discussing material specifications",
     points: [
       "Expert, project-specific advice",
@@ -59,28 +60,24 @@ const SERVICES = [
 ];
 
 function ServiceRow({ service, reversed }) {
+  const { theme } = useTheme();
   return (
-    <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-24 border-b border-dark-border last:border-b-0">
+    <div className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-24 border-b ${theme === "dark" ? "last:border-b-0 border-gray-500" : "last:border-b-0 border-dark-border"}`}>
       {/* Image column with hazard-stripe frame — the page's recurring signature */}
-      <div className={`relative ${reversed ? "md:order-2" : ""}`}>
-        <div
-          className={`absolute -top-4 -right-4 md:-top-6 md:-right-6 w-full h-full ${service.hazardClass}`}
-          aria-hidden="true"
-        />
-        <div className="relative border border-dark-border">
+      <div className={`relative group overflow-hidden transition-all duration-500 ${reversed ? "md:order-2 rounded-r-full" : "rounded-l-full"}`}>
+       
           <img
             src={service.image}
             alt={service.alt}
-            className="w-full h-[320px] md:h-[440px] object-cover grayscale-[15%] contrast-[1.05]"
+            className={`w-full h-[320px] md:h-[440px] object-cover grayscale-[15%] contrast-[1.05] group-hover:scale-110 transition-all duration-300 object-bottom-left ${theme === "dark" ? "dark:grayscale-[15%] dark:contrast-[1.05]" : ""}`}
             loading="lazy"
           />
-        </div>
       </div>
 
       {/* Copy column */}
-      <div className={reversed ? "md:order-1" : ""}>
+      <div className={`${reversed ? "md:order-1" : ""}`}>
         <span
-          className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.3em] uppercase mb-4"
+          className="inline-flex items-center gap-2 font-mono font-bold text-small tracking-[0.2em] uppercase mb-4"
           style={{ color: service.accent }}
         >
           <span
@@ -90,11 +87,7 @@ function ServiceRow({ service, reversed }) {
           {service.tag}
         </span>
 
-        <h3 className="font-display font-semibold text-white text-3xl md:text-4xl mb-4">
-          {service.title}
-        </h3>
-
-        <p className="text-dark-text/70 leading-relaxed mb-7 max-w-xl">
+        <p className={`leading-relaxed mb-7 max-w-xl ${theme === "dark" ? "text-gray-300" : "text-gray-900"}`}>
           {service.body}
         </p>
 
@@ -102,7 +95,7 @@ function ServiceRow({ service, reversed }) {
           {service.points.map((p) => (
             <li
               key={p}
-              className="flex items-center gap-3 text-[13px] text-dark-text/55 font-mono uppercase tracking-wide"
+              className={`flex items-center gap-3 text-[13px] font-mono uppercase tracking-wide ${theme === "dark" ? "text-gray-300" : "text-gray-900"}`}
             >
               <span
                 className="w-1.5 h-1.5 shrink-0"
@@ -117,7 +110,7 @@ function ServiceRow({ service, reversed }) {
           to={service.href || ROUTES.CONTACT}
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-black dark:text-white border-b-2 pb-1 transition-all"
+          className={`group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide border-b-2 pb-1 transition-all ${theme === "dark" ? "text-gray-300" : "text-gray-900"}`}
           style={{ borderColor: service.accent }}
         >
           {service.cta}
@@ -139,15 +132,25 @@ function ServiceRow({ service, reversed }) {
  * real, on-brand photo sits directly beside the copy it illustrates.
  */
 export default function ServiceGrid() {
+  const { theme } = useTheme();
   return (
     <section className="bg-dark-background px-6 md:px-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="pt-20 pb-2 md:pt-28">
-          <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-primary-600 text-2xl">
-            What We Do
-          </span>
-          <h2 className="font-display font-semibold text-4xl md:text-5xl mt-3 max-w-2xl ">
-            Materials, equipment, and expertise for the field.
+      <div className="max-w-5xl mx-auto">
+        <div className="mt-20">
+          <p
+            className={`text-sm uppercase tracking-[0.2em] ${
+              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+            } font-bold mb-4`}
+          >
+            What we do
+          </p>
+          <h2
+            className={`text-4xl sm:text-5xl font-light transition-colors duration-300 w-2xl ${
+              theme === "dark" ? "text-white" : "text-[#280905]"
+            }`}
+          >
+            Materials,<span className={` ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}> Equipment,</span> and
+            Expertise for the field.
           </h2>
         </div>
 
