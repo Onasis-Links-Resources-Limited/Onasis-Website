@@ -36,7 +36,7 @@ const BrandsSection = () => {
           <h2 className={`text-4xl sm:text-5xl font-light mt-2 ${
             theme === 'dark' ? 'text-white' : 'text-[#280905]'
           }`}>
-            Trusted by <span className="text-[#E6501B]">Industry Leaders</span>
+            Trusted by <span className={`${theme === 'dark' ? 'text-[#E6501B]' : 'text-[#C3110C]'}`}>Industry Leaders</span>
           </h2>
           <p className={`mt-4 text-base ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
