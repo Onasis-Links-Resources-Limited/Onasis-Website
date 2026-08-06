@@ -26,7 +26,7 @@ const SECTORS = [
  */
 export default function ServiceCard() {
   return (
-    <section className="relative w-full h-[50vh] min-h-[420px] flex items-end justify-start overflow-hidden bg-primary-900">
+    <section className="relative w-full h-[50vh] min-h-[420px] flex items-end overflow-hidden bg-primary-900">
       {/* Signature element: hazard-stripe accent, echoing cable colour-bands & site safety tape */}
       <div
         className="absolute top-0 left-0 w-full h-[6px] z-20 bg-hazard-top"
