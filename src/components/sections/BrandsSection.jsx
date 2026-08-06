@@ -28,17 +28,17 @@ const BrandsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className={`text-sm font-semibold tracking-widest uppercase ${
+          <span className={`text-sm font-bold tracking-widest uppercase ${
             theme === 'dark' ? 'text-[#E6501B]' : 'text-[#C3110C]'
           }`}>
             Our Partners & Clients
           </span>
-          <h2 className={`text-4xl font-bold mt-2 ${
+          <h2 className={`text-4xl sm:text-5xl font-light mt-2 ${
             theme === 'dark' ? 'text-white' : 'text-[#280905]'
           }`}>
             Trusted by <span className="text-[#E6501B]">Industry Leaders</span>
           </h2>
-          <p className={`mt-4 text-lg ${
+          <p className={`mt-4 text-base ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
           }`}>
             We partner with the best in the industry to deliver exceptional value.
@@ -106,7 +106,7 @@ const BrandsSection = () => {
         </div>
 
         {/* Certifications & Awards */}
-        <div className="mt-16 grid md:grid-cols-3 gap-6">
+        {/* <div className="mt-16 grid md:grid-cols-3 gap-6">
           <div className={`p-6 rounded-xl text-center transition-all duration-300 hover:scale-105 ${
             theme === 'dark'
               ? 'bg-gray-800 border border-gray-700'
@@ -146,7 +146,7 @@ const BrandsSection = () => {
               theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
             }`}>Global Technology Alliances</p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Add animation styles */}
