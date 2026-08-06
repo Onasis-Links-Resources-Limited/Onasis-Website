@@ -66,10 +66,10 @@ const ContactInfo = () => {
           </p>
           <h2
             className={`text-5xl font-light transition-colors duration-300 ${
-              isDark ? "text-white" : "text-[#C3110C]"
+              isDark ? "text-white" : "text-black"
             }`}
           >
-            Visit or Reach Us
+            Visit or <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Reach Us</span>
           </h2>
         </div>
 

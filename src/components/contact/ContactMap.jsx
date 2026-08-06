@@ -22,10 +22,10 @@ const ContactMap = () => {
           </p>
           <h2
             className={`text-5xl font-light transition-colors duration-300 ${
-              isDark ? "text-white" : "text-[#C3110C]"
+              isDark ? "text-white" : "text-black"
             }`}
           >
-            How to Find Us
+            How to <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Find Us</span>
           </h2>
         </div>
 
