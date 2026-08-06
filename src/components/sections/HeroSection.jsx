@@ -253,15 +253,15 @@ const HeroSection = () => {
               className="flex flex-wrap gap-4 pt-4 mt-8"
             >
               <a
-                href="#contact"
+                href="/products"
                 className="group relative px-8 py-3.5 bg-[#C3110C] hover:bg-[#E6501B] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl overflow-hidden"
               >
-                <span className="relative z-10">Discover Solutions</span>
+                <span className="relative z-10">Explore Products</span>
                 <span className="absolute inset-0 bg-linear-to-r from-[#E6501B] to-[#C3110C] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </a>
 
               <a
-                href="#services"
+                href="/about"
                 className={`px-8 py-3.5 font-semibold rounded-full transition-all duration-300 flex items-center gap-2 ${
                   theme === "dark"
                     ? "bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/40"
