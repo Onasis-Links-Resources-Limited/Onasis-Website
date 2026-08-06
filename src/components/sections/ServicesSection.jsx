@@ -115,7 +115,7 @@ const ServicesSection = () => {
               Our Services
             </span>
             <h2
-              className={`text-4xl sm:text-5xl font-bold mt-2 ${
+              className={`text-4xl sm:text-5xl font-light mt-2 ${
                 theme === "dark" ? "text-white" : "text-[#280905]"
               }`}
             >
