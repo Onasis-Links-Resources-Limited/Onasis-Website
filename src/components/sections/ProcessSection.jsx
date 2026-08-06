@@ -143,7 +143,7 @@ const ProcessSection = () => {
           <h2 className={`text-4xl sm:text-5xl font-light mt-2 ${
             theme === 'dark' ? 'text-white' : 'text-[#280905]'
           }`}>
-            How We <span className="text-[#E6501B]">Deliver Excellence</span>
+            How We <span className={`${theme === 'dark' ? 'text-[#E6501B]' : 'text-[#C3110C]'}`}>Deliver Excellence</span>
           </h2>
           <p className={`mt-4 text-base ${
             theme === 'dark' ? 'text-gray-300' : 'text-gray-600'

@@ -166,7 +166,7 @@ const WhyChooseUsSection = () => {
           <h2 className={`text-3xl sm:text-4xl font-light mt-2 ${
             theme === "dark" ? "text-white" : "text-[#280905]"
           }`}>
-            The <span className="text-[#E6501B]">Onasis Links</span> Advantage
+            The <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Onasis Links</span> Advantage
           </h2>
         </motion.div>
 

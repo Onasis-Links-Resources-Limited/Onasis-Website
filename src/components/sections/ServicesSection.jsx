@@ -119,8 +119,8 @@ const ServicesSection = () => {
                 theme === "dark" ? "text-white" : "text-[#280905]"
               }`}
             >
-              What <span className="text-[#E6501B]">We</span> <br />{" "}
-              <span className="text-[#E6501B]">Can</span> Do
+              What <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>We</span> <br />{" "}
+              <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Can</span> Do
             </h2>
           </div>
 

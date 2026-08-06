@@ -107,13 +107,13 @@ const CompanyOverview = () => {
             Our Story
           </span>
           <h2
-            className={`text-4xl sm:text-5xl font-bold transition-colors duration-300 ${
+            className={`text-4xl sm:text-5xl font-light transition-colors duration-300 ${
               theme === "dark" ? "text-white" : "text-[#280905]"
             }`}
           >
-            What <span className="text-[#E6501B]">Drives</span> Us
+            What <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Drives</span> Us
           </h2>
-          <p className={`mt-4 text-lg max-w-2xl mx-auto ${
+          <p className={`mt-4 text-base max-w-2xl mx-auto ${
             theme === "dark" ? "text-gray-400" : "text-gray-600"
           }`}>
             Our commitment to excellence, innovation, and customer satisfaction

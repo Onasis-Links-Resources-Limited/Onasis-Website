@@ -142,7 +142,7 @@ const CTASection = () => {
           {/* Heading */}
           <motion.h2 
             variants={itemVariants}
-            className="text-4xl sm:text-5xl font-bold text-white mb-2"
+            className="text-4xl sm:text-5xl font-light text-white mb-2"
           >
             Ready to <span className={`${theme === 'dark' ? 'text-[#E6501B]' : 'text-white'}`}>Transform</span> Your
             Connectivity?
