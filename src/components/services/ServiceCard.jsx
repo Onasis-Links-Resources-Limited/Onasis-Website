@@ -26,7 +26,7 @@ const SECTORS = [
  */
 export default function ServiceCard() {
   return (
-    <section className="relative w-full h-[50vh] min-h-[420px] flex items-end overflow-hidden bg-primary-900">
+    <section className="relative w-full h-[50vh] min-h-[420px] flex items-end justify-start overflow-hidden bg-primary-900">
       {/* Signature element: hazard-stripe accent, echoing cable colour-bands & site safety tape */}
       <div
         className="absolute top-0 left-0 w-full h-[6px] z-20 bg-hazard-top"
@@ -61,11 +61,6 @@ export default function ServiceCard() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 pb-16 md:pb-24 pt-36 md:pt-44 text-center">
-        <span className="inline-flex items-center gap-3 font-mono text-[11px] md:text-xs tracking-[0.3em] uppercase text-primary-600 mb-6">
-          <span className="w-6 h-[2px] bg-primary-600" />
-          Onasis Links Resources Limited
-        </span>
-
         <h1 className="font-display font-semibold text-white leading-[0.95] tracking-tight text-5xl sm:text-6xl md:text-[5.5rem] mb-6">
           Our Services
         </h1>

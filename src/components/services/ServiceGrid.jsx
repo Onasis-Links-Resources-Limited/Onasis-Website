@@ -117,7 +117,7 @@ function ServiceRow({ service, reversed }) {
           to={service.href || ROUTES.CONTACT}
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white border-b-2 pb-1 transition-all"
+          className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-black dark:text-white border-b-2 pb-1 transition-all"
           style={{ borderColor: service.accent }}
         >
           {service.cta}
