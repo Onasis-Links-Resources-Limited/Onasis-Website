@@ -18,56 +18,56 @@ const WhyChooseUsSection = () => {
     amount: 0.2,
   });
 
-  const reasons = [
-    {
-      id: 1,
-      icon: Wifi,
-      title: "High-Speed Connectivity",
-      description: "Lightning-fast fiber optic and 5G networks ensuring seamless communication.",
-      color: "#E6501B",
-      position: "top-left"
-    },
-    {
-      id: 2,
-      icon: Cloud,
-      title: "Cloud Integration",
-      description: "Scalable cloud solutions that grow with your business needs.",
-      color: "#C3110C",
-      position: "top-right"
-    },
-    {
-      id: 3,
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "Bank-grade encryption and security protocols protecting your data.",
-      color: "#740A03",
-      position: "middle-left"
-    },
-    {
-      id: 4,
-      icon: Zap,
-      title: "24/7 Reliability",
-      description: "Round-the-clock network monitoring with 99.9% uptime guarantee.",
-      color: "#E6501B",
-      position: "middle-right"
-    },
-    {
-      id: 5,
-      icon: Satellite,
-      title: "Pan-African Coverage",
-      description: "Connecting communities across the continent with satellite technology.",
-      color: "#C3110C",
-      position: "bottom-left"
-    },
-    {
-      id: 6,
-      icon: Headphones,
-      title: "Expert Support",
-      description: "Dedicated technical support team available 24/7 for your peace of mind.",
-      color: "#740A03",
-      position: "bottom-right"
-    },
-  ];
+ const reasons = [
+  {
+    id: 1,
+    icon: Wifi,
+    title: "Telecom Infrastructure",
+    description: "Supplying world-class telecommunications infrastructure and network solutions for businesses and service providers.",
+    color: "#E6501B",
+    position: "top-left"
+  },
+  {
+    id: 2,
+    icon: Cloud,
+    title: "ICT Solutions",
+    description: "Providing reliable ICT products and technology solutions tailored to modern enterprise needs.",
+    color: "#C3110C",
+    position: "top-right"
+  },
+  {
+    id: 3,
+    icon: Shield,
+    title: "Safety Products",
+    description: "Delivering certified safety equipment and protective solutions for industrial and commercial environments.",
+    color: "#740A03",
+    position: "middle-left"
+  },
+  {
+    id: 4,
+    icon: Zap,
+    title: "Power Equipment",
+    description: "Supplying dependable electrical and power equipment from trusted global manufacturers.",
+    color: "#E6501B",
+    position: "middle-right"
+  },
+  {
+    id: 5,
+    icon: Satellite,
+    title: "Trusted Supply Chain",
+    description: "Ensuring timely sourcing and delivery through a strong global network of OEM partners.",
+    color: "#C3110C",
+    position: "bottom-left"
+  },
+  {
+    id: 6,
+    icon: Headphones,
+    title: "Customer Commitment",
+    description: "Focused on quality products, dependable service, and long-term customer satisfaction.",
+    color: "#740A03",
+    position: "bottom-right"
+  },
+];
 
   // Animation variants
   // const containerVariants = {
