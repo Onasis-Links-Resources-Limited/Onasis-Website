@@ -22,9 +22,9 @@ const ContactForm = () => {
             </p>
 
             <h2 className={`text-5xl font-light leading-tight mb-8 transition-colors duration-300 ${
-              isDark ? "text-white" : "text-[#C3110C]"
+              isDark ? "text-white" : "text-black"
             }`}>
-              Let Us Know
+              Let <span className={` ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Us Know</span>
               <br />
               How We Can Help
             </h2>
