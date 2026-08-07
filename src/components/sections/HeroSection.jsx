@@ -5,46 +5,96 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 const HeroSection = () => {
   const { theme } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, {
     once: false,
     amount: 0.1,
   });
 
+  const fullText = "...your friendly company";
+
+  // Typewriter effect
+  useEffect(() => {
+    let timeout;
+    const typingSpeed = 30;
+    const deletingSpeed = 15;
+    const pauseDuration = 500;
+
+    const typeText = () => {
+      if (!isDeleting) {
+        // Typing
+        if (displayText.length < fullText.length) {
+          setDisplayText(fullText.substring(0, displayText.length + 1));
+          timeout = setTimeout(typeText, typingSpeed);
+        } else {
+          setIsTypingComplete(true);
+          timeout = setTimeout(() => {
+            setIsDeleting(true);
+            setIsTypingComplete(false);
+          }, pauseDuration);
+        }
+      } else {
+        // Deleting
+        if (displayText.length > 0) {
+          setDisplayText(displayText.substring(0, displayText.length - 1));
+          timeout = setTimeout(typeText, deletingSpeed);
+        } else {
+          setIsDeleting(false);
+          timeout = setTimeout(typeText, 100);
+        }
+      }
+    };
+
+    timeout = setTimeout(typeText, 60);
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting]);
+
   // Telecom images with descriptions
   const slides = [
     {
       id: 1,
       image:
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
-      title: "Fiber Optic Network",
-      description: "High-speed connectivity for the digital age",
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80",
+      title: "RF Materials",
+      description: "Enabling seamless communication across the continent",
       tag: "Next-Gen Infrastructure",
     },
     {
       id: 2,
       image:
-        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80",
-      title: "5G Technology",
-      description: "Transforming communication across Africa",
+        "https://images.unsplash.com/photo-1533664488202-6af66d26c44a?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      title: "Power",
+      description: "Reliable energy solutions for telecom and industrial applications",
       tag: "Cutting-Edge Innovation",
     },
     {
       id: 3,
       image:
-        "https://images.unsplash.com/photo-1533664488202-6af66d26c44a?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      title: "Cloud Solutions",
-      description: "Secure and scalable business infrastructure",
+        "/images/fiber-optic.png",
+      title: "Fiber Optic Materials",
+      description: "High-speed connectivity solutions for modern networks",
       tag: "Digital Transformation",
     },
     {
       id: 4,
       image:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1920&q=80",
-      title: "Satellite Communication",
-      description: "Connecting remote communities to the world",
+        "/images/network-materials.png",
+      title: "Network Materials",
+      description: "Building robust networks for a connected future",
       tag: "Universal Access",
     },
+    {
+      id: 5,
+      image:
+        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
+      title: "Miscellaneous",
+      description: "Diverse solutions for telecom and industrial needs",
+      tag: "Industrial Excellence",
+    }
   ];
 
   useEffect(() => {
@@ -208,49 +258,48 @@ const HeroSection = () => {
                 {String(slides.length).padStart(2, "0")}
               </span>
             </motion.div>
-
             <div className="">
               {/* Main Heading with AnimatePresence for slide transitions */}
               {/* <div className="relative h-auto min-h-[4rem] sm:min-h-[5rem] lg:min-h-[6rem]"> */}
-              <AnimatePresence mode="wait">
-                <motion.h1
-                  key={currentSlide}
-                  variants={slideTextVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${
-                    theme === "dark" ? "text-white" : "text-black"
-                  }`}
-                >
-                  {slides[currentSlide].title}
-                </motion.h1>
-              </AnimatePresence>
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={currentSlide}
+                    variants={slideTextVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className={`text-3xl uppercase sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${
+                      theme === "dark" ? "text-white" : "text-black"
+                    }`}
+                  >
+                    {slides[currentSlide].title}
+                  </motion.h1>
+                </AnimatePresence>
               {/* </div> */}
 
               {/* Description - Changes with slide */}
               {/* <div className="relative h-auto min-h-[4rem]"> */}
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={currentSlide}
-                  variants={slideTextVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className={`absolute text-lg sm:text-xl max-w-lg leading-relaxed ${
-                    theme === "dark" ? "text-gray-300" : "text-gray-950"
-                  }`}
-                >
-                  {slides[currentSlide].description}
-                </motion.p>
-              </AnimatePresence>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={currentSlide}
+                    variants={slideTextVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className={`text-lg sm:text-xl max-w-lg leading-relaxed ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-950"
+                    }`}
+                  >
+                    {slides[currentSlide].description}
+                  </motion.p>
+                </AnimatePresence>
               {/* </div> */}
             </div>
 
             {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-wrap gap-4 pt-4 mt-8"
+              className="flex flex-wrap gap-4 pt-4 mt-4"
             >
               <a
                 href="/products"
@@ -347,6 +396,30 @@ const HeroSection = () => {
                 </p>
               </motion.div>
             </motion.div>
+            {/* Typewriter Text - "Your Friendly Company . . ." */}
+            <motion.div variants={itemVariants} className="min-h-[3rem]">
+              <span
+                className={`font-serif text-base sm:text-lg md:text-xl italic font-light tracking-wide ${
+                  theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                }`}
+                style={{
+                  fontFamily:
+                    "'Pacifico', 'Brush Script MT', 'Dancing Script', cursive",
+                }}
+              >
+                {displayText}
+                <span
+                  className={`inline-block w-0.5 h-7 sm:h-8 md:h-10 ml-0.5 align-middle ${
+                    theme === "dark" ? "bg-[#E6501B]" : "bg-[#C3110C]"
+                  } ${isTypingComplete ? "animate-pulse" : "animate-blink"}`}
+                  style={{
+                    animation: isTypingComplete
+                      ? "pulse 1s ease-in-out infinite"
+                      : "blink 0.7s step-end infinite",
+                  }}
+                />
+              </span>
+            </motion.div>
           </div>
 
           {/* Right Content - Thumbnails */}
@@ -426,6 +499,17 @@ const HeroSection = () => {
           />
         </div>
       </motion.div>
+
+      {/* CSS Animations for Blinking Cursor */}
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .animate-blink {
+          animation: blink 0.7s step-end infinite;
+        }
+      `}</style>
     </section>
   );
 };
