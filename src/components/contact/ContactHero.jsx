@@ -4,7 +4,7 @@ const ContactHero = () => {
   const { theme } = useTheme();
 
   return (
-    <section className="relative h-120 overflow-hidden ">
+    <section className="relative h-120 overflow-hidden">
       {/* Background video */}
       <video
         autoPlay
