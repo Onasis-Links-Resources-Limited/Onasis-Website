@@ -10,6 +10,9 @@ import Products from './pages/Products';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
+import '@fontsource/pacifico';
+import '@fontsource/dancing-script';
+
 const AppContent = () => {
   const { theme } = useTheme();
   
