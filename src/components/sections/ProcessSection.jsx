@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { 
   Send, 
   NotebookText, 
-  BanknoteCheck, 
+  Wallet, 
   CircleCheckBig,
   Shield,
   TrendingUp,
@@ -32,12 +32,12 @@ const ProcessSection = () => {
       id: 2,
       icon: NotebookText,
       title: 'Response & Followup',
-      description: 'We often respond quickly with your quotation/procedure for partnership. We also support you with all relevant facts.',
+      description: 'We respond quickly with your quotation/procedure for partnership. We also support you with all relevant facts.',
       color: '#C3110C'
     },
     {
       id: 3,
-      icon: BanknoteCheck,
+      icon: Wallet,
       title: 'Commitment from you',
       description: 'For new clients, we often require a commitment fee before delivery. However, for our existing clients, we follow the terms of our contract.',
       color: '#740A03'

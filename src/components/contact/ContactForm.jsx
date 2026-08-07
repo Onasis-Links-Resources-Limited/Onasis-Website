@@ -110,7 +110,7 @@ const ContactForm = () => {
               className={`w-full border-b py-3 outline-none resize-none transition-colors duration-300 ${
                 isDark 
                   ? "border-gray-700 text-white placeholder:text-gray-500 bg-transparent focus:border-[#C3110C]" 
-                  : "border-gray-300 text-black bg-transparent focus:border-[#C3110C]"
+                  : "border-gray-300 text-black placeholder:text-gray-500 bg-transparent focus:border-[#C3110C]"
               }`}
             />
 
