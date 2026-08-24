@@ -1,8 +1,6 @@
 import { useTheme } from "../../context/ThemeContext";
 // Real field photo: a telecom technician climbing a communication tower —
 // the most characteristic image of a telecom materials & infrastructure supplier at work.
-const HERO_IMAGE =
-  "https://images.pexels.com/photos/11320755/pexels-photo-11320755.jpeg?auto=compress&cs=tinysrgb&w=1920";
 
 const CAPABILITIES = [
   "Telecom Materials",
@@ -23,12 +21,21 @@ export default function ServiceCard() {
   return (
     <section className="relative h-100 overflow-hidden">
       {/* Background photograph */}
-      <img
+      {/* <img
         src={HERO_IMAGE}
         alt="Field technician climbing a red and white telecommunications tower during an installation"
         className={`absolute inset-0 h-full w-full object-cover object-middle ${theme === "dark" ? "brightness-30" : "brightness-60"}`}
         loading="eager"
-      />
+      /> */}
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        className={`absolute inset-0 h-full w-full mx-auto object-cover object-bottom ${theme === 'dark' ? 'brightness-50' : 'brightness-70'}`}
+      >
+        <source src="/video/Services_Hero.mp4" type="video/mp4" />
+      </video>
 
       {/* Content */}
       <div className="relative z-20 mx-auto flex h-full max-w-5xl items-end pb-10">
