@@ -20,9 +20,11 @@ import {
 } from 'lucide-react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
   const { theme } = useTheme();
+  const location = useLocation();
   const currentYear = new Date().getFullYear();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const sectionRef = useRef(null);
@@ -38,6 +40,15 @@ const Footer = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Check if current route is an auth page
+  const isAuthPage = ['/login', '/signup', '/verify-email', '/forgot-password'].includes(location.pathname);
+  
+  // Don't render footer on auth pages
+  if (isAuthPage) {
+    return null;
+  }
+
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
