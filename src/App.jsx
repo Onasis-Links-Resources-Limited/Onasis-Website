@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
+// import { AuthProvider } from "./context/AuthContext";
 import { QuoteProvider } from "./context/QuoteContext";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
@@ -60,13 +60,13 @@ const AppContent = () => {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <QuoteProvider>
           <Router>
             <AppContent />
           </Router>
         </QuoteProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </ThemeProvider>
   );
 }
