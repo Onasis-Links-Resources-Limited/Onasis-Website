@@ -1,267 +1,314 @@
+// Product categories - DO NOT CHANGE
+export const CATEGORIES = [
+  'RF Materials',
+  'Power',
+  'Fiber Optical Materials',
+  'Miscellaneous',
+  'Network Materials'
+];
+
+// Sample product data - Replace with actual products later
 export const PRODUCTS = [
+  // RF Materials
   {
     id: 1,
-    name: "Fiber Optic Cable - 4 Core",
-    category: "Fiber Optic",
-    brand: "Corning",
-    sku: "FO-4C-1000",
-    stock: 45,
-    rating: 4.8,
-    description: "High-quality 4-core single-mode fiber optic cable. Ideal for long-distance data transmission with minimal signal loss.",
-    specifications: {
-      cores: 4,
-      type: "Single Mode",
-      length: "1000m",
-      jacket: "LSZH",
-      connector: "SC/APC",
-      attenuation: "0.35dB/km"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/fiber-optic-datasheet.pdf" },
-      { name: "Installation Guide", url: "/downloads/fiber-optic-installation.pdf" }
+    name: 'RF Coaxial Cable - RG-58',
+    category: 'RF Materials',
+    description: 'High-quality RG-58 coaxial cable for RF applications. 50 ohm impedance, suitable for radio communications and test equipment.',
+    image: '/images/products/rg58-cable.jpg',
+    badge: 'Featured',
+    specifications: [
+      'Impedance: 50Ω',
+      'Frequency range: DC to 1 GHz',
+      'Shield: Braided copper',
+      'Temperature: -40°C to +85°C'
     ],
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
-    isAvailable: true,
-    minOrder: 50,
-    unit: "Meters"
+    features: [
+      'Low signal loss',
+      'Flexible design',
+      'UV resistant jacket'
+    ]
   },
   {
     id: 2,
-    name: "Outdoor Telecom Cabinet",
-    category: "Network Infrastructure",
-    brand: "Huawei",
-    sku: "HWC-OC-12U",
-    stock: 12,
-    rating: 4.7,
-    description: "Weatherproof outdoor cabinet for telecom equipment. IP65 rated with 12U rack space.",
-    specifications: {
-      type: "Outdoor",
-      rackUnits: 12,
-      protection: "IP65",
-      material: "Galvanized Steel",
-      cooling: "Passive",
-      mounting: "Wall/Floor"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/outdoor-cabinet-datasheet.pdf" },
-      { name: "Installation Manual", url: "/downloads/outdoor-cabinet-manual.pdf" }
+    name: 'N-Type Connector Male',
+    category: 'RF Materials',
+    description: 'Precision N-type male connector for RF applications. Features excellent VSWR and low insertion loss.',
+    image: '/images/products/n-type-connector.jpg',
+    badge: 'New',
+    specifications: [
+      'Impedance: 50Ω',
+      'Frequency: DC to 11 GHz',
+      'Material: Brass with silver plating',
+      'IP Rating: IP67'
     ],
-    image: "https://images.unsplash.com/photo-1581092335874-5b5e9c0c2167?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1581092335874-5b5e9c0c2167?w=800&q=80",
-    isAvailable: true,
-    minOrder: 1,
-    unit: "Unit"
+    features: [
+      'Weatherproof design',
+      'Low VSWR',
+      'Durable construction'
+    ]
   },
   {
     id: 3,
-    name: "5G NR Antenna",
-    category: "5G Equipment",
-    brand: "Ericsson",
-    sku: "ERC-5G-ANT-28",
-    stock: 8,
-    rating: 4.9,
-    description: "High-gain 5G NR antenna supporting 28GHz band. Designed for mmWave deployments.",
-    specifications: {
-      frequency: "28GHz",
-      gain: "24dBi",
-      polarization: "Dual",
-      beamwidth: "8°",
-      connectors: "2x 2.92mm",
-      mounting: "Pole Mount"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/5g-antenna-datasheet.pdf" },
-      { name: "Mounting Guide", url: "/downloads/5g-antenna-mounting.pdf" }
+    name: 'RF Attenuator - 10dB',
+    category: 'RF Materials',
+    description: 'Precision 10dB RF attenuator for signal level control. N-type connectors, 50 ohm impedance.',
+    image: '/images/products/rf-attenuator.jpg',
+    badge: null,
+    specifications: [
+      'Attenuation: 10dB ±0.5dB',
+      'Impedance: 50Ω',
+      'Frequency: DC to 6 GHz',
+      'Power: 2W'
     ],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    isAvailable: true,
-    minOrder: 2,
-    unit: "Unit"
+    features: [
+      'High accuracy',
+      'Low VSWR',
+      'Compact design'
+    ]
   },
+
+  // Power
   {
     id: 4,
-    name: "Solar Power Controller",
-    category: "Power Solutions",
-    brand: "SMA",
-    sku: "SMA-SPC-48V",
-    stock: 20,
-    rating: 4.6,
-    description: "MPPT solar charge controller for telecom sites. Supports up to 48V battery systems.",
-    specifications: {
-      voltage: "48V",
-      maxInput: "150V",
-      current: "60A",
-      efficiency: "98%",
-      display: "LCD",
-      protection: "IP65"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/solar-controller-datasheet.pdf" },
-      { name: "User Manual", url: "/downloads/solar-controller-manual.pdf" }
+    name: 'Power Distribution Unit - 8 Port',
+    category: 'Power',
+    description: 'Professional 8-port power distribution unit for network equipment and telecom infrastructure.',
+    image: '/images/products/pdu-8port.jpg',
+    badge: 'Featured',
+    specifications: [
+      'Input: 230V AC',
+      'Output: 8 x C13 outlets',
+      'Max load: 16A',
+      'Mounting: 19" rack'
     ],
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
-    isAvailable: true,
-    minOrder: 1,
-    unit: "Unit"
+    features: [
+      'Surge protection',
+      'LED indicators',
+      'Overload protection'
+    ]
   },
   {
     id: 5,
-    name: "CAT6 Ethernet Cable",
-    category: "Cabling",
-    brand: "Belden",
-    sku: "BLD-CAT6-305",
-    stock: 100,
-    rating: 4.5,
-    description: "Premium CAT6 Ethernet cable for high-speed network connectivity. 305m box.",
-    specifications: {
-      category: "CAT6",
-      length: "305m",
-      conductor: "23 AWG",
-      jacket: "LSZH",
-      frequency: "250MHz",
-      color: "Blue"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/cat6-datasheet.pdf" },
-      { name: "Installation Guide", url: "/downloads/cat6-installation.pdf" }
+    name: 'Rectifier Module - 48V/100A',
+    category: 'Power',
+    description: 'High-efficiency rectifier module for telecom power systems. 48V output, 100A capacity.',
+    image: '/images/products/rectifier-module.jpg',
+    badge: null,
+    specifications: [
+      'Output: 48V DC',
+      'Current: 100A',
+      'Efficiency: >96%',
+      'Cooling: Fan cooled'
     ],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    isAvailable: true,
-    minOrder: 50,
-    unit: "Meters"
+    features: [
+      'Hot-swappable',
+      'Redundant operation',
+      'Remote monitoring'
+    ]
   },
   {
     id: 6,
-    name: "Cloud Server Rack",
-    category: "Network Infrastructure",
-    brand: "Dell",
-    sku: "DELL-CSR-42U",
-    stock: 5,
-    rating: 4.8,
-    description: "Enterprise-grade 42U server rack with advanced cooling and cable management.",
-    specifications: {
-      rackUnits: 42,
-      depth: "1000mm",
-      cooling: "Active",
-      material: "Steel",
-      loadCapacity: "800kg",
-      color: "Black"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/server-rack-datasheet.pdf" },
-      { name: "Assembly Guide", url: "/downloads/server-rack-assembly.pdf" }
+    name: 'Solar Charge Controller - 60A',
+    category: 'Power',
+    description: 'MPPT solar charge controller for off-grid telecom sites. 60A capacity, compatible with 12V/24V systems.',
+    image: '/images/products/solar-controller.jpg',
+    badge: 'New',
+    specifications: [
+      'Max current: 60A',
+      'Voltage: 12/24V auto-detect',
+      'Efficiency: >98%',
+      'Protection: IP65'
     ],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
-    isAvailable: true,
-    minOrder: 1,
-    unit: "Unit"
+    features: [
+      'MPPT technology',
+      'LCD display',
+      'Temperature compensation'
+    ]
   },
+
+  // Fiber Optical Materials
   {
     id: 7,
-    name: "Cybersecurity Firewall Appliance",
-    category: "Security",
-    brand: "Fortinet",
-    sku: "FORT-60F",
-    stock: 15,
-    rating: 4.7,
-    description: "Next-generation firewall appliance with advanced threat protection for telecom networks.",
-    specifications: {
-      throughput: "10Gbps",
-      connections: "5M",
-      vpn: "SSL/IPSec",
-      management: "Cloud/On-prem",
-      interfaces: "8x 1GbE",
-      power: "Redundant"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/firewall-datasheet.pdf" },
-      { name: "Configuration Guide", url: "/downloads/firewall-config.pdf" }
+    name: 'Fiber Optic Patch Cord - LC-LC',
+    category: 'Fiber Optical Materials',
+    description: 'Premium LC to LC fiber optic patch cord. OS2 single-mode, low insertion loss for high-speed networks.',
+    image: '/images/products/fiber-patch-cord.jpg',
+    badge: 'Featured',
+    specifications: [
+      'Connector: LC to LC',
+      'Fiber: OS2 single-mode',
+      'Length: 3m',
+      'Insertion loss: <0.3dB'
     ],
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
-    isAvailable: true,
-    minOrder: 1,
-    unit: "Unit"
+    features: [
+      'Low loss',
+      'Flexible design',
+      'Premium quality'
+    ]
   },
   {
     id: 8,
-    name: "IoT Gateway Device",
-    category: "IoT Solutions",
-    brand: "Siemens",
-    sku: "SIE-IOT-GW",
-    stock: 30,
-    rating: 4.6,
-    description: "Industrial IoT gateway for smart city and industrial applications. Supports multiple protocols.",
-    specifications: {
-      protocols: "MQTT, Modbus, OPC UA",
-      connectivity: "4G/5G, Ethernet",
-      memory: "4GB RAM, 32GB Storage",
-      power: "12-48V DC",
-      temperature: "-40°C to 85°C",
-      certification: "CE, UL"
-    },
-    downloads: [
-      { name: "Datasheet", url: "/downloads/iot-gateway-datasheet.pdf" },
-      { name: "Developer Guide", url: "/downloads/iot-gateway-dev.pdf" }
+    name: 'Fiber Optic Splice Tray',
+    category: 'Fiber Optical Materials',
+    description: '24-position fiber optic splice tray for network cabinets. Supports up to 24 fusion splices.',
+    image: '/images/products/splice-tray.jpg',
+    badge: null,
+    specifications: [
+      'Capacity: 24 splices',
+      'Material: ABS plastic',
+      'Temperature: -40°C to +85°C',
+      'Compatible with: 12mm tubing'
     ],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80",
-    categoryImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    isAvailable: true,
-    minOrder: 5,
-    unit: "Unit"
+    features: [
+      'Easy organization',
+      'Secure splices',
+      'Durable design'
+    ]
+  },
+  {
+    id: 9,
+    name: 'Fiber Optic Termination Kit',
+    category: 'Fiber Optical Materials',
+    description: 'Complete termination kit for fiber optic installations. Includes cleaning supplies, cleaver, and tools.',
+    image: '/images/products/termination-kit.jpg',
+    badge: 'New',
+    specifications: [
+      'Includes: Cleaver, stripper, cleaner',
+      'Case: Hard case',
+      'Weight: 2.5kg',
+      'Compatible: All common connectors'
+    ],
+    features: [
+      'Complete solution',
+      'Professional quality',
+      'Portable case'
+    ]
+  },
+
+  // Miscellaneous
+  {
+    id: 10,
+    name: 'Telecom Test Set - Digital Multimeter',
+    category: 'Miscellaneous',
+    description: 'Professional digital multimeter for telecom testing. Measures voltage, current, resistance, and more.',
+    image: '/images/products/test-set.jpg',
+    badge: 'Featured',
+    specifications: [
+      'DC voltage: 1000V',
+      'AC voltage: 750V',
+      'Resistance: 40MΩ',
+      'Display: True RMS'
+    ],
+    features: [
+      'Auto-ranging',
+      'Backlit display',
+      'Data hold'
+    ]
+  },
+  {
+    id: 11,
+    name: 'Network Cable Tester',
+    category: 'Miscellaneous',
+    description: 'Comprehensive network cable tester for Ethernet, coaxial, and telephone cables.',
+    image: '/images/products/cable-tester.jpg',
+    badge: null,
+    specifications: [
+      'Cable types: UTP, STP, Coax',
+      'Test: Continuity, short, open',
+      'Display: LCD',
+      'Power: 9V battery'
+    ],
+    features: [
+      'Easy to use',
+      'Quick results',
+      'Remote testing'
+    ]
+  },
+
+  // Network Materials
+  {
+    id: 12,
+    name: 'Network Cabinet - 42U',
+    category: 'Network Materials',
+    description: 'Professional 42U network cabinet with glass front door and comprehensive cable management.',
+    image: '/images/products/network-cabinet.jpg',
+    badge: 'Featured',
+    specifications: [
+      'Size: 42U',
+      'Dimensions: 600x1000x2000mm',
+      'Load capacity: 800kg',
+      'Material: Steel with powder coating'
+    ],
+    features: [
+      'Glass front door',
+      'Cable management',
+      'Ventilation top'
+    ]
+  },
+  {
+    id: 13,
+    name: 'Patch Panel - 24 Port Cat6',
+    category: 'Network Materials',
+    description: '24-port Cat6 patch panel with integrated cable management and labeling system.',
+    image: '/images/products/patch-panel.jpg',
+    badge: null,
+    specifications: [
+      'Ports: 24',
+      'Category: Cat6',
+      'Termination: 110 punch down',
+      'Mounting: 19" rack'
+    ],
+    features: [
+      'Color-coded',
+      'Easy termination',
+      'Cable management'
+    ]
+  },
+  {
+    id: 14,
+    name: 'Cable Management Tray - Horizontal',
+    category: 'Network Materials',
+    description: '1U horizontal cable management tray with finger duct system for organized rack cabling.',
+    image: '/images/products/cable-tray.jpg',
+    badge: null,
+    specifications: [
+      'Size: 1U',
+      'Material: Steel',
+      'Mounting: 19" rack',
+      'Color: Black'
+    ],
+    features: [
+      'Finger duct design',
+      'Easy installation',
+      'Clean organization'
+    ]
   }
 ];
 
-// Categories with images
-export const CATEGORIES = [
-  {
-    id: 1,
-    name: "Fiber Optic",
-    slug: "fiber-optic",
-    icon: "📡",
-    description: "High-speed fiber optic cables and accessories",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
-    productCount: 1
-  },
-  {
-    id: 2,
-    name: "Network Infrastructure",
-    slug: "network-infrastructure",
-    icon: "🏗️",
-    description: "Cabinets, racks, and infrastructure equipment",
-    image: "https://images.unsplash.com/photo-1581092335874-5b5e9c0c2167?w=800&q=80",
-    productCount: 2
-  },
-  {
-    id: 3,
-    name: "5G Equipment",
-    slug: "5g-equipment",
-    icon: "📶",
-    description: "5G antennas, radios, and accessories",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    productCount: 1
-  },
-  {
-    id: 4,
-    name: "Power Solutions",
-    slug: "power-solutions",
-    icon: "⚡",
-    description: "Solar controllers, power supplies, and batteries",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
-    productCount: 1
-  },
-  {
-    id: 5,
-    name: "Security",
-    slug: "security",
-    icon: "🔒",
-    description: "Firewalls, surveillance, and security systems",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80",
-    productCount: 1
-  }
-];
+// Helper function to get products by category
+export const getProductsByCategory = (category) => {
+  return PRODUCTS.filter(product => product.category === category);
+};
+
+// Helper function to get category product count
+export const getCategoryCount = (category) => {
+  return PRODUCTS.filter(product => product.category === category).length;
+};
+
+// Helper function to search products
+export const searchProducts = (query) => {
+  const searchTerm = query.toLowerCase().trim();
+  if (!searchTerm) return PRODUCTS;
+  
+  return PRODUCTS.filter(product => 
+    product.name.toLowerCase().includes(searchTerm) ||
+    product.category.toLowerCase().includes(searchTerm) ||
+    product.description.toLowerCase().includes(searchTerm)
+  );
+};
+
+// Helper function to get product by ID
+export const getProductById = (id) => {
+  return PRODUCTS.find(product => product.id === id);
+};
