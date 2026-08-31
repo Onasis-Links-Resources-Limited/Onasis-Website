@@ -23,6 +23,7 @@ import {
 // Navigation categories for the left sidebar
 const categories = [
   { name: "Fiber Optic", slug: "fiber-optic" },
+  
   { name: "Network Infrastructure", slug: "network-infrastructure" },
   { name: "5G Equipment", slug: "5g-equipment" },
   { name: "Power Solutions", slug: "power-solutions" },
