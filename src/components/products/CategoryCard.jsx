@@ -7,7 +7,7 @@ const CategoryCard = ({ category }) => {
        
                 
       {/* Centered Image with object-contain */}
-      <div className="w-full h-40 mb-6 flex items-center justify-center overflow-hidden ">
+      <div className="w-full h-40 mb-6 flex items-center justify-center overflow-hidden p-6 text-sm hover:-translate-y-1 hover:shadow-xl border-2 border-transparent">
         <img 
           src={category.image} 
           alt={category.name}

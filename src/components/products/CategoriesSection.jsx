@@ -42,7 +42,7 @@ const CATEGORIES = [
 
 const CategoriesSection = () => {
   return (
-    <section id="product-categories" className="py-24 bg-gray-50 dark:bg-black">
+    <section id="product-categories" className="py-16 bg-gray-50 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Section Heading */}
