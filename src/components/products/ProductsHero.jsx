@@ -35,7 +35,7 @@ const ProductsHero = () => {
           <div className="flex flex-wrap gap-4">
             <a 
               href="#product-categories" 
-              className="bg-[#C3110C] hover:bg-gradient-to-r from-[#E6501B] via-[#C3110C] to-transparent text-white px-4 py-4  font-bold  flex items-center gap-2 text-sm tracking-widest rounded-full transition-all duration-500"
+              className="bg-[#C3110C] hover:bg-linear-to-r from-[#E6501B] via-[#C3110C] to-transparent text-white px-4 py-4  font-bold  flex items-center gap-2 text-sm tracking-widest rounded-full transition-all duration-500"
             >
               Explore Products <span aria-hidden="true">→</span>
             </a>
