@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
+// import { AuthProvider } from "./context/AuthContext";
 import { QuoteProvider } from "./context/QuoteContext";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+
+// Public Pages (Directly in src/pages)
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -14,9 +16,9 @@ import QuoteList from "./pages/QuoteList";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
-// Auth Pages
+// Auth Pages (Inside src/pages/auth - Fixed casing to match filenames)
 import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
+import SignUp from "./pages/auth/SignUp"; 
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 
@@ -37,7 +39,7 @@ const AppContent = () => {
       <Routes>
         {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
@@ -50,6 +52,8 @@ const AppContent = () => {
         <Route path="/products/product/:id" element={<ProductDetail />} />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
+        
+        {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
@@ -60,13 +64,13 @@ const AppContent = () => {
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <QuoteProvider>
           <Router>
             <AppContent />
           </Router>
         </QuoteProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </ThemeProvider>
   );
 }
