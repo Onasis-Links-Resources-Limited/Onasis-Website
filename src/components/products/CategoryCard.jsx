@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CategoryCard = ({ category }) => {
@@ -21,13 +20,13 @@ const CategoryCard = ({ category }) => {
       </h3>
 
       {/* Short Description */}
-      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 flex-grow leading-relaxed">
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 grow leading-relaxed">
         {category.description}
       </p>
 
       {/* View Products Link */}
       <Link 
-        to={`/products/${category.slug}`}
+        to={`/products/category/${category.slug}`}
         className="inline-flex items-center gap-2 text-sm font-bold text-[#E6501B] hover:text-orange-700 dark:hover:text-orange-400 transition-colors"
       >
         VIEW PRODUCTS 

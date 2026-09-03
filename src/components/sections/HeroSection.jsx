@@ -397,7 +397,7 @@ const HeroSection = () => {
               </motion.div>
             </motion.div>
             {/* Typewriter Text - "Your Friendly Company . . ." */}
-            <motion.div variants={itemVariants} className="min-h-[3rem]">
+            <motion.div variants={itemVariants} className="min-h-12">
               <span
                 className={`font-serif text-base sm:text-lg md:text-xl italic font-light tracking-wide ${
                   theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
