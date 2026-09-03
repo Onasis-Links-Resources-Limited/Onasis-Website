@@ -1,29 +1,31 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../hooks/useAuth";
 import { useQuote } from "../context/QuoteContext";
+import { api } from "../api/client";
+import QuoteSuccessModal from "../components/common/QuoteSuccessModal";
 import { PRODUCTS } from "../data/productsData";
 import {
-  Download,
-  Plus,
-  Minus,
-  CheckCircle,
-  Truck,
-  Shield,
-  Clock,
   AlertCircle,
-  Users,
-  ChevronRight,
-  FileText,
-  PackageSearch,
   ArrowRight,
+  CheckCircle,
+  ChevronRight,
+  Clock,
+  Download,
+  FileText,
+  Lock,
+  Minus,
+  PackageSearch,
+  Plus,
+  Shield,
+  ShoppingBag,
+  Truck,
+  Users,
 } from "lucide-react";
 
-// Navigation categories for the left sidebar
 const categories = [
   { name: "Fiber Optic", slug: "fiber-optic" },
-  
   { name: "Network Infrastructure", slug: "network-infrastructure" },
   { name: "5G Equipment", slug: "5g-equipment" },
   { name: "Power Solutions", slug: "power-solutions" },
@@ -32,39 +34,51 @@ const categories = [
 
 const slugify = (str = "") => str.toLowerCase().replace(/ /g, "-");
 
+const formatDisplayValue = (value, fallback = "") => {
+  if (value === null || value === undefined || value === "") {
+    return fallback;
+  }
+  return value;
+};
+
 const ProductDetail = () => {
   const { id } = useParams();
   const { theme } = useTheme();
   const { isAuthenticated } = useAuth();
-  const { addToQuote } = useQuote();
+  const { addToQuote, itemCount } = useQuote();
   const navigate = useNavigate();
 
   const product = useMemo(
-    () => PRODUCTS.find((p) => p.id === parseInt(id)),
+    () => PRODUCTS.find((p) => p.id === Number.parseInt(id, 10)),
     [id],
   );
 
-  // Quantity always starts at the product's minimum order, and only ever
-  // steps by the product's own increment (defaulting to 1 for items without one).
-  const step = product?.orderIncrement || 1;
+  const isDark = theme === "dark";
   const [quantity, setQuantity] = useState(product?.minOrder || 1);
   const [showBulkForm, setShowBulkForm] = useState(false);
   const [addedToQuote, setAddedToQuote] = useState(false);
+  const [successSummary, setSuccessSummary] = useState(null);
 
-  const isDark = theme === "dark";
+  useEffect(() => {
+    setQuantity(product?.minOrder || 1);
+  }, [product?.id]);
 
   if (!product) {
     return (
       <div
-        className={`pt-20 min-h-screen flex items-center justify-center ${isDark ? "text-white" : "text-[#280905]"}`}
+        className={`flex min-h-screen items-center justify-center pt-20 ${isDark ? "bg-[#090909] text-white" : "bg-[#f7f7f5] text-[#280905]"}`}
       >
-        <div className="text-center px-4">
+        <div className="px-4 text-center">
           <PackageSearch
-            className={`w-10 h-10 mx-auto mb-4 ${isDark ? "text-gray-600" : "text-gray-300"}`}
+            className={`mx-auto mb-4 h-10 w-10 ${isDark ? "text-gray-600" : "text-gray-300"}`}
           />
-          <h2 className="text-2xl font-bold mb-2">Product not found</h2>
+          <h2 className="mb-2 text-2xl font-bold">Product not found</h2>
           <p
-            className={`mb-6 text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}
+            className={
+              isDark
+                ? "mb-6 text-sm text-gray-400"
+                : "mb-6 text-sm text-gray-500"
+            }
           >
             This product may have been removed or the link is out of date.
           </p>
@@ -73,18 +87,19 @@ const ProductDetail = () => {
             className="inline-flex items-center gap-1 font-medium text-[#C3110C] hover:text-[#E6501B]"
           >
             Back to all products
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>
     );
   }
 
-  const minOrder = product.minOrder || 1;
+  const minOrder = Number(product.minOrder || 1);
+  const step = Number(product.orderIncrement || 1);
 
   const decreaseQuantity = () =>
-    setQuantity((q) => Math.max(minOrder, q - step));
-  const increaseQuantity = () => setQuantity((q) => q + step);
+    setQuantity((current) => Math.max(minOrder, current - step));
+  const increaseQuantity = () => setQuantity((current) => current + step);
 
   const handleAddToQuote = () => {
     if (!isAuthenticated) {
@@ -93,9 +108,11 @@ const ProductDetail = () => {
       });
       return;
     }
-    addToQuote(product, quantity);
+
+    const safeQuantity = Math.max(minOrder, Number(quantity) || minOrder);
+    addToQuote(product, safeQuantity);
     setAddedToQuote(true);
-    window.setTimeout(() => setAddedToQuote(false), 2500);
+    window.setTimeout(() => setAddedToQuote(false), 2200);
   };
 
   const handleBulkQuote = () => {
@@ -108,272 +125,474 @@ const ProductDetail = () => {
     setShowBulkForm(true);
   };
 
+  const productBrand = formatDisplayValue(product.brand, "Onasis");
+  const productSku = formatDisplayValue(product.sku, "Custom request");
+  const productUnit = formatDisplayValue(product.unit, "Units");
+
   return (
     <div
-      className={`pt-20 min-h-screen ${isDark ? "text-white" : "text-[#280905]"}`}
+      className={`min-h-screen pt-20 ${isDark ? "bg-[#090909] text-white" : "bg-[#f7f7f5] text-[#280905]"}`}
     >
-      <div className="max-w-[1400px] mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
-        {/* Left Sidebar - Categories (Hidden on Mobile) */}
-        <aside className="hidden lg:block w-64 flex-shrink-0">
+      <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-wrap items-center gap-2 text-sm">
+          <Link
+            to="/"
+            className={
+              isDark
+                ? "text-gray-400 hover:text-[#E6501B]"
+                : "text-gray-600 hover:text-[#C3110C]"
+            }
+          >
+            Home
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+          <Link
+            to="/products"
+            className={
+              isDark
+                ? "text-gray-400 hover:text-[#E6501B]"
+                : "text-gray-600 hover:text-[#C3110C]"
+            }
+          >
+            Products
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+          <Link
+            to={`/products/category/${slugify(product.category)}`}
+            className={
+              isDark
+                ? "text-gray-400 hover:text-[#E6501B]"
+                : "text-gray-600 hover:text-[#C3110C]"
+            }
+          >
+            {product.category}
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+          <span
+            className={
+              isDark ? "font-medium text-white" : "font-medium text-[#280905]"
+            }
+          >
+            {product.name}
+          </span>
+        </div>
+
+        <div className="mb-8 hidden xl:block">
           <div
-            className={`sticky top-24 rounded-2xl p-6 ${isDark ? "bg-gray-800 border border-gray-700" : "bg-white shadow-md border border-gray-200"}`}
+            className={`flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-sm ${isDark ? "border-gray-700 bg-gray-800/80" : "border-gray-200 bg-white"}`}
           >
-            <h2 className="text-lg font-bold mb-4 text-[#E6501B]">
-              Categories
-            </h2>
-            <nav className="space-y-2" aria-label="Product categories">
-              {categories.map((cat) => (
-                <Link
-                  key={cat.slug}
-                  to={`/products/category/${cat.slug}`}
-                  className={`flex items-center justify-between p-3 rounded-lg transition-all ${
-                    slugify(product.category) === cat.slug
-                      ? "bg-[#C3110C] text-white shadow-md"
-                      : isDark
-                        ? "hover:bg-gray-700 text-gray-300"
-                        : "hover:bg-gray-100 text-gray-600"
-                  }`}
-                >
-                  <span className="font-medium">{cat.name}</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              ))}
-            </nav>
-          </div>
-        </aside>
-
-        {/* Main Content Area */}
-        <div className="flex-1 min-w-0">
-          {/* Breadcrumbs */}
-          <nav
-            className={`flex items-center gap-2 text-sm mb-6 flex-wrap ${isDark ? "text-gray-400" : "text-gray-500"}`}
-            aria-label="Breadcrumb"
-          >
-            <Link to="/" className="hover:text-[#E6501B]">
-              Home
-            </Link>
-            <ChevronRight className="w-3 h-3" />
-            <Link to="/products" className="hover:text-[#E6501B]">
-              Products
-            </Link>
-            <ChevronRight className="w-3 h-3" />
-            <Link
-              to={`/products/category/${slugify(product.category)}`}
-              className="hover:text-[#E6501B]"
-            >
-              {product.category}
-            </Link>
-            <ChevronRight className="w-3 h-3" />
+            <ShoppingBag
+              className={
+                isDark ? "h-5 w-5 text-[#E6501B]" : "h-5 w-5 text-[#C3110C]"
+              }
+            />
             <span
-              className={`font-medium ${isDark ? "text-white" : "text-[#280905]"}`}
+              className={
+                isDark ? "text-sm text-gray-300" : "text-sm text-gray-700"
+              }
             >
-              {product.name}
+              {itemCount > 0
+                ? `${itemCount} product${itemCount === 1 ? "" : "s"} in your quote list`
+                : "Add this product to your quote list for review"}
             </span>
-          </nav>
+          </div>
+        </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Left - Gallery + supporting technical info */}
-            <div className="space-y-6">
-              <ProductGallery product={product} isDark={isDark} />
+        <div className="grid gap-8 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+          <div className="space-y-6">
+            <ProductGallery product={product} isDark={isDark} />
 
-              {product.specifications &&
-                Object.keys(product.specifications).length > 0 && (
-                  <div
-                    className={`rounded-xl p-5 ${isDark ? "bg-gray-800" : "bg-gray-50"}`}
-                  >
-                    <h3 className="font-semibold mb-4 text-lg">
-                      Specifications
-                    </h3>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-                      {Object.entries(product.specifications).map(
-                        ([key, value]) => (
-                          <div
-                            key={key}
-                            className={`flex flex-col justify-between py-2 border-b ${isDark ? "border-gray-700" : "border-gray-200"}`}
-                          >
-                            <span
-                              className={`text-xs uppercase tracking-wide mb-1 ${isDark ? "text-gray-400" : "text-gray-500"}`}
-                            >
-                              {key.replace(/([A-Z])/g, " $1").trim()}
-                            </span>
-                            <span className="font-semibold">{value}</span>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  </div>
-                )}
-
-              {product.downloads?.length > 0 && (
+            {product.specifications &&
+              Object.keys(product.specifications).length > 0 && (
                 <div
-                  className={`rounded-xl p-5 ${isDark ? "bg-gray-800" : "bg-gray-50"}`}
+                  className={`rounded-2xl p-5 ${isDark ? "border border-gray-700 bg-gray-800/90" : "border border-gray-200 bg-white shadow-sm"}`}
                 >
-                  <h3 className="font-semibold mb-3">Downloads</h3>
-                  <div className="space-y-2">
-                    {product.downloads.map((file, index) => (
-                      <a
-                        key={file.url || index}
-                        href={file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${isDark ? "hover:bg-gray-700 text-gray-300" : "hover:bg-gray-100 text-gray-600"}`}
-                      >
-                        <Download className="w-4 h-4 text-[#E6501B] flex-shrink-0" />
-                        <span className="text-sm font-medium">{file.name}</span>
-                      </a>
-                    ))}
+                  <h3
+                    className={
+                      isDark
+                        ? "mb-4 text-lg font-semibold text-white"
+                        : "mb-4 text-lg font-semibold text-[#280905]"
+                    }
+                  >
+                    Specifications
+                  </h3>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {Object.entries(product.specifications).map(
+                      ([key, value]) => (
+                        <div
+                          key={key}
+                          className={
+                            isDark
+                              ? "rounded-xl border border-gray-700 bg-gray-900/60 p-3"
+                              : "rounded-xl border border-gray-200 bg-gray-50 p-3"
+                          }
+                        >
+                          <p
+                            className={
+                              isDark
+                                ? "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-400"
+                                : "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500"
+                            }
+                          >
+                            {key.replace(/([A-Z])/g, " $1").trim()}
+                          </p>
+                          <p
+                            className={
+                              isDark
+                                ? "text-sm font-semibold text-white"
+                                : "text-sm font-semibold text-[#280905]"
+                            }
+                          >
+                            {value}
+                          </p>
+                        </div>
+                      ),
+                    )}
                   </div>
                 </div>
               )}
-            </div>
 
-            {/* Right - Details */}
-            <div className="space-y-6">
-              <div>
-                <div className="flex items-center gap-3 mb-2 flex-wrap">
-                  <span
-                    className={`text-sm px-3 py-1 rounded-full font-medium ${
-                      product.isAvailable
-                        ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                        : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-                    }`}
-                  >
-                    {product.isAvailable ? "In Stock" : "Out of Stock"}
-                  </span>
-                  {product.sku && (
-                    <span
-                      className={`text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}
-                    >
-                      SKU: {product.sku}
-                    </span>
-                  )}
-                </div>
-                <h1 className="text-3xl sm:text-4xl font-bold leading-tight">
-                  {product.name}
-                </h1>
-                <p
-                  className={`text-lg mt-1 ${isDark ? "text-gray-300" : "text-gray-600"}`}
+            {product.downloads?.length > 0 && (
+              <div
+                className={`rounded-2xl p-5 ${isDark ? "border border-gray-700 bg-gray-800/90" : "border border-gray-200 bg-white shadow-sm"}`}
+              >
+                <h3
+                  className={
+                    isDark
+                      ? "mb-4 text-lg font-semibold text-white"
+                      : "mb-4 text-lg font-semibold text-[#280905]"
+                  }
                 >
-                  {[product.brand, product.category]
-                    .filter(Boolean)
-                    .join(" • ")}
-                </p>
+                  Downloads
+                </h3>
+                <div className="space-y-2">
+                  {product.downloads.map((file, index) => (
+                    <a
+                      key={file.url || index}
+                      href={file.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={
+                        isDark
+                          ? "flex items-center gap-3 rounded-xl border border-gray-700 p-3 text-gray-300 transition hover:bg-gray-700"
+                          : "flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 text-gray-700 transition hover:bg-gray-100"
+                      }
+                    >
+                      <Download className="h-4 w-4 text-[#E6501B]" />
+                      <span className="text-sm font-medium">{file.name}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
+            )}
+          </div>
+
+          <div className="space-y-6">
+            <div
+              className={`rounded-2xl border p-5 ${isDark ? "border-gray-700 bg-gray-800/90" : "border-gray-200 bg-white shadow-sm"}`}
+            >
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <span
+                  className={
+                    product.isAvailable
+                      ? "inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      : "inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                  }
+                >
+                  {product.isAvailable ? "In stock" : "Out of stock"}
+                </span>
+                <span
+                  className={
+                    isDark
+                      ? "inline-flex rounded-full border border-[#E6501B]/30 bg-[#E6501B]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FDBA74]"
+                      : "inline-flex rounded-full border border-[#C3110C]/20 bg-[#C3110C]/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#740A03]"
+                  }
+                >
+                  Price on request
+                </span>
+              </div>
+
+              <h1
+                className={
+                  isDark
+                    ? "text-3xl font-bold text-white sm:text-4xl"
+                    : "text-3xl font-bold text-[#280905] sm:text-4xl"
+                }
+              >
+                {product.name}
+              </h1>
+
+              <p
+                className={
+                  isDark
+                    ? "mt-2 text-base text-gray-300"
+                    : "mt-2 text-base text-gray-600"
+                }
+              >
+                {productBrand}
+                {product.category ? ` • ${product.category}` : ""}
+              </p>
+
+              {productSku && (
+                <p
+                  className={
+                    isDark
+                      ? "mt-3 text-sm text-gray-400"
+                      : "mt-3 text-sm text-gray-600"
+                  }
+                >
+                  SKU: {productSku}
+                </p>
+              )}
 
               {product.description && (
                 <p
-                  className={`text-base leading-relaxed ${isDark ? "text-gray-300" : "text-gray-600"}`}
+                  className={
+                    isDark
+                      ? "mt-5 text-base leading-relaxed text-gray-300"
+                      : "mt-5 text-base leading-relaxed text-gray-600"
+                  }
                 >
                   {product.description}
                 </p>
               )}
 
-              <div className="rounded-xl p-5 border-2 border-[#E6501B]/30 bg-[#E6501B]/5">
-                <div className="flex items-center gap-2 text-[#E6501B] font-bold text-lg">
-                  <AlertCircle className="w-5 h-5" />
-                  <span>Price: Available on Request</span>
+              <div
+                className={
+                  isDark
+                    ? "mt-6 rounded-2xl border border-[#E6501B]/30 bg-[#E6501B]/10 p-4"
+                    : "mt-6 rounded-2xl border border-[#C3110C]/20 bg-[#C3110C]/5 p-4"
+                }
+              >
+                <div
+                  className={
+                    isDark
+                      ? "flex items-center gap-2 text-base font-bold text-[#FDBA74]"
+                      : "flex items-center gap-2 text-base font-bold text-[#740A03]"
+                  }
+                >
+                  <AlertCircle className="h-5 w-5" />
+                  <span>Price available on request</span>
                 </div>
-                <div className="flex items-center gap-4 mt-2 text-sm flex-wrap">
-                  <span className={isDark ? "text-gray-300" : "text-gray-600"}>
-                    Min. Order: {minOrder} {product.unit}
+                <div
+                  className={
+                    isDark
+                      ? "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-300"
+                      : "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-600"
+                  }
+                >
+                  <span>
+                    Minimum order: {minOrder} {productUnit}
                   </span>
-                  <span className={isDark ? "text-gray-300" : "text-gray-600"}>
-                    Bulk discounts available
-                  </span>
+                  <span>•</span>
+                  <span>Bulk pricing available</span>
                 </div>
               </div>
 
-              <div className="space-y-4 pt-4">
-                <div className="flex items-center gap-4">
+              <div className="mt-6 space-y-4">
+                <label
+                  className={
+                    isDark
+                      ? "block text-sm font-medium text-gray-300"
+                      : "block text-sm font-medium text-gray-700"
+                  }
+                >
+                  Requested quantity
+                </label>
+
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div
-                    className={`flex items-center rounded-lg border ${isDark ? "border-gray-700" : "border-gray-300"}`}
+                    className={
+                      isDark
+                        ? "inline-flex items-center overflow-hidden rounded-xl border border-gray-600 bg-gray-900/70"
+                        : "inline-flex items-center overflow-hidden rounded-xl border border-gray-300 bg-white"
+                    }
                   >
                     <button
                       type="button"
                       onClick={decreaseQuantity}
                       disabled={quantity <= minOrder}
                       aria-label="Decrease quantity"
-                      className={`p-3 rounded-l-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${isDark ? "hover:bg-gray-700 text-gray-300" : "hover:bg-gray-100 text-gray-600"}`}
+                      className={
+                        quantity <= minOrder
+                          ? isDark
+                            ? "flex h-12 w-12 items-center justify-center text-gray-500 opacity-50"
+                            : "flex h-12 w-12 items-center justify-center text-gray-400 opacity-50"
+                          : isDark
+                            ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
+                            : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
+                      }
                     >
-                      <Minus className="w-4 h-4" />
+                      <Minus className="h-4 w-4" />
                     </button>
-                    <span
-                      className="w-14 text-center font-bold text-lg"
-                      aria-live="polite"
-                    >
-                      {quantity}
-                    </span>
+
+                    <input
+                      type="number"
+                      min={minOrder}
+                      step={step}
+                      inputMode="numeric"
+                      value={quantity}
+                      onChange={(event) => {
+                        const nextValue = Number.parseInt(
+                          event.target.value,
+                          10,
+                        );
+                        if (!Number.isNaN(nextValue)) {
+                          setQuantity(Math.max(minOrder, nextValue));
+                        }
+                      }}
+                      onBlur={(event) => {
+                        const nextValue = Number.parseInt(
+                          event.target.value,
+                          10,
+                        );
+                        if (Number.isNaN(nextValue) || nextValue < minOrder) {
+                          setQuantity(minOrder);
+                        }
+                      }}
+                      aria-label="Quantity"
+                      className={
+                        isDark
+                          ? "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-white outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                          : "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-[#280905] outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                      }
+                    />
+
                     <button
                       type="button"
                       onClick={increaseQuantity}
                       aria-label="Increase quantity"
-                      className={`p-3 rounded-r-lg transition-colors ${isDark ? "hover:bg-gray-700 text-gray-300" : "hover:bg-gray-100 text-gray-600"}`}
+                      className={
+                        isDark
+                          ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
+                          : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
+                      }
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="h-4 w-4" />
                     </button>
                   </div>
-                  <span
-                    className={`text-sm font-medium ${isDark ? "text-gray-400" : "text-gray-500"}`}
+
+                  <div
+                    className={
+                      isDark
+                        ? "text-sm font-medium text-gray-400"
+                        : "text-sm font-medium text-gray-600"
+                    }
                   >
-                    {product.unit}
-                  </span>
+                    Minimum order: {minOrder} {productUnit}
+                  </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <button
                     type="button"
                     onClick={handleAddToQuote}
                     disabled={!product.isAvailable}
-                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-[#C3110C] hover:bg-[#E6501B] disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:hover:scale-100 shadow-lg shadow-[#C3110C]/20"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-[#C3110C] px-5 py-4 text-base font-bold text-white shadow-lg shadow-[#C3110C]/20 transition hover:bg-[#E6501B] disabled:cursor-not-allowed disabled:bg-gray-400 disabled:shadow-none"
                   >
                     {addedToQuote ? (
-                      <>
-                        <CheckCircle className="w-5 h-5" />
-                        Added to Quote
-                      </>
+                      <CheckCircle className="h-5 w-5" />
                     ) : (
-                      <>
-                        <FileText className="w-5 h-5" />
-                        Add to Quote
-                      </>
+                      <FileText className="h-5 w-5" />
                     )}
+                    {addedToQuote ? "Added to quote" : "Add to Quote"}
                   </button>
+
                   <button
                     type="button"
                     onClick={handleBulkQuote}
-                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 border-2 border-[#C3110C] text-[#C3110C] hover:bg-[#C3110C] hover:text-white font-bold rounded-xl transition-all duration-300"
+                    className={
+                      isDark
+                        ? "flex items-center justify-center gap-2 rounded-xl border border-[#E6501B]/40 bg-[#E6501B]/10 px-5 py-4 text-base font-bold text-[#FDBA74] transition hover:bg-[#E6501B]/20"
+                        : "flex items-center justify-center gap-2 rounded-xl border border-[#C3110C]/30 bg-[#C3110C]/5 px-5 py-4 text-base font-bold text-[#740A03] transition hover:bg-[#C3110C]/10"
+                    }
                   >
-                    <Users className="w-5 h-5" />
+                    <Users className="h-5 w-5" />
                     Request Bulk Quote
                   </button>
                 </div>
               </div>
 
               <div
-                className={`grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t ${isDark ? "border-gray-700" : "border-gray-200"}`}
+                className={`grid gap-3 border-t pt-6 sm:grid-cols-2 ${isDark ? "border-gray-700" : "border-gray-200"}`}
               >
                 {[
-                  { icon: Shield, label: "Genuine Products" },
-                  { icon: Truck, label: "Fast Delivery" },
-                  { icon: CheckCircle, label: "Warranty" },
-                  { icon: Clock, label: "24/7 Support" },
+                  { icon: Shield, label: "Genuine products" },
+                  { icon: Truck, label: "Fast delivery" },
+                  { icon: CheckCircle, label: "Quality checked" },
+                  { icon: Clock, label: "Support available" },
                 ].map(({ icon: Icon, label }) => (
                   <div
                     key={label}
-                    className="flex flex-col items-center gap-2 text-center"
+                    className={
+                      isDark
+                        ? "flex items-center gap-3 rounded-xl bg-gray-900/50 p-3 text-sm text-gray-300"
+                        : "flex items-center gap-3 rounded-xl bg-gray-50 p-3 text-sm text-gray-700"
+                    }
                   >
-                    <Icon className="w-6 h-6 text-[#E6501B]" />
                     <span
-                      className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}
+                      className={
+                        isDark
+                          ? "flex h-9 w-9 items-center justify-center rounded-lg bg-[#E6501B]/10 text-[#E6501B]"
+                          : "flex h-9 w-9 items-center justify-center rounded-lg bg-[#C3110C]/5 text-[#740A03]"
+                      }
                     >
-                      {label}
+                      <Icon className="h-4 w-4" />
                     </span>
+                    <span>{label}</span>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
+            <div
+              className={
+                isDark
+                  ? "rounded-2xl border border-gray-700 bg-gray-800/90 p-4"
+                  : "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+              }
+            >
+              <div className="mb-3 flex items-center gap-2">
+                <Lock
+                  className={
+                    isDark ? "h-4 w-4 text-[#E6501B]" : "h-4 w-4 text-[#C3110C]"
+                  }
+                />
+                <span
+                  className={
+                    isDark
+                      ? "text-sm font-semibold text-white"
+                      : "text-sm font-semibold text-[#280905]"
+                  }
+                >
+                  Quote request process
+                </span>
+              </div>
+              <ul
+                className={
+                  isDark
+                    ? "space-y-2 text-sm text-gray-300"
+                    : "space-y-2 text-sm text-gray-600"
+                }
+              >
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                  Share requirements and quantity
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                  Receive a reviewed commercial quotation
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                  Confirm delivery and commercial terms
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16">
           <SimilarProducts currentProduct={product} isDark={isDark} />
         </div>
       </div>
@@ -382,15 +601,24 @@ const ProductDetail = () => {
         <BulkQuoteForm
           product={product}
           onClose={() => setShowBulkForm(false)}
+          onSuccess={(summary) => {
+            setShowBulkForm(false);
+            setSuccessSummary(summary);
+          }}
+        />
+      )}
+      {successSummary && (
+        <QuoteSuccessModal
+          isDark={isDark}
+          itemCount={successSummary.itemCount}
+          totalUnits={successSummary.totalUnits}
+          onClose={() => setSuccessSummary(null)}
         />
       )}
     </div>
   );
 };
 
-// Image gallery, split out so the main/thumbnail images can be swapped
-// independently and the component tolerates products with a single image
-// or an explicit `images` array.
 const ProductGallery = ({ product, isDark }) => {
   const images = useMemo(() => {
     if (Array.isArray(product.images) && product.images.length > 0) {
@@ -401,31 +629,42 @@ const ProductGallery = ({ product, isDark }) => {
 
   const [activeImage, setActiveImage] = useState(images[0]);
 
+  useEffect(() => {
+    setActiveImage(images[0]);
+  }, [images]);
+
   return (
     <div className="space-y-4">
       <div
-        className={`rounded-2xl overflow-hidden aspect-square ${isDark ? "bg-gray-800" : "bg-gray-100"}`}
+        className={`mx-auto max-w-[680px] overflow-hidden rounded-2xl border transition-all duration-300 ${isDark ? "border-gray-700 bg-gray-800 shadow-lg shadow-black/10" : "border-gray-200 bg-gray-100 shadow-md shadow-gray-200/60"}`}
       >
         <img
           src={activeImage}
           alt={product.name}
-          className="w-full h-full object-cover"
+          className="h-[420px] w-full object-cover transition duration-300 ease-out hover:scale-[1.03] hover:shadow-xl sm:h-[500px] lg:h-[560px]"
         />
       </div>
+
       {images.length > 1 && (
-        <div className="flex gap-3">
-          {images.map((src, i) => (
+        <div className="flex gap-2 overflow-x-auto pb-1 sm:gap-3">
+          {images.map((src, index) => (
             <button
-              key={src + i}
+              key={`${src}-${index}`}
               type="button"
               onClick={() => setActiveImage(src)}
-              aria-label={`Show image ${i + 1} of ${product.name}`}
+              aria-label={`Show image ${index + 1} of ${product.name}`}
               aria-pressed={activeImage === src}
-              className={`w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 transition-shadow ${
-                activeImage === src ? "ring-2 ring-[#E6501B]" : ""
-              } ${isDark ? "bg-gray-800" : "bg-gray-100"}`}
+              className={
+                activeImage === src
+                  ? isDark
+                    ? "h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-2 ring-[#E6501B] ring-offset-2 ring-offset-[#090909] transition-all duration-200"
+                    : "h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-2 ring-[#C3110C] ring-offset-2 ring-offset-[#f7f7f5] transition-all duration-200"
+                  : isDark
+                    ? "h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-gray-700 opacity-80 transition-all duration-200 hover:opacity-100"
+                    : "h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-gray-200 opacity-80 transition-all duration-200 hover:opacity-100"
+              }
             >
-              <img src={src} alt="" className="w-full h-full object-cover" />
+              <img src={src} alt="" className="h-full w-full object-cover" />
             </button>
           ))}
         </div>
@@ -434,96 +673,130 @@ const ProductGallery = ({ product, isDark }) => {
   );
 };
 
-// Similar Products — surfaces other items from the same category (falling
-// back to the same brand, then a general sample) so the section is never
-// empty even for niche or single-item categories.
 const SimilarProducts = ({ currentProduct, isDark }) => {
   const navigate = useNavigate();
 
   const similar = useMemo(() => {
     const sameCategory = PRODUCTS.filter(
-      (p) =>
-        p.id !== currentProduct.id && p.category === currentProduct.category,
+      (product) =>
+        product.id !== currentProduct.id &&
+        product.category === currentProduct.category,
     );
-    if (sameCategory.length >= 4) return sameCategory.slice(0, 8);
+
+    if (sameCategory.length >= 4) {
+      return sameCategory.slice(0, 8);
+    }
 
     const sameBrand = PRODUCTS.filter(
-      (p) =>
-        p.id !== currentProduct.id &&
-        p.brand === currentProduct.brand &&
-        !sameCategory.includes(p),
+      (product) =>
+        product.id !== currentProduct.id &&
+        product.brand === currentProduct.brand &&
+        !sameCategory.some((item) => item.id === product.id),
     );
 
     const fallback = PRODUCTS.filter(
-      (p) =>
-        p.id !== currentProduct.id &&
-        !sameCategory.includes(p) &&
-        !sameBrand.includes(p),
+      (product) =>
+        product.id !== currentProduct.id &&
+        !sameCategory.some((item) => item.id === product.id) &&
+        !sameBrand.some((item) => item.id === product.id),
     );
 
     return [...sameCategory, ...sameBrand, ...fallback].slice(0, 8);
   }, [currentProduct]);
 
-  if (similar.length === 0) return null;
+  if (similar.length === 0) {
+    return null;
+  }
 
   return (
-    <section className="mt-16" aria-labelledby="similar-products-heading">
-      <div className="flex items-center justify-between mb-6">
-        <h2 id="similar-products-heading" className="text-2xl font-bold">
+    <section aria-labelledby="similar-products-heading">
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <h2
+          id="similar-products-heading"
+          className={
+            isDark
+              ? "text-2xl font-bold text-white"
+              : "text-2xl font-bold text-[#280905]"
+          }
+        >
           Similar Products
         </h2>
+
         <Link
           to={`/products/category/${slugify(currentProduct.category)}`}
-          className="hidden sm:flex items-center gap-1 text-sm font-medium text-[#C3110C] hover:text-[#E6501B]"
+          className={
+            isDark
+              ? "hidden items-center gap-1 text-sm font-medium text-[#E6501B] sm:inline-flex"
+              : "hidden items-center gap-1 text-sm font-medium text-[#C3110C] sm:inline-flex"
+          }
         >
-          View all in {currentProduct.category}
-          <ArrowRight className="w-4 h-4" />
+          View all
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
 
-      <div className="flex gap-5 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {similar.map((item) => (
           <button
             key={item.id}
             type="button"
             onClick={() => navigate(`/products/product/${item.id}`)}
-            className={`text-left snap-start flex-shrink-0 w-64 sm:w-auto rounded-2xl overflow-hidden border transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+            className={
               isDark
-                ? "bg-gray-800 border-gray-700 hover:border-gray-600"
-                : "bg-white border-gray-200 hover:border-gray-300 shadow-sm"
-            }`}
+                ? "overflow-hidden rounded-2xl border border-gray-700 bg-gray-800 text-left transition hover:-translate-y-0.5 hover:border-gray-600"
+                : "overflow-hidden rounded-2xl border border-gray-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300"
+            }
           >
-            <div
-              className={`aspect-square ${isDark ? "bg-gray-900" : "bg-gray-100"}`}
-            >
+            <div className={isDark ? "bg-gray-900" : "bg-gray-100"}>
               <img
                 src={item.image}
                 alt={item.name}
                 loading="lazy"
-                className="w-full h-full object-cover"
+                className="aspect-square w-full object-cover"
               />
             </div>
-            <div className="p-4 space-y-1.5">
+
+            <div className="space-y-2 p-4">
               <p
-                className={`text-xs uppercase tracking-wide ${isDark ? "text-gray-500" : "text-gray-400"}`}
+                className={
+                  isDark
+                    ? "text-[10px] font-medium uppercase tracking-[0.14em] text-gray-400"
+                    : "text-[10px] font-medium uppercase tracking-[0.14em] text-gray-500"
+                }
               >
-                {item.brand || item.category}
+                {formatDisplayValue(item.brand, item.category || "Product")}
               </p>
-              <h3 className="font-semibold leading-snug line-clamp-2">
-                {item.name}
+              <h3
+                className={
+                  isDark
+                    ? "text-sm font-semibold text-white"
+                    : "text-sm font-semibold text-[#280905]"
+                }
+              >
+                {formatDisplayValue(item.name, "Product")}
               </h3>
               <p
-                className={`text-xs font-medium ${
+                className={
                   item.isAvailable
-                    ? "text-green-600 dark:text-green-400"
-                    : "text-red-600 dark:text-red-400"
-                }`}
+                    ? isDark
+                      ? "text-xs font-medium text-green-400"
+                      : "text-xs font-medium text-green-600"
+                    : isDark
+                      ? "text-xs font-medium text-red-400"
+                      : "text-xs font-medium text-red-600"
+                }
               >
-                {item.isAvailable ? "In Stock" : "Out of Stock"}
+                {item.isAvailable ? "In stock" : "Out of stock"}
               </p>
-              <span className="inline-flex items-center gap-1 pt-1 text-sm font-bold text-[#C3110C]">
-                View Details
-                <ChevronRight className="w-4 h-4" />
+              <span
+                className={
+                  isDark
+                    ? "inline-flex items-center gap-1 text-sm font-bold text-[#E6501B]"
+                    : "inline-flex items-center gap-1 text-sm font-bold text-[#C3110C]"
+                }
+              >
+                View details
+                <ChevronRight className="h-4 w-4" />
               </span>
             </div>
           </button>
@@ -533,11 +806,11 @@ const SimilarProducts = ({ currentProduct, isDark }) => {
   );
 };
 
-// Bulk Quote Form Component
-const BulkQuoteForm = ({ product, onClose }) => {
+const BulkQuoteForm = ({ product, onClose, onSuccess }) => {
   const { theme } = useTheme();
   const { user } = useAuth();
   const isDark = theme === "dark";
+
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -549,8 +822,8 @@ const BulkQuoteForm = ({ product, onClose }) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setError("");
 
     if (Number(formData.quantity) < product.minOrder) {
@@ -561,10 +834,26 @@ const BulkQuoteForm = ({ product, onClose }) => {
     }
 
     setSubmitting(true);
+
     try {
-      // Replace with the real bulk-quote request endpoint.
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-      onClose();
+      const requestedQuantity = Number(formData.quantity);
+      await api.post("/quotes", {
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        company_name: formData.company,
+        items: [
+          {
+            product_id: product.id,
+            name: product.name,
+            sku: product.sku,
+            quantity: requestedQuantity,
+            unit: product.unit,
+            notes: formData.message,
+          },
+        ],
+      });
+      onSuccess({ itemCount: 1, totalUnits: requestedQuantity });
     } catch {
       setError("Something went wrong sending your request. Please try again.");
     } finally {
@@ -574,37 +863,53 @@ const BulkQuoteForm = ({ product, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="bulk-quote-title"
     >
       <div
-        className={`w-full max-w-md rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto ${isDark ? "bg-gray-900" : "bg-white"}`}
+        className={`max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl shadow-2xl ${isDark ? "bg-gray-900" : "bg-white"}`}
       >
         <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 id="bulk-quote-title" className="text-xl font-bold">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2
+              id="bulk-quote-title"
+              className={
+                isDark
+                  ? "text-xl font-bold text-white"
+                  : "text-xl font-bold text-[#280905]"
+              }
+            >
               Bulk Quote Request
             </h2>
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close"
-              className="text-gray-500 hover:text-gray-700"
+              aria-label="Close bulk quote form"
+              className={
+                isDark
+                  ? "text-gray-400 hover:text-white"
+                  : "text-gray-500 hover:text-gray-700"
+              }
             >
               ✕
             </button>
           </div>
+
           <p
-            className={`text-sm mb-4 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+            className={
+              isDark
+                ? "mb-4 text-sm text-gray-400"
+                : "mb-4 text-sm text-gray-600"
+            }
           >
             Request a bulk quote for <strong>{product.name}</strong>
           </p>
 
           {error && (
-            <div className="mb-4 flex items-start gap-2 rounded-lg bg-red-50 dark:bg-red-900/20 p-3 text-sm text-red-700 dark:text-red-400">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <div className="mb-4 flex items-start gap-2 rounded-xl bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
+              <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
           )}
@@ -627,7 +932,14 @@ const BulkQuoteForm = ({ product, onClose }) => {
               },
             ].map(({ key, label, type, required }) => (
               <div key={key}>
-                <label htmlFor={key} className="block text-sm font-medium mb-1">
+                <label
+                  htmlFor={key}
+                  className={
+                    isDark
+                      ? "mb-1 block text-sm font-medium text-gray-200"
+                      : "mb-1 block text-sm font-medium text-gray-700"
+                  }
+                >
                   {label}
                 </label>
                 <input
@@ -635,10 +947,14 @@ const BulkQuoteForm = ({ product, onClose }) => {
                   type={type}
                   required={required}
                   value={formData[key]}
-                  onChange={(e) =>
-                    setFormData({ ...formData, [key]: e.target.value })
+                  onChange={(event) =>
+                    setFormData({ ...formData, [key]: event.target.value })
                   }
-                  className={`w-full px-4 py-2 rounded-lg border ${isDark ? "bg-gray-800 border-gray-700 text-white" : "bg-white border-gray-300"}`}
+                  className={
+                    isDark
+                      ? "w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white outline-none focus:border-[#E6501B]"
+                      : "w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[#280905] outline-none focus:border-[#C3110C]"
+                  }
                 />
               </div>
             ))}
@@ -646,7 +962,11 @@ const BulkQuoteForm = ({ product, onClose }) => {
             <div>
               <label
                 htmlFor="quantity"
-                className="block text-sm font-medium mb-1"
+                className={
+                  isDark
+                    ? "mb-1 block text-sm font-medium text-gray-200"
+                    : "mb-1 block text-sm font-medium text-gray-700"
+                }
               >
                 Estimated Quantity *
               </label>
@@ -656,17 +976,26 @@ const BulkQuoteForm = ({ product, onClose }) => {
                 required
                 min={product.minOrder}
                 value={formData.quantity}
-                onChange={(e) =>
-                  setFormData({ ...formData, quantity: e.target.value })
+                onChange={(event) =>
+                  setFormData({ ...formData, quantity: event.target.value })
                 }
-                className={`w-full px-4 py-2 rounded-lg border ${isDark ? "bg-gray-800 border-gray-700 text-white" : "bg-white border-gray-300"}`}
+                className={
+                  isDark
+                    ? "w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white outline-none focus:border-[#E6501B]"
+                    : "w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[#280905] outline-none focus:border-[#C3110C]"
+                }
                 placeholder={`Min. ${product.minOrder} ${product.unit}`}
               />
             </div>
+
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium mb-1"
+                className={
+                  isDark
+                    ? "mb-1 block text-sm font-medium text-gray-200"
+                    : "mb-1 block text-sm font-medium text-gray-700"
+                }
               >
                 Additional Notes
               </label>
@@ -674,27 +1003,36 @@ const BulkQuoteForm = ({ product, onClose }) => {
                 id="message"
                 rows="3"
                 value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
+                onChange={(event) =>
+                  setFormData({ ...formData, message: event.target.value })
                 }
-                className={`w-full px-4 py-2 rounded-lg border ${isDark ? "bg-gray-800 border-gray-700 text-white" : "bg-white border-gray-300"}`}
+                className={
+                  isDark
+                    ? "w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-2.5 text-white outline-none focus:border-[#E6501B]"
+                    : "w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-[#280905] outline-none focus:border-[#C3110C]"
+                }
                 placeholder="Any special requirements..."
               />
             </div>
+
             <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={onClose}
-                className={`flex-1 px-4 py-2.5 rounded-lg border font-medium ${isDark ? "border-gray-700 hover:bg-gray-800" : "border-gray-300 hover:bg-gray-50"}`}
+                className={
+                  isDark
+                    ? "flex-1 rounded-xl border border-gray-700 px-4 py-2.5 font-medium text-gray-200 transition hover:bg-gray-800"
+                    : "flex-1 rounded-xl border border-gray-300 px-4 py-2.5 font-medium text-gray-700 transition hover:bg-gray-50"
+                }
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 px-4 py-2.5 bg-[#C3110C] hover:bg-[#E6501B] text-white font-bold rounded-lg transition-all disabled:opacity-50"
+                className="flex-1 rounded-xl bg-[#C3110C] px-4 py-2.5 font-bold text-white transition hover:bg-[#E6501B] disabled:opacity-50"
               >
-                {submitting ? "Sending..." : "Submit Request"}
+                {submitting ? "Sending..." : "Submit request"}
               </button>
             </div>
           </form>
