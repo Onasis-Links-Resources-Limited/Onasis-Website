@@ -47,12 +47,21 @@ export const CATEGORIES = [
 ];
 
 // Helper function for product images - uses placeholder if image doesn't exist
+<<<<<<< HEAD
 // const getProductImage = (productName, imagePath) => {
 //   // If image path is provided, use it
 //   if (imagePath) return imagePath;
 //   // Otherwise use placeholder with product name
 //   return `https://via.placeholder.com/400x300?text=${encodeURIComponent(productName)}`;
 // };
+=======
+const getProductImage = (productName, imagePath) => {
+  // If image path is provided, use it
+  if (imagePath) return imagePath;
+  // Otherwise use placeholder with product name
+  return `https://via.placeholder.com/400x300?text=${encodeURIComponent(productName)}`;
+};
+>>>>>>> origin/main
 
 export const PRODUCTS = [
   // ============================================================
