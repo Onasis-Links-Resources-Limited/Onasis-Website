@@ -10,7 +10,7 @@ const Products = () => {
   return (
     <div className="bg-white dark:bg-black min-h-screen">
 
-      {/* Video Hero Section - type shiii*/}
+      {/* Video Hero Section*/}
       <ProductsHero />
 
       {/* Category Section gfgfgf*/}
