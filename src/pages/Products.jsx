@@ -13,7 +13,7 @@ const Products = () => {
       {/* Video Hero Section - type shiii*/}
       <ProductsHero />
 
-      {/* Category Section */}
+      {/* Category Section gfgfgf*/}
       <CategoriesSection />
 
       </div>
