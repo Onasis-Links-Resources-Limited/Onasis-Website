@@ -29,11 +29,6 @@ const Navbar = () => {
     "/forgot-password",
   ].includes(location.pathname);
 
-  // Don't render navbar on auth pages
-  if (isAuthPage) {
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -41,11 +36,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
 
   // Close profile dropdown on click outside
   useEffect(() => {
@@ -57,6 +47,11 @@ const Navbar = () => {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isProfileDropdownOpen]);
+
+  // Don't render navbar on auth pages
+  if (isAuthPage) {
+    return null;
+  }
 
   const navLinks = [
     { name: "Home", href: "/" },
