@@ -20,11 +20,7 @@ const Navbar = () => {
   const { theme } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
-<<<<<<< HEAD
-  const { totalItems } = useQuote();
-=======
   const { itemCount } = useQuote();
->>>>>>> origin/main
   // Check if current route is an auth page
   const isAuthPage = [
     "/login",
@@ -33,11 +29,6 @@ const Navbar = () => {
     "/forgot-password",
   ].includes(location.pathname);
 
-  // Don't render navbar on auth pages
-  if (isAuthPage) {
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -45,11 +36,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
 
   // Close profile dropdown on click outside
   useEffect(() => {
@@ -61,6 +47,11 @@ const Navbar = () => {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, [isProfileDropdownOpen]);
+
+  // Don't render navbar on auth pages
+  if (isAuthPage) {
+    return null;
+  }
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -238,15 +229,9 @@ const Navbar = () => {
               aria-label="Quote List"
             >
               <ShoppingCartIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-<<<<<<< HEAD
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#C3110C] text-white text-xs font-bold rounded-full flex items-center justify-center">
-                  {totalItems}
-=======
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#C3110C] text-white text-xs font-bold rounded-full flex items-center justify-center">
                   {itemCount}
->>>>>>> origin/main
                 </span>
               )}
             </Link>

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-<<<<<<< HEAD
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -18,5 +17,3 @@
 @layer components {
   /* Add your component styles here */
 }
-=======
->>>>>>> origin/main
