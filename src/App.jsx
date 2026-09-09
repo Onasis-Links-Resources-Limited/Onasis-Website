@@ -1,11 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-// import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./hooks/useAuth";
+import { CategoryProvider } from "./context/CategoryContext";
+import { ProductProvider } from "./context/ProductContext";
 import { QuoteProvider } from "./context/QuoteContext";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 
-// Public Pages (Directly in src/pages)
+// Public Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -16,9 +19,9 @@ import QuoteList from "./pages/QuoteList";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
-// Auth Pages (Inside src/pages/auth - Fixed casing to match filenames)
+// Auth Pages
 import Login from "./pages/auth/Login";
-import SignUp from "./pages/auth/SignUp"; 
+import SignUp from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 
@@ -28,18 +31,26 @@ import "@fontsource/dancing-script";
 
 const AppContent = () => {
   const { theme } = useTheme();
+  const { loading, user } = useAuth();
+
+  // ✅ Show loading spinner while auth is initializing
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a]">
+        <div className="w-12 h-12 border-4 border-[#C3110C] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
-      }`}
-    >
+    <div className={`min-h-screen transition-colors duration-300 ${
+      theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
+    }`}>
       <Navbar />
       <Routes>
-        {/* Auth Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        {/* Auth Routes - redirect if already logged in */}
+        <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+        <Route path="/signup" element={user ? <Navigate to="/" replace /> : <SignUp />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
@@ -49,7 +60,7 @@ const AppContent = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/category/:slug" element={<CategoryProducts />} />
-        <Route path="/products/product/:id" element={<ProductDetail />} />
+        <Route path="/products/category/:slug/product/:id" element={<ProductDetail />} />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
         
@@ -64,13 +75,17 @@ const AppContent = () => {
 function App() {
   return (
     <ThemeProvider>
-      {/* <AuthProvider> */}
-        <QuoteProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </QuoteProvider>
-      {/* </AuthProvider> */}
+      <AuthProvider>
+        <CategoryProvider>
+          <ProductProvider>
+          <QuoteProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </QuoteProvider>
+          </ProductProvider>
+        </CategoryProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

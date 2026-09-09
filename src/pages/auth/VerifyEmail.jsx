@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Mail, CheckCircle, Send, ArrowLeft, AlertCircle } from 'lucide-react';
 import AuthLayout from './components/AuthLayout';
@@ -8,7 +8,7 @@ import { api } from '../../api/client';
 const VerifyEmail = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(() => location.state?.email || '');
   const [loading, setLoading] = useState(false);
   const [verifying, setVerifying] = useState(true);
   const [resendSuccess, setResendSuccess] = useState(false);
@@ -23,24 +23,7 @@ const VerifyEmail = () => {
   const stateEmail = location.state?.email;
   const needsVerification = location.state?.needsVerification || false;
 
-  useEffect(() => {
-    // If we have email from state, use it
-    if (stateEmail) {
-      setEmail(stateEmail);
-    }
-
-    // If we have a token, verify the email
-    if (token) {
-      verifyEmail(token);
-    } else if (!stateEmail && !needsVerification) {
-      // No token and no email state - redirect to signup
-      navigate('/signup');
-    } else {
-      setVerifying(false);
-    }
-  }, [token, stateEmail, needsVerification, navigate]);
-
-  const verifyEmail = async (verificationToken) => {
+  const verifyEmail = useCallback(async (verificationToken) => {
     setVerifying(true);
     setError('');
 
@@ -54,7 +37,19 @@ const VerifyEmail = () => {
     } finally {
       setVerifying(false);
     }
-  };
+  }, [stateEmail]);
+
+  useEffect(() => {
+    // If we have a token, verify the email
+    if (token) {
+      // Defer the state updates performed by verification until after the effect.
+      const verificationTimer = setTimeout(() => verifyEmail(token), 0);
+      return () => clearTimeout(verificationTimer);
+    } else if (!stateEmail && !needsVerification) {
+      // No token and no email state - redirect to signup
+      navigate('/signup');
+    }
+  }, [token, stateEmail, needsVerification, navigate, verifyEmail]);
 
   const handleResend = async () => {
     setLoading(true);

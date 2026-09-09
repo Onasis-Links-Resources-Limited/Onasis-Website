@@ -7,8 +7,6 @@ import {
   LogOut,
   FileText,
   ChevronDown,
-  LayoutDashboard,
-  User,
   ShoppingCartIcon,
 } from "lucide-react";
 import { useQuote } from "../../context/QuoteContext";
@@ -146,9 +144,9 @@ const Navbar = () => {
                   onClick={() =>
                     setIsProfileDropdownOpen(!isProfileDropdownOpen)
                   }
-                  className="flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 hover:bg-gray-100 dark:hover:bg-[#1A1A1A] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E6501B]"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#C3110C] to-[#E6501B] flex items-center justify-center text-white font-semibold text-sm">
+                  <div className="w-8 h-8 rounded-full bg-linear-to-r from-[#C3110C] to-[#E6501B] flex items-center justify-center text-white font-semibold text-sm">
                     {user?.first_name?.charAt(0) ||
                       user?.email?.charAt(0) ||
                       "U"}
@@ -162,9 +160,9 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 {isProfileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#1A1A1A] rounded-lg shadow-xl border border-gray-200 dark:border-[#2A2A2A] overflow-hidden z-50">
                     {/* User Info */}
-                    <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                    <div className="px-4 py-3 border-b border-gray-200 dark:border-[#2A2A2A]">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         {user?.first_name} {user?.last_name}
                       </p>
@@ -179,27 +177,20 @@ const Navbar = () => {
                     {/* Menu Items */}
                     <div className="py-1">
                       <Link
-                        to="/dashboard"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                      >
-                        <LayoutDashboard className="w-4 h-4" />
-                        Dashboard
-                      </Link>
-                      <Link
-                        to="/my-quotes"
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        to="/quote-list"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#212121] transition-colors"
                       >
                         <FileText className="w-4 h-4" />
                         My Quotes
                       </Link>
-                      <Link
+                      {/* <Link
                         to="/profile"
                         className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
                         <User className="w-4 h-4" />
                         Profile
-                      </Link>
-                      <hr className="my-1 border-gray-200 dark:border-gray-700" />
+                      </Link> */}
+                      <hr className="my-1 border-gray-200 dark:border-[#2A2A2A]" />
                       <button
                         onClick={handleLogout}
                         className="flex items-center gap-3 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors w-full"
@@ -225,7 +216,7 @@ const Navbar = () => {
 
             <Link
               to="/quote-list"
-              className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#212121] transition-colors"
               aria-label="Quote List"
             >
               <ShoppingCartIcon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
@@ -303,14 +294,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <>
                 <Link
-                  to="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#C3110C] dark:hover:text-[#E6501B] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/my-quotes"
+                  to="/quote-list"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#C3110C] dark:hover:text-[#E6501B] hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
@@ -321,7 +305,7 @@ const Navbar = () => {
                     handleLogout();
                     setIsMobileMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                  className="block w-full text-left px-4 py-2 text-sm font-medium cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                 >
                   Logout
                 </button>

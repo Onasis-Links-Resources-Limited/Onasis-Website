@@ -41,7 +41,7 @@ const Login = () => {
     const result = await login(formData.email, formData.password);
 
     if (result.success) {
-      navigate('/');
+      navigate('/', { replace: true });
     } else {
       if (result.message?.includes('verify') || result.message?.includes('verified')) {
         navigate('/verify-email', { 
@@ -70,8 +70,8 @@ const Login = () => {
   };
 
   return (
-    <div className={`min-h-screen pt-20 flex items-center justify-center ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <div className={`w-full max-w-md p-8 rounded-2xl shadow-sm border ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+    <div className={`min-h-screen pt-20 flex items-center justify-center ${isDark ? 'bg-black' : 'bg-gray-50'}`}>
+      <div className={`w-full max-w-md p-8 rounded-2xl shadow-sm border ${isDark ? 'bg-[#1A1A1A] border-[#2A2A2A]' : 'bg-white border-gray-200'}`}>
         
         {/* Logo Added Here */}
         <img src="/images/onasis-t-logo.png" alt="Onasis Logo" className="h-10 w-auto mx-auto mb-6" />
@@ -99,11 +99,11 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="you@company.com"
-              className={`w-full px-4 py-2.5 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#C3110C] focus:border-transparent ${
+              className={`w-full px-4 py-2.5 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
                 errors.email
                   ? 'border-red-500 focus:ring-red-200'
                   : isDark
-                    ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400'
+                    ? 'bg-black/50 border-[#2A2A2A] text-white placeholder-gray-400'
                     : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'
               }`}
             />
@@ -122,11 +122,11 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className={`w-full px-4 py-2.5 pr-10 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#C3110C] focus:border-transparent ${
+                className={`w-full px-4 py-2.5 pr-10 rounded-lg border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
                   errors.password
                     ? 'border-red-500 focus:ring-red-200'
                     : isDark
-                      ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400'
+                      ? 'bg-black/50 border-[#2A2A2A] text-white placeholder-gray-400'
                       : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'
                 }`}
               />
@@ -164,8 +164,8 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 flex items-center justify-center gap-2 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed ${
-              isDark ? 'bg-[#E6501B] hover:bg-[#C3110C]' : 'bg-[#C3110C] hover:bg-[#E6501B]'
+            className={`w-full py-3 flex items-center justify-center gap-2 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer ${
+              isDark ? 'bg-[#E6501B] hover:bg-amber-700' : 'bg-[#C3110C] hover:bg-[#E6501B]'
             }`}
           >
             {loading ? (
