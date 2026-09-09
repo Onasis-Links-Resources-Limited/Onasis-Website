@@ -7,7 +7,7 @@ const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       className={`relative w-12 h-7 rounded-full transition-colors duration-300 focus:outline-none shrink-0 cursor-pointer ${
-        theme === "dark" ? "bg-gray-700" : "bg-[#C2410C]"
+        theme === 'dark' ? 'bg-white' : 'bg-[#280905]'
       }`}
       aria-label="Toggle theme"
     >

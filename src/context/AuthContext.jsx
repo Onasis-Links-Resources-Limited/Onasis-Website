@@ -1,49 +1,70 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback, useRef } from 'react';
 import { api } from '../api/client';
 
 // ✅ Export AuthContext as named export
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('onasis_token'));
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  const hasFetched = useRef(false);
 
-  // Set up axios interceptor for auth token
-  useEffect(() => {
-    if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      fetchUser();
-    } else {
+  const logout = useCallback(() => {
+    localStorage.removeItem('onasis_token');
+    delete api.defaults.headers.common['Authorization'];
+    setUser(null);
+    setIsAuthenticated(false);
+    setLoading(false);
+  }, []);
+
+  const fetchUser = useCallback(async () => {
+    const token = localStorage.getItem('onasis_token');
+    
+    if (!token) {
       setLoading(false);
       setIsAuthenticated(false);
+      return;
     }
-  }, [token]);
 
-  const fetchUser = async () => {
     try {
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await api.get('/auth/me');
       setUser(response.data.data);
       setIsAuthenticated(true);
     } catch (error) {
       console.error('Failed to fetch user:', error);
-      logout();
+      // Only logout if it's an auth error (401)
+      if (error.response?.status === 401) {
+        logout();
+      } else {
+        setLoading(false);
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }, [logout]);
 
-  const login = async (email, password) => {
+  // ✅ Only run once on mount
+  useEffect(() => {
+    if (!hasFetched.current) {
+      hasFetched.current = true;
+      fetchUser();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const login = useCallback(async (email, password) => {
     try {
       const response = await api.post('/auth/login', { email, password });
       const { token: authToken, user: userData } = response.data.data;
 
       localStorage.setItem('onasis_token', authToken);
-      setToken(authToken);
       api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
       setUser(userData);
       setIsAuthenticated(true);
+      setLoading(false);
 
       return { success: true, data: userData };
     } catch (error) {
@@ -53,18 +74,18 @@ export const AuthProvider = ({ children }) => {
         errors: error.response?.data?.errors || [],
       };
     }
-  };
+  }, []);
 
-  const register = async (userData) => {
+  const register = useCallback(async (userData) => {
     try {
       const response = await api.post('/auth/register', userData);
       const { token: authToken, user: newUser } = response.data.data;
 
       localStorage.setItem('onasis_token', authToken);
-      setToken(authToken);
       api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
       setUser(newUser);
       setIsAuthenticated(true);
+      setLoading(false);
 
       return { success: true, data: newUser };
     } catch (error) {
@@ -74,15 +95,7 @@ export const AuthProvider = ({ children }) => {
         errors: error.response?.data?.errors || [],
       };
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('onasis_token');
-    setToken(null);
-    setUser(null);
-    setIsAuthenticated(false);
-    delete api.defaults.headers.common['Authorization'];
-  };
+  }, []);
 
   const value = {
     user,
@@ -96,3 +109,5 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export { AuthContext, AuthProvider };

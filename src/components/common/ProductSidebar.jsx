@@ -1,15 +1,16 @@
-import { Link } from "react-router-dom";
-import { ChevronRight, X } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from '../../context/ThemeContext';
+import { Filter, X, Tag } from 'lucide-react';
 
 const ProductSidebar = ({
-  categories = [],
-  activeSlug = "",
+  subHeadings = [],
+  selectedSubHeading,
+  onSubHeadingChange,
+  onClearFilters,
   isMobile = false,
   onClose,
 }) => {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
   return (
     <>
@@ -20,71 +21,83 @@ const ProductSidebar = ({
         />
       )}
 
-      <aside
-        className={
-          isMobile
-            ? "fixed inset-y-0 left-0 z-50 w-80 overflow-y-auto bg-[#1a1a1a] p-6 shadow-2xl"
-            : "sticky top-24"
+      {/* Sidebar Content */}
+      <div className={`
+        ${isMobile 
+          ? 'fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-in-out'
+          : 'sticky top-24'
         }
-      >
-        <div
-          className={`rounded-2xl border p-4 shadow-sm ${
-            isDark
-              ? "border-[#34404d] bg-[#1a1a1a]"
-              : "border-gray-200 bg-white"
-          }`}
-        >
-          {isMobile && (
-            <div className="mb-4 flex items-center justify-between border-b border-[#34404d] pb-4">
-              <span className="text-sm font-semibold uppercase tracking-[0.16em] text-gray-400">
-                Product categories
-              </span>
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close product categories"
-                className="rounded-lg p-1 text-gray-400 hover:bg-[#222222] hover:text-white"
-              >
-                <X className="h-5 w-5" />
-              </button>
+        ${isMobile ? 'translate-x-0' : ''}
+        p-6
+        ${isDark ? 'bg-[#1A1A1A]' : 'bg-white'}
+        ${isMobile ? 'shadow-2xl' : 'shadow-sm rounded-xl border'}
+        ${isDark ? 'border-gray-700' : 'border-gray-200'}
+        ${isMobile ? 'h-full overflow-y-auto' : ''}
+      `}>
+        {/* Mobile Header */}
+        {isMobile && (
+          <div className="flex items-center justify-between mb-6 pb-4 border-b dark:border-gray-700 border-gray-200">
+            <div className="flex items-center gap-2">
+              <Filter className="w-5 h-5 text-[#C3110C]" />
+              <h2 className="text-lg font-bold">Filters</h2>
+            </div>
+            <button
+              onClick={onClose}
+              className={`p-2 rounded-lg transition-colors ${
+                isDark ? 'hover:bg-[#212121]' : 'hover:bg-gray-100'
+              }`}
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="space-y-6">
+          {/* Sub-Heading Filter */}
+          {subHeadings.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Tag className="w-4 h-4 text-[#C3110C]" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                  Sub-Categories
+                </h3>
+              </div>
+              <div className="space-y-1.5">
+                {subHeadings.map((heading) => (
+                  <button
+                    key={heading}
+                    onClick={() => onSubHeadingChange(heading)}
+                    className={`w-full px-3 py-2 text-xs text-left rounded-lg transition-all duration-200 cursor-pointer ${
+                      selectedSubHeading === heading
+                        ? 'bg-[#C3110C] text-white shadow-md'
+                        : isDark
+                          ? 'text-gray-300 hover:bg-[#212121]'
+                          : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {heading}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
-          {!isMobile && (
-            <p
-              className={`mb-4 px-3 text-xs font-semibold uppercase tracking-[0.16em] ${
-                isDark ? "text-gray-400" : "text-gray-500"
+          {/* Clear Filters */}
+          {(selectedSubHeading && selectedSubHeading !== 'All') && (
+            <button
+              onClick={onClearFilters}
+              className={`w-full px-2 py-2.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                isDark
+                  ? 'bg-[#1A1A1A] text-gray-300 hover:bg-[#212121]'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               Product categories
-            </p>
+            </button>
           )}
-
-          <nav className="space-y-1" aria-label="Product categories">
-            {categories.map((category) => {
-              const isCurrent = activeSlug === category.slug;
-
-              return (
-                <Link
-                  key={category.slug}
-                  to={`/products/category/${category.slug}`}
-                  onClick={onClose}
-                  className={
-                    isCurrent
-                      ? "flex items-center justify-between rounded-xl bg-[#E6501B] px-3 py-3 text-sm font-semibold text-white shadow-sm"
-                      : isDark
-                        ? "flex items-center justify-between rounded-xl px-3 py-3 text-sm text-gray-300 transition hover:bg-[#222222] hover:text-white"
-                        : "flex items-center justify-between rounded-xl px-3 py-3 text-sm text-gray-700 transition hover:bg-orange-50 hover:text-[#C2410C]"
-                  }
-                >
-                  <span>{category.name}</span>
-                  <ChevronRight className="h-4 w-4 shrink-0" />
-                </Link>
-              );
-            })}
-          </nav>
         </div>
-      </aside>
+      </div>
     </>
   );
 };
