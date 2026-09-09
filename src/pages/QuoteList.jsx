@@ -37,6 +37,17 @@ const QuoteListHeader = ({ productCount, totalUnits, isDark, onClear }) => {
     <div className="mb-8 flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2 text-sm">
         <Link
+          to="/"
+          className={
+            isDark
+              ? "text-gray-400 transition-colors hover:text-[#E6501B]"
+              : "text-gray-600 transition-colors hover:text-[#C3110C]"
+          }
+        >
+          Home
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+        <Link
           to="/products"
           className={
             isDark

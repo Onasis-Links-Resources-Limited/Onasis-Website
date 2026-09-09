@@ -1,14 +1,7 @@
 import { useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { motion, useInView } from "framer-motion";
-import {
-  Shield, 
-  Zap, 
-  Headphones,
-  Wifi,
-  Cloud,
-  Satellite,
-} from "lucide-react";
+import { Shield, Zap, Headphones, Wifi, Cloud, Satellite } from "lucide-react";
 
 const WhyChooseUsSection = () => {
   const { theme } = useTheme();
@@ -18,56 +11,62 @@ const WhyChooseUsSection = () => {
     amount: 0.2,
   });
 
- const reasons = [
-  {
-    id: 1,
-    icon: Wifi,
-    title: "Telecom Infrastructure",
-    description: "Supplying world-class telecommunications infrastructure and network solutions for businesses and service providers.",
-    color: "#E6501B",
-    position: "top-left"
-  },
-  {
-    id: 2,
-    icon: Cloud,
-    title: "ICT Solutions",
-    description: "Providing reliable ICT products and technology solutions tailored to modern enterprise needs.",
-    color: "#C3110C",
-    position: "top-right"
-  },
-  {
-    id: 3,
-    icon: Shield,
-    title: "Safety Products",
-    description: "Delivering certified safety equipment and protective solutions for industrial and commercial environments.",
-    color: "#740A03",
-    position: "middle-left"
-  },
-  {
-    id: 4,
-    icon: Zap,
-    title: "Power Equipment",
-    description: "Supplying dependable electrical and power equipment from trusted global manufacturers.",
-    color: "#E6501B",
-    position: "middle-right"
-  },
-  {
-    id: 5,
-    icon: Satellite,
-    title: "Trusted Supply Chain",
-    description: "Ensuring timely sourcing and delivery through a strong global network of OEM partners.",
-    color: "#C3110C",
-    position: "bottom-left"
-  },
-  {
-    id: 6,
-    icon: Headphones,
-    title: "Customer Commitment",
-    description: "Focused on quality products, dependable service, and long-term customer satisfaction.",
-    color: "#740A03",
-    position: "bottom-right"
-  },
-];
+  const reasons = [
+    {
+      id: 1,
+      icon: Wifi,
+      title: "Telecom Infrastructure",
+      description:
+        "Supplying world-class telecommunications infrastructure and network solutions for businesses and service providers.",
+      color: "#E6501B",
+      position: "top-left",
+    },
+    {
+      id: 2,
+      icon: Cloud,
+      title: "ICT Solutions",
+      description:
+        "Providing reliable ICT products and technology solutions tailored to modern enterprise needs.",
+      color: "#E6501B",
+      position: "top-right",
+    },
+    {
+      id: 3,
+      icon: Shield,
+      title: "Safety Products",
+      description:
+        "Delivering certified safety equipment and protective solutions for industrial and commercial environments.",
+      color: "#E6501B",
+      position: "middle-left",
+    },
+    {
+      id: 4,
+      icon: Zap,
+      title: "Power Equipment",
+      description:
+        "Supplying dependable electrical and power equipment from trusted global manufacturers.",
+      color: "#E6501B",
+      position: "middle-right",
+    },
+    {
+      id: 5,
+      icon: Satellite,
+      title: "Trusted Supply Chain",
+      description:
+        "Ensuring timely sourcing and delivery through a strong global network of OEM partners.",
+      color: "#E6501B",
+      position: "bottom-left",
+    },
+    {
+      id: 6,
+      icon: Headphones,
+      title: "Customer Commitment",
+      description:
+        "Focused on quality products, dependable service, and long-term customer satisfaction.",
+      color: "#E6501B",
+      position: "bottom-right",
+    },
+  ];
 
   // Animation variants
   // const containerVariants = {
@@ -94,17 +93,17 @@ const WhyChooseUsSection = () => {
   };
 
   // Get items by position
-  const topLeft = reasons.find(r => r.position === "top-left");
-  const topRight = reasons.find(r => r.position === "top-right");
-  const middleLeft = reasons.find(r => r.position === "middle-left");
-  const middleRight = reasons.find(r => r.position === "middle-right");
-  const bottomLeft = reasons.find(r => r.position === "bottom-left");
-  const bottomRight = reasons.find(r => r.position === "bottom-right");
+  const topLeft = reasons.find((r) => r.position === "top-left");
+  const topRight = reasons.find((r) => r.position === "top-right");
+  const middleLeft = reasons.find((r) => r.position === "middle-left");
+  const middleRight = reasons.find((r) => r.position === "middle-right");
+  const bottomLeft = reasons.find((r) => r.position === "bottom-left");
+  const bottomRight = reasons.find((r) => r.position === "bottom-right");
 
   const renderReason = (reason, align = "left") => {
     if (!reason) return null;
     const IconComponent = reason.icon;
-    
+
     return (
       <motion.div
         variants={itemVariants}
@@ -114,24 +113,27 @@ const WhyChooseUsSection = () => {
           <div
             className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300"
             style={{
-              backgroundColor: theme === "dark" 
-                ? `${reason.color}33` 
-                : `${reason.color}10`,
-              color: reason.color
+              backgroundColor:
+                theme === "dark" ? `${reason.color}33` : `${reason.color}10`,
+              color: reason.color,
             }}
           >
             <IconComponent className="w-6 h-6" strokeWidth={1.5} />
           </div>
         </div>
         <div className={align === "right" ? "flex-1" : "flex-1"}>
-          <h3 className={`text-base font-bold mb-0.5 ${
-            theme === "dark" ? "text-white" : "text-[#280905]"
-          }`}>
+          <h3
+            className={`text-base font-bold mb-0.5 ${
+              theme === "dark" ? "text-white" : "text-[#280905]"
+            }`}
+          >
             {reason.title}
           </h3>
-          <p className={`text-sm leading-relaxed ${
-            theme === "dark" ? "text-gray-400" : "text-gray-500"
-          }`}>
+          <p
+            className={`text-sm leading-relaxed ${
+              theme === "dark" ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
             {reason.description}
           </p>
         </div>
@@ -158,15 +160,25 @@ const WhyChooseUsSection = () => {
           }}
           className="text-center mb-12"
         >
-          <span className={`text-sm font-bold tracking-[0.2em] uppercase ${
-            theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-          }`}>
+          <span
+            className={`text-sm font-bold tracking-[0.2em] uppercase ${
+              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+            }`}
+          >
             Why Choose Us
           </span>
-          <h2 className={`text-3xl sm:text-4xl font-light mt-2 ${
-            theme === "dark" ? "text-white" : "text-[#280905]"
-          }`}>
-            The <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Onasis Links</span> Advantage
+          <h2
+            className={`text-3xl sm:text-4xl font-light mt-2 ${
+              theme === "dark" ? "text-white" : "text-[#280905]"
+            }`}
+          >
+            The{" "}
+            <span
+              className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
+            >
+              Onasis Links
+            </span>{" "}
+            Advantage
           </h2>
         </motion.div>
 
@@ -197,13 +209,15 @@ const WhyChooseUsSection = () => {
                 className="w-full h-auto object-cover"
               />
               {/* Decorative border glow */}
-              <div className={`absolute inset-0 rounded-2xl pointer-events-none ${
-                theme === "dark"
-                  ? "ring-1 ring-[#E6501B]/20"
-                  : "ring-1 ring-[#C3110C]/10"
-              }`}></div>
+              <div
+                className={`absolute inset-0 rounded-2xl pointer-events-none ${
+                  theme === "dark"
+                    ? "ring-1 ring-[#E6501B]/20"
+                    : "ring-1 ring-[#C3110C]/10"
+                }`}
+              ></div>
             </div>
-            
+
             {/* Decorative elements around image */}
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#E6501B]/10 rounded-full blur-2xl"></div>
             <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-[#C3110C]/10 rounded-full blur-2xl"></div>
@@ -216,7 +230,6 @@ const WhyChooseUsSection = () => {
             {bottomRight && renderReason(bottomRight, "right")}
           </div>
         </div>
-
       </div>
     </section>
   );

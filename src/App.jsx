@@ -63,7 +63,7 @@ const AppContent = () => {
         <Route path="/products/category/:slug/product/:id" element={<ProductDetail />} />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
-        
+
         {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>

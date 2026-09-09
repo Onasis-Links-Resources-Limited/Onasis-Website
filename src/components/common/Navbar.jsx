@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
@@ -10,11 +10,14 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { useQuote } from "../../context/QuoteContext";
+import { CATEGORIES, getProductSubHeadings } from "../../data/productsData";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [isProductsMenuOpen, setIsProductsMenuOpen] = useState(false);
+  const productsMenuCloseTimer = useRef(null);
   const { theme } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
@@ -73,6 +76,26 @@ const Navbar = () => {
     window.location.href = "/";
   };
 
+  const cancelProductsMenuClose = () => {
+    if (productsMenuCloseTimer.current) {
+      window.clearTimeout(productsMenuCloseTimer.current);
+      productsMenuCloseTimer.current = null;
+    }
+  };
+
+  const scheduleProductsMenuClose = () => {
+    cancelProductsMenuClose();
+    productsMenuCloseTimer.current = window.setTimeout(() => {
+      setIsProductsMenuOpen(false);
+      productsMenuCloseTimer.current = null;
+    }, 180);
+  };
+
+  const closeProductsMenu = () => {
+    cancelProductsMenuClose();
+    setIsProductsMenuOpen(false);
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -104,34 +127,125 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={`px-4 py-2 text-sm font-semibold transition-colors duration-200 relative group ${
-                  theme === "dark"
-                    ? `${
-                        isActive(link.href)
+            {navLinks.map((link) => {
+              const isProductsLink = link.name === "Products";
+
+              if (!isProductsLink) {
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-200 group ${
+                      theme === "dark"
+                        ? isActive(link.href)
                           ? "text-[#E6501B]"
                           : "text-gray-200 hover:text-[#E6501B]"
-                      }`
-                    : `${
-                        isActive(link.href)
+                        : isActive(link.href)
                           ? "text-[#C3110C]"
                           : "text-gray-950 hover:text-[#C3110C]"
-                      }`
-                }`}
-              >
-                {link.name}
-                <span
-                  className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 ${
-                    isActive(link.href)
-                      ? `w-full ${theme === "dark" ? "bg-[#E6501B]" : "bg-[#C3110C]"}`
-                      : "w-0 group-hover:w-full bg-[#E6501B]"
-                  }`}
-                ></span>
-              </Link>
-            ))}
+                    }`}
+                  >
+                    {link.name}
+                    <span
+                      className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 ${
+                        isActive(link.href)
+                          ? `w-full ${theme === "dark" ? "bg-[#E6501B]" : "bg-[#C3110C]"}`
+                          : "w-0 bg-[#E6501B] group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+                );
+              }
+
+              return (
+                <div
+                  key={link.name}
+                  className="relative"
+                  onFocus={() => {
+                    cancelProductsMenuClose();
+                    setIsProductsMenuOpen(true);
+                  }}
+                  onMouseEnter={() => setIsProductsMenuOpen(true)}
+                  onMouseLeave={scheduleProductsMenuClose}
+                >
+                  <Link
+                    to={link.href}
+                    onFocus={() => setIsProductsMenuOpen(true)}
+                    className={`relative block px-4 py-2 text-sm font-semibold transition-colors duration-200 group ${
+                      theme === "dark"
+                        ? isActive(link.href)
+                          ? "text-[#E6501B]"
+                          : "text-gray-200 hover:text-[#E6501B]"
+                        : isActive(link.href)
+                          ? "text-[#C3110C]"
+                          : "text-gray-950 hover:text-[#C3110C]"
+                    }`}
+                  >
+                    {link.name}
+                    <span
+                      className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 ${
+                        isProductsMenuOpen || isActive(link.href)
+                          ? `w-full ${theme === "dark" ? "bg-[#E6501B]" : "bg-[#C3110C]"}`
+                          : "w-0 bg-[#E6501B] group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+
+                  {isProductsMenuOpen && (
+                    <div
+                      className={`fixed left-0 right-0 top-20 z-50 border-y shadow-2xl ${
+                        theme === "dark"
+                          ? "border-[#34404d] bg-[#1a1a1a]"
+                          : "border-gray-200 bg-white"
+                      }`}
+                      onMouseEnter={cancelProductsMenuClose}
+                      onMouseLeave={scheduleProductsMenuClose}
+                      onFocus={cancelProductsMenuClose}
+                    >
+                      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-7 lg:grid-cols-3">
+                        {CATEGORIES.map((category) => {
+                          const subcategories = getProductSubHeadings(
+                            category.slug,
+                          );
+
+                          return (
+                            <div key={category.slug} className="min-w-0">
+                              <Link
+                                to={`/products/category/${category.slug}`}
+                                onClick={closeProductsMenu}
+                                className={`mb-3 block text-sm font-bold transition-colors ${
+                                  theme === "dark"
+                                    ? "text-white hover:text-[#E6501B]"
+                                    : "text-[#280905] hover:text-[#C3110C]"
+                                }`}
+                              >
+                                {category.name}
+                              </Link>
+                              <div className="space-y-1.5">
+                                {subcategories.map((subcategory) => (
+                                  <Link
+                                    key={`${category.slug}-${subcategory}`}
+                                    to={`/products/category/${category.slug}?subCategory=${encodeURIComponent(subcategory)}`}
+                                    onClick={closeProductsMenu}
+                                    className={`block text-xs transition-colors ${
+                                      theme === "dark"
+                                        ? "text-gray-400 hover:text-[#E6501B]"
+                                        : "text-gray-600 hover:text-[#C3110C]"
+                                    }`}
+                                  >
+                                    {subcategory}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Right Section */}

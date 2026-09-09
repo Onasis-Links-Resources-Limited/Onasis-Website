@@ -68,21 +68,20 @@ const HeroSection = () => {
       image:
         "https://images.unsplash.com/photo-1533664488202-6af66d26c44a?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Power",
-      description: "Reliable energy solutions for telecom and industrial applications",
+      description:
+        "Reliable energy solutions for telecom and industrial applications",
       tag: "Cutting-Edge Innovation",
     },
     {
       id: 3,
-      image:
-        "/images/fiber-optic.png",
+      image: "/images/fiber-optic.png",
       title: "Fiber Optic Materials",
       description: "High-speed connectivity solutions for modern networks",
       tag: "Digital Transformation",
     },
     {
       id: 4,
-      image:
-        "/images/network-materials.png",
+      image: "/images/network-materials.png",
       title: "Network Materials",
       description: "Building robust networks for a connected future",
       tag: "Universal Access",
@@ -94,7 +93,7 @@ const HeroSection = () => {
       title: "Miscellaneous",
       description: "Diverse solutions for telecom and industrial needs",
       tag: "Industrial Excellence",
-    }
+    },
   ];
 
   useEffect(() => {
@@ -261,38 +260,38 @@ const HeroSection = () => {
             <div className="">
               {/* Main Heading with AnimatePresence for slide transitions */}
               {/* <div className="relative h-auto min-h-[4rem] sm:min-h-[5rem] lg:min-h-[6rem]"> */}
-                <AnimatePresence mode="wait">
-                  <motion.h1
-                    key={currentSlide}
-                    variants={slideTextVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className={`text-3xl uppercase sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${
-                      theme === "dark" ? "text-white" : "text-black"
-                    }`}
-                  >
-                    {slides[currentSlide].title}
-                  </motion.h1>
-                </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.h1
+                  key={currentSlide}
+                  variants={slideTextVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className={`text-3xl uppercase sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${
+                    theme === "dark" ? "text-white" : "text-black"
+                  }`}
+                >
+                  {slides[currentSlide].title}
+                </motion.h1>
+              </AnimatePresence>
               {/* </div> */}
 
               {/* Description - Changes with slide */}
               {/* <div className="relative h-auto min-h-[4rem]"> */}
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={currentSlide}
-                    variants={slideTextVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className={`text-lg sm:text-xl max-w-lg leading-relaxed ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-950"
-                    }`}
-                  >
-                    {slides[currentSlide].description}
-                  </motion.p>
-                </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={currentSlide}
+                  variants={slideTextVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className={`text-lg sm:text-xl max-w-lg leading-relaxed ${
+                    theme === "dark" ? "text-gray-300" : "text-gray-950"
+                  }`}
+                >
+                  {slides[currentSlide].description}
+                </motion.p>
+              </AnimatePresence>
               {/* </div> */}
             </div>
 
@@ -351,7 +350,7 @@ const HeroSection = () => {
                     theme === "dark" ? "text-white" : "text-[#280905]"
                   }`}
                 >
-                  10+
+                  20+
                 </p>
                 <p
                   className={`text-xs ${

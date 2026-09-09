@@ -55,7 +55,10 @@ const CategoriesSection = () => {
   }
 
   return (
-    <section id="product-categories" className="py-16 bg-gray-50 dark:bg-black">
+    <section
+      id="product-categories"
+      className="bg-[#f7f7f5] py-16 dark:bg-[#090909]"
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <span className="text-[#E6501B] text-sm font-bold uppercase tracking-widest mb-4 block">

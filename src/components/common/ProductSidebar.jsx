@@ -14,9 +14,8 @@ const ProductSidebar = ({
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isMobile && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
           onClick={onClose}
         />
@@ -94,7 +93,7 @@ const ProductSidebar = ({
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              Clear All Filters
+              Product categories
             </button>
           )}
         </div>
