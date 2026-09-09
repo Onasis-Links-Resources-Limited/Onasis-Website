@@ -1,11 +1,7 @@
 import { useRef } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { motion, useInView } from "framer-motion";
-import { 
-  Clock, 
-  Eye,
-  MapPinned
-} from "lucide-react";
+import { Clock, Eye, MapPinned } from "lucide-react";
 
 const CompanyOverview = () => {
   const { theme } = useTheme();
@@ -24,7 +20,7 @@ const CompanyOverview = () => {
       icon: Clock,
       color: "#E6501B",
       stat: "20+",
-      statLabel: "Years of Excellence"
+      statLabel: "Years of Excellence",
     },
     {
       id: 2,
@@ -32,9 +28,9 @@ const CompanyOverview = () => {
       description:
         "To relieve customers challenges through our supply chain global network and timely deliveries.",
       icon: Eye,
-      color: "#C3110C",
+      color: "#E6501B",
       stat: "Global",
-      statLabel: "Reach & Impact"
+      statLabel: "Reach & Impact",
     },
     {
       id: 3,
@@ -42,9 +38,9 @@ const CompanyOverview = () => {
       description:
         "To be the centre point in sales and logistics in the areas of our specialization.",
       icon: MapPinned,
-      color: "#740A03",
+      color: "#E6501B",
       stat: "100%",
-      statLabel: "Customer Focus"
+      statLabel: "Customer Focus",
     },
   ];
 
@@ -85,7 +81,7 @@ const CompanyOverview = () => {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className={`py-20 overflow-hidden ${
         theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
@@ -93,7 +89,7 @@ const CompanyOverview = () => {
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           variants={headerVariants}
           initial="hidden"
@@ -111,17 +107,25 @@ const CompanyOverview = () => {
               theme === "dark" ? "text-white" : "text-[#280905]"
             }`}
           >
-            What <span className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Drives</span> Us
+            What{" "}
+            <span
+              className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
+            >
+              Drives
+            </span>{" "}
+            Us
           </h2>
-          <p className={`mt-4 text-base max-w-2xl mx-auto ${
-            theme === "dark" ? "text-gray-400" : "text-gray-600"
-          }`}>
+          <p
+            className={`mt-4 text-base max-w-2xl mx-auto ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             Our commitment to excellence, innovation, and customer satisfaction
           </p>
         </motion.div>
 
         {/* Cards Grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
@@ -141,56 +145,69 @@ const CompanyOverview = () => {
                     : "border-r hover:border-[#C3110C]/20 hover:shadow-xl"
                 } ${!isLast ? "md:border-r-2" : ""}`}
                 style={{
-                  borderRightColor: !isLast ? (theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)") : "transparent"
+                  borderRightColor: !isLast
+                    ? theme === "dark"
+                      ? "rgba(255,255,255,0.05)"
+                      : "rgba(0,0,0,0.05)"
+                    : "transparent",
                 }}
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Icon */}
                 <div className="relative mb-4">
-                  <div 
+                  <div
                     className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                     style={{
-                      backgroundColor: theme === "dark" 
-                        ? `${item.color}33` 
-                        : `${item.color}10`,
-                      color: item.color
+                      backgroundColor:
+                        theme === "dark"
+                          ? `${item.color}33`
+                          : `${item.color}10`,
+                      color: item.color,
                     }}
                   >
                     <IconComponent className="w-7 h-7" strokeWidth={1.5} />
                   </div>
-                  
-                  
                 </div>
 
                 {/* Title */}
-                <h3 className={`text-xl font-bold mb-3 transition-colors duration-300 ${
-                  theme === "dark" 
-                    ? "text-white group-hover:text-[#E6501B]" 
-                    : "text-[#280905] group-hover:text-[#C3110C]"
-                }`}>
+                <h3
+                  className={`text-xl font-bold mb-3 transition-colors duration-300 ${
+                    theme === "dark"
+                      ? "text-white group-hover:text-[#E6501B]"
+                      : "text-[#280905] group-hover:text-[#C3110C]"
+                  }`}
+                >
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className={`text-sm leading-relaxed ${
-                  theme === "dark" ? "text-gray-400" : "text-gray-600"
-                }`}>
+                <p
+                  className={`text-sm leading-relaxed ${
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
                   {item.description}
                 </p>
 
                 {/* Stat Badge */}
-                <div className={`flex-1 mt-4 pt-4 border-t flex items-center gap-3 ${
-                  theme === "dark" ? "border-gray-700" : "border-gray-100"
-                }`}>
-                  <span className={`text-xl font-bold ${
-                    theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-                  }`}>
+                <div
+                  className={`flex-1 mt-4 pt-4 border-t flex items-center gap-3 ${
+                    theme === "dark" ? "border-gray-700" : "border-gray-100"
+                  }`}
+                >
+                  <span
+                    className={`text-xl font-bold ${
+                      theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                    }`}
+                  >
                     {item.stat}
                   </span>
-                  <span className={`text-xs ${
-                    theme === "dark" ? "text-gray-500" : "text-gray-400"
-                  }`}>
+                  <span
+                    className={`text-xs ${
+                      theme === "dark" ? "text-gray-500" : "text-gray-400"
+                    }`}
+                  >
                     {item.statLabel}
                   </span>
                 </div>

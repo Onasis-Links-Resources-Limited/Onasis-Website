@@ -56,6 +56,17 @@ const QuoteListHeader = ({ productCount, totalUnits, isDark, onClear }) => {
     <div className="mb-8 flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2 text-sm">
         <Link
+          to="/"
+          className={
+            isDark
+              ? "text-gray-400 transition-colors hover:text-[#E6501B]"
+              : "text-gray-600 transition-colors hover:text-[#C3110C]"
+          }
+        >
+          Home
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+        <Link
           to="/products"
           className={
             isDark
@@ -68,7 +79,7 @@ const QuoteListHeader = ({ productCount, totalUnits, isDark, onClear }) => {
         <ChevronRight className="h-3.5 w-3.5 opacity-60" />
         <span
           className={
-            isDark ? "font-medium text-white" : "font-medium text-[#280905]"
+            isDark ? "font-semibold text-white" : "font-semibold text-[#280905]"
           }
         >
           Quote List
@@ -106,7 +117,7 @@ const QuoteListHeader = ({ productCount, totalUnits, isDark, onClear }) => {
       <div
         className={
           isDark
-            ? "rounded-2xl border border-gray-700 bg-gray-800/80 p-4"
+            ? "rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-4"
             : "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
         }
       >
@@ -162,7 +173,7 @@ const QuantitySelector = ({
     <div
       className={
         isDark
-          ? "inline-flex items-center overflow-hidden rounded-xl border border-gray-600 bg-gray-900/60"
+          ? "inline-flex items-center overflow-hidden rounded-xl border border-[#34404d] bg-[#151515]"
           : "inline-flex items-center overflow-hidden rounded-xl border border-gray-300 bg-white"
       }
     >
@@ -175,7 +186,7 @@ const QuantitySelector = ({
           quantity <= minOrder
             ? "flex h-11 w-11 items-center justify-center border-r border-gray-500/40 bg-transparent text-gray-500 opacity-50"
             : isDark
-              ? "flex h-11 w-11 items-center justify-center border-r border-gray-600 bg-transparent text-gray-200 transition hover:bg-gray-700"
+              ? "flex h-11 w-11 items-center justify-center border-r border-[#34404d] bg-transparent text-gray-200 transition hover:bg-[#222222]"
               : "flex h-11 w-11 items-center justify-center border-r border-gray-300 bg-transparent text-gray-700 transition hover:bg-gray-100"
         }
       >
@@ -214,7 +225,7 @@ const QuantitySelector = ({
         aria-label={`Increase quantity of ${item.name}`}
         className={
           isDark
-            ? "flex h-11 w-11 items-center justify-center border-l border-gray-600 bg-transparent text-gray-200 transition hover:bg-gray-700"
+            ? "flex h-11 w-11 items-center justify-center border-l border-[#34404d] bg-transparent text-gray-200 transition hover:bg-[#222222]"
             : "flex h-11 w-11 items-center justify-center border-l border-gray-300 bg-transparent text-gray-700 transition hover:bg-gray-100"
         }
       >
@@ -236,7 +247,7 @@ const QuoteItemCard = ({ item, isDark, onRemove, onUpdateQuantity }) => {
     <article
       className={
         isDark
-          ? "rounded-2xl border border-gray-700 bg-gray-800/90 p-4 shadow-sm shadow-black/10 transition-colors sm:p-5"
+          ? "rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-4 shadow-sm shadow-black/20 transition-colors sm:p-5"
           : "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition-colors sm:p-5"
       }
     >
@@ -260,7 +271,7 @@ const QuoteItemCard = ({ item, isDark, onRemove, onUpdateQuantity }) => {
                   <span
                     className={
                       isDark
-                        ? "inline-flex rounded-full border border-gray-600 bg-gray-700/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-gray-300"
+                        ? "inline-flex rounded-full border border-[#34404d] bg-[#151515] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-gray-300"
                         : "inline-flex rounded-full border border-gray-200 bg-gray-50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em] text-gray-600"
                     }
                   >
@@ -319,7 +330,7 @@ const QuoteItemCard = ({ item, isDark, onRemove, onUpdateQuantity }) => {
             </button>
           </div>
 
-          <div className="flex flex-col gap-4 border-t border-gray-200/80 pt-4 sm:flex-row sm:items-center sm:justify-between dark:border-gray-700">
+          <div className="flex flex-col gap-4 border-t border-gray-200/80 pt-4 sm:flex-row sm:items-center sm:justify-between dark:border-[#34404d]">
             <div className="flex items-center gap-3">
               <QuantitySelector
                 item={item}
@@ -360,7 +371,7 @@ const QuoteSummary = ({
       <div
         className={
           isDark
-            ? "rounded-2xl border border-gray-700 bg-gray-800/90 p-5 shadow-lg shadow-black/10"
+            ? "rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-5 shadow-lg shadow-black/20"
             : "rounded-2xl border border-gray-200 bg-white p-5 shadow-lg shadow-gray-200/60"
         }
       >
@@ -446,7 +457,7 @@ const QuoteSummary = ({
         <div
           className={
             isDark
-              ? "my-6 border-t border-gray-700"
+              ? "my-6 border-t border-[#34404d]"
               : "my-6 border-t border-gray-200"
           }
         />
@@ -529,7 +540,7 @@ const QuoteTrustIndicators = ({ isDark }) => {
     <div
       className={
         isDark
-          ? "mt-6 rounded-2xl border border-gray-700 bg-gray-800/80 p-4"
+          ? "mt-6 rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-4"
           : "mt-6 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
       }
     >
@@ -612,7 +623,7 @@ const ClearQuoteDialog = ({ isDark, onClose, onConfirm }) => {
       <div
         className={
           isDark
-            ? "w-full max-w-md rounded-2xl border border-gray-700 bg-gray-900 p-6 shadow-2xl"
+            ? "w-full max-w-md rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-6 shadow-2xl"
             : "w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-2xl"
         }
       >
@@ -644,7 +655,7 @@ const ClearQuoteDialog = ({ isDark, onClose, onConfirm }) => {
             onClick={onClose}
             className={
               isDark
-                ? "rounded-xl border border-gray-600 px-4 py-2.5 text-sm font-semibold text-gray-200 transition hover:bg-gray-800"
+                ? "rounded-xl border border-[#34404d] px-4 py-2.5 text-sm font-semibold text-gray-200 transition hover:bg-[#222222]"
                 : "rounded-xl border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-100"
             }
           >
@@ -716,7 +727,7 @@ const SimilarProducts = ({ quoteItems, isDark }) => {
             key={item.id}
             className={
               isDark
-                ? "overflow-hidden rounded-2xl border border-gray-700 bg-gray-800 transition hover:-translate-y-0.5 hover:border-gray-600 hover:shadow-lg hover:shadow-black/10"
+                ? "overflow-hidden rounded-2xl border border-[#34404d] bg-[#1a1a1a] transition hover:-translate-y-0.5 hover:border-[#6b7785] hover:shadow-lg hover:shadow-black/20"
                 : "overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
             }
           >
@@ -725,7 +736,7 @@ const SimilarProducts = ({ quoteItems, isDark }) => {
               onClick={() => navigate(`/products/product/${item.id}`)}
               className="block w-full text-left"
             >
-              <div className={isDark ? "bg-gray-900" : "bg-gray-100"}>
+              <div className={isDark ? "bg-[#111111]" : "bg-gray-100"}>
                 <img
                   src={
                     item.image ||
@@ -863,7 +874,7 @@ const QuoteList = () => {
     >
       <div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8 hidden xl:block">
-          <div className="flex items-center gap-3 rounded-2xl border border-gray-200/70 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80">
+          <div className="flex items-center gap-3 rounded-2xl border border-gray-200/70 bg-white/80 px-4 py-3 shadow-sm backdrop-blur-sm dark:border-[#34404d] dark:bg-[#1a1a1a]">
             <CheckCircle2
               className={
                 isDark ? "h-5 w-5 text-[#E6501B]" : "h-5 w-5 text-[#C3110C]"
@@ -900,7 +911,7 @@ const QuoteList = () => {
               ))}
             </div>
 
-            <div className="mt-8 flex items-center justify-between gap-4 border-t border-gray-200 pt-6 dark:border-gray-700">
+            <div className="mt-8 flex items-center justify-between gap-4 border-t border-gray-200 pt-6 dark:border-[#34404d]">
               <button
                 type="button"
                 onClick={() => navigate("/products")}

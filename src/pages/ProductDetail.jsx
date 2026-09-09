@@ -179,7 +179,7 @@ const ProductDetail = () => {
 
         <div className="mb-8 hidden xl:block">
           <div
-            className={`flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-sm ${isDark ? "border-gray-700 bg-gray-800/80" : "border-gray-200 bg-white"}`}
+            className={`flex items-center gap-3 rounded-2xl border px-4 py-3 shadow-sm ${isDark ? "border-[#34404d] bg-[#1a1a1a]" : "border-gray-200 bg-white"}`}
           >
             <ShoppingBag
               className={
@@ -198,14 +198,101 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="grid gap-8 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-          <div className="space-y-6">
-            <ProductGallery product={product} isDark={isDark} />
+        <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+          <aside className="hidden lg:block">
+            <div
+              className={`sticky top-24 rounded-2xl border p-4 shadow-sm ${isDark ? "border-[#34404d] bg-[#1a1a1a]" : "border-gray-200 bg-white"}`}
+            >
+              <p
+                className={
+                  isDark
+                    ? "mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gray-400"
+                    : "mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-gray-500"
+                }
+              >
+                Product categories
+              </p>
+              <nav className="space-y-1" aria-label="Product categories">
+                {categories.map((category) => {
+                  const isCurrent = slugify(product.category) === category.slug;
+                  return (
+                    <Link
+                      key={category.slug}
+                      to={`/products/category/${category.slug}`}
+                      className={
+                        isCurrent
+                          ? "flex items-center justify-between rounded-xl bg-[#E6501B] px-3 py-2.5 text-sm font-semibold text-white shadow-sm"
+                          : isDark
+                            ? "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-gray-300 transition hover:bg-[#222222] hover:text-white"
+                            : "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm text-gray-700 transition hover:bg-orange-50 hover:text-[#C2410C]"
+                      }
+                    >
+                      {category.name}
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          </aside>
 
-            {product.specifications &&
-              Object.keys(product.specifications).length > 0 && (
+          <div className="grid min-w-0 gap-8 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <div className="space-y-6">
+              <ProductGallery product={product} isDark={isDark} />
+
+              {product.specifications &&
+                Object.keys(product.specifications).length > 0 && (
+                  <div
+                    className={`rounded-2xl p-5 ${isDark ? "border border-[#34404d] bg-[#1a1a1a]" : "border border-gray-200 bg-white shadow-sm"}`}
+                  >
+                    <h3
+                      className={
+                        isDark
+                          ? "mb-4 text-lg font-semibold text-white"
+                          : "mb-4 text-lg font-semibold text-[#280905]"
+                      }
+                    >
+                      Specifications
+                    </h3>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {Object.entries(product.specifications).map(
+                        ([key, value]) => (
+                          <div
+                            key={key}
+                            className={
+                              isDark
+                                ? "rounded-xl border border-[#34404d] bg-[#151515] p-3"
+                                : "rounded-xl border border-gray-200 bg-gray-50 p-3"
+                            }
+                          >
+                            <p
+                              className={
+                                isDark
+                                  ? "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-400"
+                                  : "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500"
+                              }
+                            >
+                              {key.replace(/([A-Z])/g, " $1").trim()}
+                            </p>
+                            <p
+                              className={
+                                isDark
+                                  ? "text-sm font-semibold text-white"
+                                  : "text-sm font-semibold text-[#280905]"
+                              }
+                            >
+                              {value}
+                            </p>
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  </div>
+                )}
+
+              {product.downloads?.length > 0 && (
                 <div
-                  className={`rounded-2xl p-5 ${isDark ? "border border-gray-700 bg-gray-800/90" : "border border-gray-200 bg-white shadow-sm"}`}
+                  className={`rounded-2xl p-5 ${isDark ? "border border-[#34404d] bg-[#1a1a1a]" : "border border-gray-200 bg-white shadow-sm"}`}
                 >
                   <h3
                     className={
@@ -214,380 +301,334 @@ const ProductDetail = () => {
                         : "mb-4 text-lg font-semibold text-[#280905]"
                     }
                   >
-                    Specifications
+                    Downloads
                   </h3>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {Object.entries(product.specifications).map(
-                      ([key, value]) => (
-                        <div
-                          key={key}
-                          className={
-                            isDark
-                              ? "rounded-xl border border-gray-700 bg-gray-900/60 p-3"
-                              : "rounded-xl border border-gray-200 bg-gray-50 p-3"
-                          }
-                        >
-                          <p
-                            className={
-                              isDark
-                                ? "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-400"
-                                : "mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-gray-500"
-                            }
-                          >
-                            {key.replace(/([A-Z])/g, " $1").trim()}
-                          </p>
-                          <p
-                            className={
-                              isDark
-                                ? "text-sm font-semibold text-white"
-                                : "text-sm font-semibold text-[#280905]"
-                            }
-                          >
-                            {value}
-                          </p>
-                        </div>
-                      ),
-                    )}
+                  <div className="space-y-2">
+                    {product.downloads.map((file, index) => (
+                      <a
+                        key={file.url || index}
+                        href={file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={
+                          isDark
+                            ? "flex items-center gap-3 rounded-xl border border-[#34404d] bg-[#151515] p-3 text-gray-300 transition hover:bg-[#222222]"
+                            : "flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 text-gray-700 transition hover:bg-gray-100"
+                        }
+                      >
+                        <Download className="h-4 w-4 text-[#E6501B]" />
+                        <span className="text-sm font-medium">{file.name}</span>
+                      </a>
+                    ))}
                   </div>
                 </div>
               )}
+            </div>
 
-            {product.downloads?.length > 0 && (
+            <div className="space-y-6">
               <div
-                className={`rounded-2xl p-5 ${isDark ? "border border-gray-700 bg-gray-800/90" : "border border-gray-200 bg-white shadow-sm"}`}
+                className={`rounded-2xl border p-5 ${isDark ? "border-[#34404d] bg-[#1a1a1a]" : "border-gray-200 bg-white shadow-sm"}`}
               >
-                <h3
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <span
+                    className={
+                      product.isAvailable
+                        ? "inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                        : "inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                    }
+                  >
+                    {product.isAvailable ? "In stock" : "Out of stock"}
+                  </span>
+                  <span
+                    className={
+                      isDark
+                        ? "inline-flex rounded-full border border-[#E6501B]/30 bg-[#E6501B]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FDBA74]"
+                        : "inline-flex rounded-full border border-[#C3110C]/20 bg-[#C3110C]/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#740A03]"
+                    }
+                  >
+                    Price on request
+                  </span>
+                </div>
+
+                <h1
                   className={
                     isDark
-                      ? "mb-4 text-lg font-semibold text-white"
-                      : "mb-4 text-lg font-semibold text-[#280905]"
+                      ? "text-3xl font-bold text-white sm:text-4xl"
+                      : "text-3xl font-bold text-[#280905] sm:text-4xl"
                   }
                 >
-                  Downloads
-                </h3>
-                <div className="space-y-2">
-                  {product.downloads.map((file, index) => (
-                    <a
-                      key={file.url || index}
-                      href={file.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                  {product.name}
+                </h1>
+
+                <p
+                  className={
+                    isDark
+                      ? "mt-2 text-base text-gray-300"
+                      : "mt-2 text-base text-gray-600"
+                  }
+                >
+                  {productBrand}
+                  {product.category ? ` • ${product.category}` : ""}
+                </p>
+
+                {productSku && (
+                  <p
+                    className={
+                      isDark
+                        ? "mt-3 text-sm text-gray-400"
+                        : "mt-3 text-sm text-gray-600"
+                    }
+                  >
+                    SKU: {productSku}
+                  </p>
+                )}
+
+                {product.description && (
+                  <p
+                    className={
+                      isDark
+                        ? "mt-5 text-base leading-relaxed text-gray-300"
+                        : "mt-5 text-base leading-relaxed text-gray-600"
+                    }
+                  >
+                    {product.description}
+                  </p>
+                )}
+
+                <div
+                  className={
+                    isDark
+                      ? "mt-6 rounded-2xl border border-[#E6501B]/30 bg-[#E6501B]/10 p-4"
+                      : "mt-6 rounded-2xl border border-[#C3110C]/20 bg-[#C3110C]/5 p-4"
+                  }
+                >
+                  <div
+                    className={
+                      isDark
+                        ? "flex items-center gap-2 text-base font-bold text-[#FDBA74]"
+                        : "flex items-center gap-2 text-base font-bold text-[#740A03]"
+                    }
+                  >
+                    <AlertCircle className="h-5 w-5" />
+                    <span>Price available on request</span>
+                  </div>
+                  <div
+                    className={
+                      isDark
+                        ? "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-300"
+                        : "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-600"
+                    }
+                  >
+                    <span>
+                      Minimum order: {minOrder} {productUnit}
+                    </span>
+                    <span>•</span>
+                    <span>Bulk pricing available</span>
+                  </div>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                  <label
+                    className={
+                      isDark
+                        ? "block text-sm font-medium text-gray-300"
+                        : "block text-sm font-medium text-gray-700"
+                    }
+                  >
+                    Requested quantity
+                  </label>
+
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <div
                       className={
                         isDark
-                          ? "flex items-center gap-3 rounded-xl border border-gray-700 p-3 text-gray-300 transition hover:bg-gray-700"
-                          : "flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 text-gray-700 transition hover:bg-gray-100"
+                          ? "inline-flex items-center overflow-hidden rounded-xl border border-gray-600 bg-gray-900/70"
+                          : "inline-flex items-center overflow-hidden rounded-xl border border-gray-300 bg-white"
                       }
                     >
-                      <Download className="h-4 w-4 text-[#E6501B]" />
-                      <span className="text-sm font-medium">{file.name}</span>
-                    </a>
+                      <button
+                        type="button"
+                        onClick={decreaseQuantity}
+                        disabled={quantity <= minOrder}
+                        aria-label="Decrease quantity"
+                        className={
+                          quantity <= minOrder
+                            ? isDark
+                              ? "flex h-12 w-12 items-center justify-center text-gray-500 opacity-50"
+                              : "flex h-12 w-12 items-center justify-center text-gray-400 opacity-50"
+                            : isDark
+                              ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
+                              : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
+                        }
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+
+                      <input
+                        type="number"
+                        min={minOrder}
+                        step={step}
+                        inputMode="numeric"
+                        value={quantity}
+                        onChange={(event) => {
+                          const nextValue = Number.parseInt(
+                            event.target.value,
+                            10,
+                          );
+                          if (!Number.isNaN(nextValue)) {
+                            setQuantity(Math.max(minOrder, nextValue));
+                          }
+                        }}
+                        onBlur={(event) => {
+                          const nextValue = Number.parseInt(
+                            event.target.value,
+                            10,
+                          );
+                          if (Number.isNaN(nextValue) || nextValue < minOrder) {
+                            setQuantity(minOrder);
+                          }
+                        }}
+                        aria-label="Quantity"
+                        className={
+                          isDark
+                            ? "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-white outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                            : "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-[#280905] outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                        }
+                      />
+
+                      <button
+                        type="button"
+                        onClick={increaseQuantity}
+                        aria-label="Increase quantity"
+                        className={
+                          isDark
+                            ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
+                            : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
+                        }
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    <div
+                      className={
+                        isDark
+                          ? "text-sm font-medium text-gray-400"
+                          : "text-sm font-medium text-gray-600"
+                      }
+                    >
+                      Minimum order: {minOrder} {productUnit}
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={handleAddToQuote}
+                      disabled={!product.isAvailable}
+                      className="flex items-center justify-center gap-2 rounded-xl bg-[#C3110C] px-5 py-4 text-base font-bold text-white shadow-lg shadow-[#C3110C]/20 transition hover:bg-[#E6501B] disabled:cursor-not-allowed disabled:bg-gray-400 disabled:shadow-none"
+                    >
+                      {addedToQuote ? (
+                        <CheckCircle className="h-5 w-5" />
+                      ) : (
+                        <FileText className="h-5 w-5" />
+                      )}
+                      {addedToQuote ? "Added to quote" : "Add to Quote"}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleBulkQuote}
+                      className={
+                        isDark
+                          ? "flex items-center justify-center gap-2 rounded-xl border border-[#E6501B]/40 bg-[#E6501B]/10 px-5 py-4 text-base font-bold text-[#FDBA74] transition hover:bg-[#E6501B]/20"
+                          : "flex items-center justify-center gap-2 rounded-xl border border-[#C3110C]/30 bg-[#C3110C]/5 px-5 py-4 text-base font-bold text-[#740A03] transition hover:bg-[#C3110C]/10"
+                      }
+                    >
+                      <Users className="h-5 w-5" />
+                      Request Bulk Quote
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  className={`grid gap-3 border-t pt-6 sm:grid-cols-2 ${isDark ? "border-gray-700" : "border-gray-200"}`}
+                >
+                  {[
+                    { icon: Shield, label: "Genuine products" },
+                    { icon: Truck, label: "Fast delivery" },
+                    { icon: CheckCircle, label: "Quality checked" },
+                    { icon: Clock, label: "Support available" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div
+                      key={label}
+                      className={
+                        isDark
+                          ? "flex items-center gap-3 rounded-xl bg-gray-900/50 p-3 text-sm text-gray-300"
+                          : "flex items-center gap-3 rounded-xl bg-gray-50 p-3 text-sm text-gray-700"
+                      }
+                    >
+                      <span
+                        className={
+                          isDark
+                            ? "flex h-9 w-9 items-center justify-center rounded-lg bg-[#151515] text-[#E6501B]"
+                            : "flex h-9 w-9 items-center justify-center rounded-lg bg-[#C3110C]/5 text-[#740A03]"
+                        }
+                      >
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span>{label}</span>
+                    </div>
                   ))}
                 </div>
               </div>
-            )}
-          </div>
-
-          <div className="space-y-6">
-            <div
-              className={`rounded-2xl border p-5 ${isDark ? "border-gray-700 bg-gray-800/90" : "border-gray-200 bg-white shadow-sm"}`}
-            >
-              <div className="mb-4 flex flex-wrap items-center gap-2">
-                <span
-                  className={
-                    product.isAvailable
-                      ? "inline-flex rounded-full bg-green-100 px-2.5 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                      : "inline-flex rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700 dark:bg-red-900/30 dark:text-red-400"
-                  }
-                >
-                  {product.isAvailable ? "In stock" : "Out of stock"}
-                </span>
-                <span
-                  className={
-                    isDark
-                      ? "inline-flex rounded-full border border-[#E6501B]/30 bg-[#E6501B]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#FDBA74]"
-                      : "inline-flex rounded-full border border-[#C3110C]/20 bg-[#C3110C]/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#740A03]"
-                  }
-                >
-                  Price on request
-                </span>
-              </div>
-
-              <h1
-                className={
-                  isDark
-                    ? "text-3xl font-bold text-white sm:text-4xl"
-                    : "text-3xl font-bold text-[#280905] sm:text-4xl"
-                }
-              >
-                {product.name}
-              </h1>
-
-              <p
-                className={
-                  isDark
-                    ? "mt-2 text-base text-gray-300"
-                    : "mt-2 text-base text-gray-600"
-                }
-              >
-                {productBrand}
-                {product.category ? ` • ${product.category}` : ""}
-              </p>
-
-              {productSku && (
-                <p
-                  className={
-                    isDark
-                      ? "mt-3 text-sm text-gray-400"
-                      : "mt-3 text-sm text-gray-600"
-                  }
-                >
-                  SKU: {productSku}
-                </p>
-              )}
-
-              {product.description && (
-                <p
-                  className={
-                    isDark
-                      ? "mt-5 text-base leading-relaxed text-gray-300"
-                      : "mt-5 text-base leading-relaxed text-gray-600"
-                  }
-                >
-                  {product.description}
-                </p>
-              )}
 
               <div
                 className={
                   isDark
-                    ? "mt-6 rounded-2xl border border-[#E6501B]/30 bg-[#E6501B]/10 p-4"
-                    : "mt-6 rounded-2xl border border-[#C3110C]/20 bg-[#C3110C]/5 p-4"
+                    ? "rounded-2xl border border-[#34404d] bg-[#1a1a1a] p-4"
+                    : "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
                 }
               >
-                <div
-                  className={
-                    isDark
-                      ? "flex items-center gap-2 text-base font-bold text-[#FDBA74]"
-                      : "flex items-center gap-2 text-base font-bold text-[#740A03]"
-                  }
-                >
-                  <AlertCircle className="h-5 w-5" />
-                  <span>Price available on request</span>
-                </div>
-                <div
-                  className={
-                    isDark
-                      ? "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-300"
-                      : "mt-2 flex flex-wrap items-center gap-3 text-sm text-gray-600"
-                  }
-                >
-                  <span>
-                    Minimum order: {minOrder} {productUnit}
+                <div className="mb-3 flex items-center gap-2">
+                  <Lock
+                    className={
+                      isDark
+                        ? "h-4 w-4 text-[#E6501B]"
+                        : "h-4 w-4 text-[#C3110C]"
+                    }
+                  />
+                  <span
+                    className={
+                      isDark
+                        ? "text-sm font-semibold text-white"
+                        : "text-sm font-semibold text-[#280905]"
+                    }
+                  >
+                    Quote request process
                   </span>
-                  <span>•</span>
-                  <span>Bulk pricing available</span>
                 </div>
-              </div>
-
-              <div className="mt-6 space-y-4">
-                <label
+                <ul
                   className={
                     isDark
-                      ? "block text-sm font-medium text-gray-300"
-                      : "block text-sm font-medium text-gray-700"
+                      ? "space-y-2 text-sm text-gray-300"
+                      : "space-y-2 text-sm text-gray-600"
                   }
                 >
-                  Requested quantity
-                </label>
-
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <div
-                    className={
-                      isDark
-                        ? "inline-flex items-center overflow-hidden rounded-xl border border-gray-600 bg-gray-900/70"
-                        : "inline-flex items-center overflow-hidden rounded-xl border border-gray-300 bg-white"
-                    }
-                  >
-                    <button
-                      type="button"
-                      onClick={decreaseQuantity}
-                      disabled={quantity <= minOrder}
-                      aria-label="Decrease quantity"
-                      className={
-                        quantity <= minOrder
-                          ? isDark
-                            ? "flex h-12 w-12 items-center justify-center text-gray-500 opacity-50"
-                            : "flex h-12 w-12 items-center justify-center text-gray-400 opacity-50"
-                          : isDark
-                            ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
-                            : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
-                      }
-                    >
-                      <Minus className="h-4 w-4" />
-                    </button>
-
-                    <input
-                      type="number"
-                      min={minOrder}
-                      step={step}
-                      inputMode="numeric"
-                      value={quantity}
-                      onChange={(event) => {
-                        const nextValue = Number.parseInt(
-                          event.target.value,
-                          10,
-                        );
-                        if (!Number.isNaN(nextValue)) {
-                          setQuantity(Math.max(minOrder, nextValue));
-                        }
-                      }}
-                      onBlur={(event) => {
-                        const nextValue = Number.parseInt(
-                          event.target.value,
-                          10,
-                        );
-                        if (Number.isNaN(nextValue) || nextValue < minOrder) {
-                          setQuantity(minOrder);
-                        }
-                      }}
-                      aria-label="Quantity"
-                      className={
-                        isDark
-                          ? "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-white outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                          : "h-12 w-20 border-0 bg-transparent px-2 text-center text-lg font-bold text-[#280905] outline-none [appearance:textfield] [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                      }
-                    />
-
-                    <button
-                      type="button"
-                      onClick={increaseQuantity}
-                      aria-label="Increase quantity"
-                      className={
-                        isDark
-                          ? "flex h-12 w-12 items-center justify-center text-gray-200 transition hover:bg-gray-700"
-                          : "flex h-12 w-12 items-center justify-center text-gray-700 transition hover:bg-gray-100"
-                      }
-                    >
-                      <Plus className="h-4 w-4" />
-                    </button>
-                  </div>
-
-                  <div
-                    className={
-                      isDark
-                        ? "text-sm font-medium text-gray-400"
-                        : "text-sm font-medium text-gray-600"
-                    }
-                  >
-                    Minimum order: {minOrder} {productUnit}
-                  </div>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <button
-                    type="button"
-                    onClick={handleAddToQuote}
-                    disabled={!product.isAvailable}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-[#C3110C] px-5 py-4 text-base font-bold text-white shadow-lg shadow-[#C3110C]/20 transition hover:bg-[#E6501B] disabled:cursor-not-allowed disabled:bg-gray-400 disabled:shadow-none"
-                  >
-                    {addedToQuote ? (
-                      <CheckCircle className="h-5 w-5" />
-                    ) : (
-                      <FileText className="h-5 w-5" />
-                    )}
-                    {addedToQuote ? "Added to quote" : "Add to Quote"}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleBulkQuote}
-                    className={
-                      isDark
-                        ? "flex items-center justify-center gap-2 rounded-xl border border-[#E6501B]/40 bg-[#E6501B]/10 px-5 py-4 text-base font-bold text-[#FDBA74] transition hover:bg-[#E6501B]/20"
-                        : "flex items-center justify-center gap-2 rounded-xl border border-[#C3110C]/30 bg-[#C3110C]/5 px-5 py-4 text-base font-bold text-[#740A03] transition hover:bg-[#C3110C]/10"
-                    }
-                  >
-                    <Users className="h-5 w-5" />
-                    Request Bulk Quote
-                  </button>
-                </div>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                    Share requirements and quantity
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                    Receive a reviewed commercial quotation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
+                    Confirm delivery and commercial terms
+                  </li>
+                </ul>
               </div>
-
-              <div
-                className={`grid gap-3 border-t pt-6 sm:grid-cols-2 ${isDark ? "border-gray-700" : "border-gray-200"}`}
-              >
-                {[
-                  { icon: Shield, label: "Genuine products" },
-                  { icon: Truck, label: "Fast delivery" },
-                  { icon: CheckCircle, label: "Quality checked" },
-                  { icon: Clock, label: "Support available" },
-                ].map(({ icon: Icon, label }) => (
-                  <div
-                    key={label}
-                    className={
-                      isDark
-                        ? "flex items-center gap-3 rounded-xl bg-gray-900/50 p-3 text-sm text-gray-300"
-                        : "flex items-center gap-3 rounded-xl bg-gray-50 p-3 text-sm text-gray-700"
-                    }
-                  >
-                    <span
-                      className={
-                        isDark
-                          ? "flex h-9 w-9 items-center justify-center rounded-lg bg-[#E6501B]/10 text-[#E6501B]"
-                          : "flex h-9 w-9 items-center justify-center rounded-lg bg-[#C3110C]/5 text-[#740A03]"
-                      }
-                    >
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span>{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div
-              className={
-                isDark
-                  ? "rounded-2xl border border-gray-700 bg-gray-800/90 p-4"
-                  : "rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
-              }
-            >
-              <div className="mb-3 flex items-center gap-2">
-                <Lock
-                  className={
-                    isDark ? "h-4 w-4 text-[#E6501B]" : "h-4 w-4 text-[#C3110C]"
-                  }
-                />
-                <span
-                  className={
-                    isDark
-                      ? "text-sm font-semibold text-white"
-                      : "text-sm font-semibold text-[#280905]"
-                  }
-                >
-                  Quote request process
-                </span>
-              </div>
-              <ul
-                className={
-                  isDark
-                    ? "space-y-2 text-sm text-gray-300"
-                    : "space-y-2 text-sm text-gray-600"
-                }
-              >
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
-                  Share requirements and quantity
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
-                  Receive a reviewed commercial quotation
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="mt-0.5 h-4 w-4 text-[#E6501B]" />{" "}
-                  Confirm delivery and commercial terms
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -636,7 +677,7 @@ const ProductGallery = ({ product, isDark }) => {
   return (
     <div className="space-y-4">
       <div
-        className={`mx-auto max-w-[680px] overflow-hidden rounded-2xl border transition-all duration-300 ${isDark ? "border-gray-700 bg-gray-800 shadow-lg shadow-black/10" : "border-gray-200 bg-gray-100 shadow-md shadow-gray-200/60"}`}
+        className={`mx-auto max-w-[680px] overflow-hidden rounded-2xl border transition-all duration-300 ${isDark ? "border-[#34404d] bg-[#1a1a1a] shadow-lg shadow-black/20" : "border-gray-200 bg-gray-100 shadow-md shadow-gray-200/60"}`}
       >
         <img
           src={activeImage}
@@ -660,7 +701,7 @@ const ProductGallery = ({ product, isDark }) => {
                     ? "h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-2 ring-[#E6501B] ring-offset-2 ring-offset-[#090909] transition-all duration-200"
                     : "h-16 w-16 shrink-0 overflow-hidden rounded-lg ring-2 ring-[#C3110C] ring-offset-2 ring-offset-[#f7f7f5] transition-all duration-200"
                   : isDark
-                    ? "h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-gray-700 opacity-80 transition-all duration-200 hover:opacity-100"
+                    ? "h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-[#34404d] bg-[#151515] opacity-80 transition-all duration-200 hover:opacity-100"
                     : "h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-gray-200 opacity-80 transition-all duration-200 hover:opacity-100"
               }
             >
@@ -743,11 +784,11 @@ const SimilarProducts = ({ currentProduct, isDark }) => {
             onClick={() => navigate(`/products/product/${item.id}`)}
             className={
               isDark
-                ? "overflow-hidden rounded-2xl border border-gray-700 bg-gray-800 text-left transition hover:-translate-y-0.5 hover:border-gray-600"
+                ? "overflow-hidden rounded-2xl border border-[#34404d] bg-[#1a1a1a] text-left transition hover:-translate-y-0.5 hover:border-[#6b7785]"
                 : "overflow-hidden rounded-2xl border border-gray-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-gray-300"
             }
           >
-            <div className={isDark ? "bg-gray-900" : "bg-gray-100"}>
+            <div className={isDark ? "bg-[#111111]" : "bg-gray-100"}>
               <img
                 src={item.image}
                 alt={item.name}
