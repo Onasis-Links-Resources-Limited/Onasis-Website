@@ -1,9 +1,16 @@
-export const ProductCard = ({ image, name, category, description, price, badge }) => {
+export const ProductCard = ({
+  image,
+  name,
+  category,
+  description,
+  price,
+  badge,
+}) => {
   return (
-    <div className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+    <div className="group rounded-xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-2xl dark:border-gray-700 dark:bg-[#171717]">
       <div className="relative overflow-hidden">
-        <img 
-          src={image} 
+        <img
+          src={image}
           alt={name}
           className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
         />
@@ -18,7 +25,7 @@ export const ProductCard = ({ image, name, category, description, price, badge }
         <h3 className="text-xl font-bold mt-1">{name}</h3>
         <p className="text-gray-600 dark:text-gray-300 mt-2">{description}</p>
         <p className="text-lg font-semibold mt-4">${price}</p>
-        <button className="mt-4 w-full bg-[#C3110C] hover:bg-[#E6501B] text-white py-2 rounded-lg transition-colors">
+        <button className="mt-4 w-full rounded-lg bg-[#E6501B] py-2 text-white transition-colors hover:bg-[#C2410C]">
           Learn More
         </button>
       </div>

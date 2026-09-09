@@ -2,14 +2,209 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --onasis-orange: #ed7d00;
+  --onasis-orange-deep: #bd6200;
+  --onasis-gold: #f3a52f;
+  --surface-light: #f7f7f5;
+  --surface-dark: #090909;
+  --panel-light: #ffffff;
+  --panel-dark: #171717;
+  --text-light: #280905;
+  --text-dark: #f8fafc;
+  --muted-light: #64748b;
+  --muted-dark: #a1a1aa;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-light);
+  color: var(--text-light);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+button:not(:disabled) {
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+button:not(:disabled):hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0) scale(0.98);
+}
+
+html.dark body {
+  background: var(--surface-dark);
+  color: var(--text-dark);
+}
+
+/* Keep older page classes aligned with the logo palette during the visual migration. */
+.text-\[\#C3110C\],
+.hover\:text-\[\#C3110C\]:hover {
+  color: var(--onasis-orange) !important;
+}
+
+.text-\[\#740A03\] {
+  color: var(--onasis-orange-deep) !important;
+}
+
+.bg-\[\#C3110C\],
+.hover\:bg-\[\#C3110C\]:hover {
+  background-color: var(--onasis-orange) !important;
+}
+
+.bg-\[\#740A03\],
+.hover\:bg-\[\#740A03\]:hover {
+  background-color: var(--onasis-orange-deep) !important;
+}
+
+.border-\[\#C3110C\],
+.hover\:border-\[\#C3110C\]:hover {
+  border-color: var(--onasis-orange) !important;
+}
+
+.text-\[\#C3110C\]\/10,
+.text-\[\#C3110C\]\/20,
+.text-\[\#C3110C\]\/30,
+.text-\[\#740A03\]\/10,
+.text-\[\#740A03\]\/20,
+.text-\[\#740A03\]\/30 {
+  color: var(--onasis-orange) !important;
+}
+
+.bg-\[\#C3110C\]\/5,
+.bg-\[\#C3110C\]\/10,
+.bg-\[\#C3110C\]\/20,
+.bg-\[\#C3110C\]\/30,
+.bg-\[\#740A03\]\/5,
+.bg-\[\#740A03\]\/10,
+.bg-\[\#740A03\]\/20,
+.bg-\[\#740A03\]\/30 {
+  background-color: color-mix(
+    in srgb,
+    var(--onasis-orange) 15%,
+    transparent
+  ) !important;
+}
+
+.border-\[\#C3110C\]\/10,
+.border-\[\#C3110C\]\/20,
+.border-\[\#C3110C\]\/30,
+.border-\[\#C3110C\]\/40,
+.border-\[\#740A03\]\/10,
+.border-\[\#740A03\]\/20,
+.border-\[\#740A03\]\/30 {
+  border-color: color-mix(
+    in srgb,
+    var(--onasis-orange) 40%,
+    transparent
+  ) !important;
+}
+
+/* Normalize every legacy red utility to the logo orange. */
+[class*="text-red-"],
+[class*="hover:text-red-"]:hover {
+  color: var(--onasis-orange) !important;
+}
+
+[class*="bg-red-"] {
+  background-color: color-mix(
+    in srgb,
+    var(--onasis-orange) 14%,
+    transparent
+  ) !important;
+}
+
+[class*="border-red-"],
+[class*="hover:border-red-"]:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--onasis-orange) 55%,
+    transparent
+  ) !important;
+}
+
+[class*="ring-red-"] {
+  --tw-ring-color: color-mix(
+    in srgb,
+    var(--onasis-orange) 35%,
+    transparent
+  ) !important;
+}
+
+.text-\[\#E6501B\],
+.hover\:text-\[\#E6501B\]:hover,
+.text-\[\#C2410C\],
+.hover\:text-\[\#C2410C\]:hover {
+  color: var(--onasis-orange) !important;
+}
+
+.bg-\[\#E6501B\],
+.hover\:bg-\[\#E6501B\]:hover,
+.bg-\[\#C2410C\],
+.hover\:bg-\[\#C2410C\]:hover {
+  background-color: var(--onasis-orange) !important;
+}
+
+.border-\[\#E6501B\],
+.hover\:border-\[\#E6501B\]:hover,
+.border-\[\#C2410C\],
+.hover\:border-\[\#C2410C\]:hover {
+  border-color: var(--onasis-orange) !important;
+}
+
+.from-\[\#E6501B\],
+.via-\[\#E6501B\],
+.to-\[\#E6501B\],
+.from-\[\#C3110C\],
+.via-\[\#C3110C\],
+.to-\[\#C3110C\] {
+  --tw-gradient-from: var(--onasis-orange) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(237 125 0 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops:
+    var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.text-yellow-400,
+.text-yellow-500 {
+  color: var(--onasis-gold) !important;
+}
+
+.bg-yellow-400,
+.bg-yellow-500 {
+  background-color: var(--onasis-gold) !important;
+}
+
 @layer base {
   html {
-    background-color: #ffffff;
+    background-color: var(--surface-light);
   }
-  
+
   html.dark {
-    background-color: #0a0a0a;
+    background-color: var(--surface-dark);
     color-scheme: dark;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.01em;
   }
 }
 

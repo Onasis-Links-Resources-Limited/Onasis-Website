@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { motion, useInView } from "framer-motion";
-import { 
-  Users, 
-  Briefcase, 
-  Code, 
-  Megaphone, 
+import {
+  Users,
+  Briefcase,
+  Code,
+  Megaphone,
   Mail,
   // Linkedin,
   X,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 
 const TeamSection = () => {
@@ -30,7 +30,7 @@ const TeamSection = () => {
       department: "Executive",
       initials: "DK",
       email: "david.k@onasislinks.com",
-      color: "#E6501B"
+      color: "#E6501B",
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const TeamSection = () => {
       department: "Executive",
       initials: "AR",
       email: "antony.r@onasislinks.com",
-      color: "#C3110C"
+      color: "#E6501B",
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ const TeamSection = () => {
       department: "Executive",
       initials: "JB",
       email: "jim.b@onasislinks.com",
-      color: "#740A03"
+      color: "#E6501B",
     },
     // IT Team
     {
@@ -58,7 +58,7 @@ const TeamSection = () => {
       department: "IT",
       initials: "SJ",
       email: "sarah.j@onasislinks.com",
-      color: "#E6501B"
+      color: "#E6501B",
     },
     {
       id: 5,
@@ -67,7 +67,7 @@ const TeamSection = () => {
       department: "IT",
       initials: "MC",
       email: "michael.c@onasislinks.com",
-      color: "#C3110C"
+      color: "#E6501B",
     },
     {
       id: 6,
@@ -76,7 +76,7 @@ const TeamSection = () => {
       department: "IT",
       initials: "AO",
       email: "amara.o@onasislinks.com",
-      color: "#740A03"
+      color: "#E6501B",
     },
     // Marketing Team
     {
@@ -86,7 +86,7 @@ const TeamSection = () => {
       department: "Marketing",
       initials: "JW",
       email: "jessica.w@onasislinks.com",
-      color: "#E6501B"
+      color: "#E6501B",
     },
     {
       id: 8,
@@ -95,7 +95,7 @@ const TeamSection = () => {
       department: "Marketing",
       initials: "TA",
       email: "tunde.a@onasislinks.com",
-      color: "#C3110C"
+      color: "#E6501B",
     },
     // Support Team
     {
@@ -105,8 +105,8 @@ const TeamSection = () => {
       department: "Support",
       initials: "PS",
       email: "priya.s@onasislinks.com",
-      color: "#740A03"
-    }
+      color: "#E6501B",
+    },
   ];
 
   // Group members by department
@@ -122,10 +122,10 @@ const TeamSection = () => {
 
   // Department icons
   const departmentIcons = {
-    "Executive": Briefcase,
-    "IT": Code,
-    "Marketing": Megaphone,
-    "Support": Users
+    Executive: Briefcase,
+    IT: Code,
+    Marketing: Megaphone,
+    Support: Users,
   };
 
   // Animation variants
@@ -177,7 +177,7 @@ const TeamSection = () => {
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className={`py-20 overflow-hidden ${
         theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
@@ -185,7 +185,7 @@ const TeamSection = () => {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           variants={headerVariants}
           initial="hidden"
@@ -205,10 +205,13 @@ const TeamSection = () => {
           >
             The <span className="text-[#E6501B]">People</span> Behind Onasis
           </h2>
-          <p className={`mt-4 text-lg max-w-2xl mx-auto ${
-            theme === "dark" ? "text-gray-400" : "text-gray-600"
-          }`}>
-            Dedicated professionals working together to connect Africa to the world
+          <p
+            className={`mt-4 text-lg max-w-2xl mx-auto ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
+            Dedicated professionals working together to connect Africa to the
+            world
           </p>
         </motion.div>
 
@@ -226,33 +229,41 @@ const TeamSection = () => {
               className="mb-16 last:mb-0"
             >
               {/* Department Header */}
-              <motion.div 
+              <motion.div
                 className="flex items-center gap-3 mb-6"
                 variants={itemVariants}
               >
-                <div className={`p-2 rounded-xl ${
-                  theme === "dark" ? "bg-[#E6501B]/20" : "bg-[#C3110C]/10"
-                }`}>
-                  <DepartmentIcon className={`w-5 h-5 ${
-                    theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-                  }`} />
+                <div
+                  className={`p-2 rounded-xl ${
+                    theme === "dark" ? "bg-[#E6501B]/20" : "bg-[#C3110C]/10"
+                  }`}
+                >
+                  <DepartmentIcon
+                    className={`w-5 h-5 ${
+                      theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                    }`}
+                  />
                 </div>
-                <h3 className={`text-xl font-bold ${
-                  theme === "dark" ? "text-white" : "text-[#280905]"
-                }`}>
+                <h3
+                  className={`text-xl font-bold ${
+                    theme === "dark" ? "text-white" : "text-[#280905]"
+                  }`}
+                >
                   {department} Team
                 </h3>
-                <span className={`text-sm px-3 py-1 rounded-full ${
-                  theme === "dark" 
-                    ? "bg-gray-800 text-gray-400" 
-                    : "bg-gray-100 text-gray-500"
-                }`}>
+                <span
+                  className={`text-sm px-3 py-1 rounded-full ${
+                    theme === "dark"
+                      ? "bg-gray-800 text-gray-400"
+                      : "bg-gray-100 text-gray-500"
+                  }`}
+                >
                   {members.length} members
                 </span>
               </motion.div>
 
               {/* Team Members Grid */}
-              <motion.div 
+              <motion.div
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                 variants={containerVariants}
                 initial="hidden"
@@ -277,62 +288,68 @@ const TeamSection = () => {
                     >
                       {/* Avatar */}
                       <div className="flex flex-col items-center text-center">
-                        <motion.div 
+                        <motion.div
                           className="relative"
                           whileHover={{ scale: 1.05 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <div 
+                          <div
                             className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-lg"
                             style={{
-                              background: `linear-gradient(135deg, ${member.color}, ${member.color}CC)`
+                              background: `linear-gradient(135deg, ${member.color}, ${member.color}CC)`,
                             }}
                           >
                             {member.initials}
                           </div>
-                          
+
                           {/* Online status dot */}
                           <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-[#0a0a0a]"></div>
                         </motion.div>
 
                         {/* Name */}
-                        <h4 className={`text-lg font-bold mt-4 transition-colors duration-300 ${
-                          theme === "dark" 
-                            ? "text-white group-hover:text-[#E6501B]" 
-                            : "text-[#280905] group-hover:text-[#C3110C]"
-                        }`}>
+                        <h4
+                          className={`text-lg font-bold mt-4 transition-colors duration-300 ${
+                            theme === "dark"
+                              ? "text-white group-hover:text-[#E6501B]"
+                              : "text-[#280905] group-hover:text-[#C3110C]"
+                          }`}
+                        >
                           {member.name}
                         </h4>
 
                         {/* Role */}
-                        <span className={`inline-block text-sm px-4 py-1 rounded-full mt-1 ${
-                          theme === "dark"
-                            ? "bg-gray-700 text-gray-300"
-                            : "bg-gray-100 text-gray-600"
-                        }`}>
+                        <span
+                          className={`inline-block text-sm px-4 py-1 rounded-full mt-1 ${
+                            theme === "dark"
+                              ? "bg-gray-700 text-gray-300"
+                              : "bg-gray-100 text-gray-600"
+                          }`}
+                        >
                           {member.role}
                         </span>
 
                         {/* Email */}
-                        <div className={`flex items-center gap-2 mt-3 text-sm ${
-                          theme === "dark" ? "text-gray-500" : "text-gray-400"
-                        }`}>
+                        <div
+                          className={`flex items-center gap-2 mt-3 text-sm ${
+                            theme === "dark" ? "text-gray-500" : "text-gray-400"
+                          }`}
+                        >
                           <Mail className="w-3.5 h-3.5" />
                           <span>{member.email}</span>
                         </div>
 
                         {/* Social Links - appears on hover */}
-                        <motion.div 
+                        <motion.div
                           className="flex gap-3 mt-4"
                           initial={{ opacity: 0, y: 10 }}
-                          animate={{ 
+                          animate={{
                             opacity: isHovered ? 1 : 0,
-                            y: isHovered ? 0 : 10
+                            y: isHovered ? 0 : 10,
                           }}
                           transition={{ duration: 0.3 }}
                         >
-                          <a 
-                            href="#" 
+                          <a
+                            href="#"
                             className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                               theme === "dark"
                                 ? "bg-gray-700 hover:bg-[#E6501B] text-gray-400 hover:text-white"
@@ -342,8 +359,8 @@ const TeamSection = () => {
                           >
                             <X className="w-4 h-4" />
                           </a>
-                          <a 
-                            href="#" 
+                          <a
+                            href="#"
                             className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                               theme === "dark"
                                 ? "bg-gray-700 hover:bg-[#E6501B] text-gray-400 hover:text-white"
@@ -353,8 +370,8 @@ const TeamSection = () => {
                           >
                             <X className="w-4 h-4" />
                           </a>
-                          <a 
-                            href={`mailto:${member.email}`} 
+                          <a
+                            href={`mailto:${member.email}`}
                             className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${
                               theme === "dark"
                                 ? "bg-gray-700 hover:bg-[#E6501B] text-gray-400 hover:text-white"
@@ -368,7 +385,7 @@ const TeamSection = () => {
                       </div>
 
                       {/* Decorative bottom line */}
-                      <motion.div 
+                      <motion.div
                         className={`absolute bottom-0 left-0 h-0.5 rounded-b-2xl transition-all duration-500 ${
                           theme === "dark" ? "bg-[#E6501B]" : "bg-[#C3110C]"
                         }`}
@@ -385,7 +402,7 @@ const TeamSection = () => {
         })}
 
         {/* Join Our Team CTA */}
-        <motion.div 
+        <motion.div
           className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -395,9 +412,11 @@ const TeamSection = () => {
             ease: [0.6, -0.05, 0.01, 0.99],
           }}
         >
-          <p className={`text-sm mb-4 ${
-            theme === "dark" ? "text-gray-400" : "text-gray-500"
-          }`}>
+          <p
+            className={`text-sm mb-4 ${
+              theme === "dark" ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
             Want to be part of our team?
           </p>
           <a

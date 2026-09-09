@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
-// import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import { QuoteProvider } from "./context/QuoteContext";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
@@ -18,7 +18,7 @@ import NotFound from "./pages/NotFound";
 
 // Auth Pages (Inside src/pages/auth - Fixed casing to match filenames)
 import Login from "./pages/auth/Login";
-import SignUp from "./pages/auth/SignUp"; 
+import SignUp from "./pages/auth/SignUp";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 
@@ -32,7 +32,9 @@ const AppContent = () => {
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
+        theme === "dark"
+          ? "bg-[#090909] text-white"
+          : "bg-[#f7f7f5] text-[#280905]"
       }`}
     >
       <Navbar />
@@ -52,7 +54,7 @@ const AppContent = () => {
         <Route path="/products/product/:id" element={<ProductDetail />} />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
-        
+
         {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -64,13 +66,13 @@ const AppContent = () => {
 function App() {
   return (
     <ThemeProvider>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <QuoteProvider>
           <Router>
             <AppContent />
           </Router>
         </QuoteProvider>
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </ThemeProvider>
   );
 }

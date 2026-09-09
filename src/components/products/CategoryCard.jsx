@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const CategoryCard = ({ category }) => {
   return (
-    <div className="group flex flex-col items-center text-center p-8 rounded-2xl bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-600 hover:border-white hover:shadow-lg dark:hover:shadow-black -900/80 hover-opacity transition-all duration-300 hover:-translate-y-1 hover:border-orange ">
-       
-                
+    <Link
+      to={`/products/category/${category.slug}`}
+      className="group flex h-full flex-col items-center rounded-2xl border border-gray-200 bg-white p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[#E6501B] hover:shadow-lg dark:border-[#34404d] dark:bg-[#1a1a1a] dark:hover:border-[#6b7785] dark:hover:shadow-black/80"
+      aria-label={`View ${category.name} products`}
+    >
       {/* Centered Image with object-contain */}
       <div className="w-full h-40 mb-6 flex items-center justify-center overflow-hidden p-6 text-sm hover:-translate-y-1 hover:shadow-xl border-2 border-transparent">
-        <img 
-          src={category.image} 
+        <img
+          src={category.image}
           alt={category.name}
           className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300 ease-out"
         />
@@ -25,14 +27,16 @@ const CategoryCard = ({ category }) => {
       </p>
 
       {/* View Products Link */}
-      <Link 
-        to={`/products/category/${category.slug}`}
-        className="inline-flex items-center gap-2 text-sm font-bold text-[#E6501B] hover:text-orange-700 dark:hover:text-orange-400 transition-colors"
-      >
-        VIEW PRODUCTS 
-        <span className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true">→</span>
-      </Link>
-    </div>
+      <span className="inline-flex items-center gap-2 text-sm font-bold text-[#E6501B] transition-colors group-hover:text-orange-700 dark:group-hover:text-orange-400">
+        VIEW PRODUCTS
+        <span
+          className="group-hover:translate-x-1 transition-transform duration-300"
+          aria-hidden="true"
+        >
+          →
+        </span>
+      </span>
+    </Link>
   );
 };
 

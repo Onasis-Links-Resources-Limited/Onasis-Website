@@ -13,7 +13,7 @@ const AboutSection = () => {
   });
 
   const stats = [
-    { number: "10+", label: "Years of experience" },
+    { number: "20+", label: "Years of experience" },
     { number: "500+", label: "Clients served" },
     { number: "100%", label: "Success Rate" },
     { number: "16+", label: "Industry Recognition" },
