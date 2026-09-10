@@ -36,10 +36,10 @@ const Input = ({
           className={`
             w-full px-4 py-2.5 rounded-lg border
             transition-all duration-200
-            bg-white dark:bg-gray-800
+            bg-white dark:bg-black/50
             text-gray-900 dark:text-white
             placeholder:text-gray-400 dark:placeholder:text-gray-500
-            focus:outline-none focus:ring-2 focus:ring-[#C3110C] focus:border-transparent
+            focus:outline-none focus:ring-2 focus:ring-[#ED7D00] focus:border-transparent
             ${error ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}
             ${className}
           `}

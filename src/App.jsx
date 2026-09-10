@@ -18,6 +18,7 @@ import ProductDetail from "./pages/ProductDetail";
 import QuoteList from "./pages/QuoteList";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 
 // Auth Pages
 import Login from "./pages/auth/Login";
@@ -63,6 +64,7 @@ const AppContent = () => {
         <Route path="/products/category/:slug/product/:id" element={<ProductDetail />} />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/newsletter/unsubscribe/:id" element={<NewsletterUnsubscribe />} />
 
         {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />

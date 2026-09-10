@@ -103,7 +103,7 @@ const ContactMap = () => {
                 }`}
               >
                 <Mail size={20} className="inline mr-2" />
-                info@onasisltd.com
+                support@onasisltd.com
               </p>
             </div>
           </div>
