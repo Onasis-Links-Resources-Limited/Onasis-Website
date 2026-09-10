@@ -31,7 +31,7 @@ const ContactInfo = () => {
       id: 3,
       icon: Mail,
       title: "Email",
-      details: "info@onasisltd.com",
+      details: "support@onasisltd.com",
     },
     {
       id: 4,

@@ -27,7 +27,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
         </div>
 
         {/* Content */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-[#1A1A1A] rounded-2xl shadow-xl p-6 sm:p-8 border border-gray-100 dark:border-[#2A2A2A]">
           {children}
         </div>
 

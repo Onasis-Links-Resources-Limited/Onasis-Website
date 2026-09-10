@@ -61,7 +61,7 @@ const ForgotPassword = () => {
           </p>
           <Link
             to="/login"
-            className="text-[#C3110C] dark:text-[#E6501B] hover:underline font-medium text-sm"
+            className="text-[#C3110C] dark:text-[#E6501B] hover:underline font-medium text-sm cursor-pointer"
           >
             Back to Sign In
           </Link>

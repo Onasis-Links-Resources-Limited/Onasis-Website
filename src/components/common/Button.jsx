@@ -30,8 +30,8 @@ const Button = forwardRef(({
     inline-flex items-center justify-center gap-2
     font-semibold rounded-lg
     transition-all duration-300
-    focus:outline-none focus:ring-2 focus:ring-[#C3110C] focus:ring-offset-2
-    disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-[#ED7D00] focus:ring-offset-2
+    disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer
     ${variants[variant]}
     ${sizes[size]}
     ${fullWidth ? 'w-full' : ''}
