@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom"; // ✅ Fixed import
+import { Link } from "react-router-dom";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { api } from "../../api/client";
@@ -25,7 +25,6 @@ import LegalModal from "./LegalModal";
 const Footer = () => {
   const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
-  const location = useLocation(); // ✅ Fixed
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
@@ -35,13 +34,6 @@ const Footer = () => {
     once: false,
     amount: 0.1,
   });
-
-  const isAuthPage = [
-    "/login",
-    "/signup",
-    "/verify-email",
-    "/forgot-password",
-  ].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,20 +80,24 @@ const Footer = () => {
       });
       setNewsletterEmail("");
     } catch (error) {
-      const errorMsg = error.response?.data?.message || "Failed to subscribe. Please try again.";
+      const errorMsg =
+        error.response?.data?.message ||
+        "Failed to subscribe. Please try again.";
       toast.error(errorMsg);
     } finally {
       setIsSubscribing(false);
     }
   };
 
-  if (isAuthPage) return null;
-
   const services = [
     { name: "Fiber Optic Networks", href: "/services#fiber", icon: Wifi },
     { name: "5G Technology", href: "/services#5g", icon: TrendingUp },
     { name: "Cloud Solutions", href: "/services#cloud", icon: Cloud },
-    { name: "Satellite Communication", href: "/services#satellite", icon: Satellite },
+    {
+      name: "Satellite Communication",
+      href: "/services#satellite",
+      icon: Satellite,
+    },
     { name: "Cybersecurity", href: "/services#security", icon: Lock },
     { name: "IoT Solutions", href: "/services#iot", icon: Smartphone },
   ];
@@ -160,7 +156,11 @@ const Footer = () => {
     visible: (i) => ({
       opacity: 1,
       x: 0,
-      transition: { delay: i * 0.1, duration: 0.5, ease: [0.6, -0.05, 0.01, 0.99] },
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
     }),
   };
 
@@ -200,13 +200,25 @@ const Footer = () => {
             >
               <Link to="/" className="inline-block mb-4">
                 {theme === "dark" ? (
-                  <img src="/images/logo-dark.png" alt="Onasis Links" className="h-12 w-auto" />
+                  <img
+                    src="/images/logo-dark.png"
+                    alt="Onasis Links"
+                    className="h-12 w-auto"
+                  />
                 ) : (
-                  <img src="/images/logo-light.png" alt="Onasis Links" className="h-12 w-auto" />
+                  <img
+                    src="/images/logo-light.png"
+                    alt="Onasis Links"
+                    className="h-12 w-auto"
+                  />
                 )}
               </Link>
-              <p className={`text-sm leading-relaxed ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-                Empowering businesses and communities with cutting-edge telecommunications infrastructure and innovative digital solutions across Africa.
+              <p
+                className={`text-sm leading-relaxed ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
+              >
+                Empowering businesses and communities with cutting-edge
+                telecommunications infrastructure and innovative digital
+                solutions across Africa.
               </p>
 
               <motion.div
@@ -235,19 +247,31 @@ const Footer = () => {
             </motion.div>
 
             {/* Column 2: Our Services */}
-            <motion.div variants={itemVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-              <h3 className={`text-lg font-bold mb-4 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}>
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+            >
+              <h3
+                className={`text-lg font-bold mb-4 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}
+              >
                 Our Services
               </h3>
               <ul className="space-y-3">
                 {services.map((service) => {
                   const IconComponent = service.icon;
                   return (
-                    <motion.li key={service.name} whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
+                    <motion.li
+                      key={service.name}
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <Link
                         to={service.href}
                         className={`flex items-center gap-2 text-sm transition-colors duration-200 ${
-                          theme === "dark" ? "text-gray-400 hover:text-[#E6501B]" : "text-gray-600 hover:text-[#C3110C]"
+                          theme === "dark"
+                            ? "text-gray-400 hover:text-[#E6501B]"
+                            : "text-gray-600 hover:text-[#C3110C]"
                         }`}
                       >
                         <IconComponent className="w-3.5 h-3.5" />
@@ -260,8 +284,14 @@ const Footer = () => {
             </motion.div>
 
             {/* Column 3: Contact Info with proper links */}
-            <motion.div variants={itemVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
-              <h3 className={`text-lg font-bold mb-4 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}>
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+            >
+              <h3
+                className={`text-lg font-bold mb-4 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}
+              >
                 GET IN TOUCH
               </h3>
               <ul className="space-y-5">
@@ -276,9 +306,11 @@ const Footer = () => {
                       animate={isInView ? "visible" : "hidden"}
                       className="flex flex-col"
                     >
-                      <span className={`text-xs font-bold tracking-[0.1em] uppercase ${
-                        theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-                      }`}>
+                      <span
+                        className={`text-xs font-bold tracking-[0.1em] uppercase ${
+                          theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                        }`}
+                      >
                         {item.label}
                       </span>
                       <a
@@ -287,14 +319,20 @@ const Footer = () => {
                         rel={item.external ? "noopener noreferrer" : undefined}
                         className="flex items-start gap-3 mt-1 group"
                       >
-                        <IconComponent className={`w-4 h-4 flex-shrink-0 mt-0.5 transition-colors ${
-                          theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-                        }`} />
-                        <span className={`text-sm transition-colors ${
-                          theme === "dark"
-                            ? "text-gray-400 group-hover:text-[#E6501B]"
-                            : "text-gray-600 group-hover:text-[#C3110C]"
-                        }`}>
+                        <IconComponent
+                          className={`w-4 h-4 flex-shrink-0 mt-0.5 transition-colors ${
+                            theme === "dark"
+                              ? "text-[#E6501B]"
+                              : "text-[#C3110C]"
+                          }`}
+                        />
+                        <span
+                          className={`text-sm transition-colors ${
+                            theme === "dark"
+                              ? "text-gray-400 group-hover:text-[#E6501B]"
+                              : "text-gray-600 group-hover:text-[#C3110C]"
+                          }`}
+                        >
                           {item.text}
                         </span>
                       </a>
@@ -305,12 +343,20 @@ const Footer = () => {
             </motion.div>
 
             {/* Column 4: Newsletter */}
-            <motion.div variants={itemVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+            >
               <div className="mt-6">
-                <h4 className={`text-sm font-semibold mb-2 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}>
+                <h4
+                  className={`text-sm font-semibold mb-2 ${theme === "dark" ? "text-white" : "text-[#280905]"}`}
+                >
                   Subscribe to Our Newsletter
                 </h4>
-                <p className={`text-xs mb-3 ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}>
+                <p
+                  className={`text-xs mb-3 ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}
+                >
                   Get product updates, industry insights, and exclusive offers.
                 </p>
                 <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
@@ -350,18 +396,27 @@ const Footer = () => {
             className={`mt-12 pt-8 border-t ${theme === "dark" ? "border-[#2A2A2A]" : "border-gray-200"}`}
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }}
+            transition={{
+              delay: 0.4,
+              duration: 0.6,
+              ease: [0.6, -0.05, 0.01, 0.99],
+            }}
           >
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className={`text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}>
-                © {currentYear} Onasis Links Resources Limited. All rights reserved.
+              <p
+                className={`text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}
+              >
+                © {currentYear} Onasis Links Resources Limited. All rights
+                reserved.
               </p>
               <div className="flex flex-wrap gap-6 justify-center">
                 {/* ✅ Legal Links trigger modals */}
                 <button
                   onClick={() => openLegalModal("privacy")}
                   className={`text-sm transition-colors duration-200 cursor-pointer ${
-                    theme === "dark" ? "text-gray-500 hover:text-[#E6501B]" : "text-gray-500 hover:text-[#C3110C]"
+                    theme === "dark"
+                      ? "text-gray-500 hover:text-[#E6501B]"
+                      : "text-gray-500 hover:text-[#C3110C]"
                   }`}
                 >
                   Privacy Policy
@@ -369,7 +424,9 @@ const Footer = () => {
                 <button
                   onClick={() => openLegalModal("terms")}
                   className={`text-sm transition-colors duration-200 cursor-pointer ${
-                    theme === "dark" ? "text-gray-500 hover:text-[#E6501B]" : "text-gray-500 hover:text-[#C3110C]"
+                    theme === "dark"
+                      ? "text-gray-500 hover:text-[#E6501B]"
+                      : "text-gray-500 hover:text-[#C3110C]"
                   }`}
                 >
                   Terms of Service
@@ -389,7 +446,9 @@ const Footer = () => {
               exit="exit"
               onClick={scrollToTop}
               className={`fixed bottom-8 right-8 p-3 rounded-full shadow-lg hover:scale-110 z-40 ${
-                theme === "dark" ? "bg-[#E6501B] hover:bg-[#C3110C] text-white" : "bg-[#C3110C] hover:bg-[#E6501B] text-white"
+                theme === "dark"
+                  ? "bg-[#E6501B] hover:bg-[#C3110C] text-white"
+                  : "bg-[#C3110C] hover:bg-[#E6501B] text-white"
               }`}
               aria-label="Scroll to top"
               whileHover={{ y: -4 }}

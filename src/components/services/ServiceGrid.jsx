@@ -62,16 +62,19 @@ const SERVICES = [
 function ServiceRow({ service, reversed }) {
   const { theme } = useTheme();
   return (
-    <div className={`grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-24 border-b ${theme === "dark" ? "last:border-b-0 border-gray-500" : "last:border-b-0 border-dark-border"}`}>
+    <div
+      className={`grid items-center gap-8 border-b py-12 sm:gap-10 sm:py-16 md:grid-cols-2 md:gap-16 md:py-24 ${theme === "dark" ? "last:border-b-0 border-gray-500" : "last:border-b-0 border-dark-border"}`}
+    >
       {/* Image column with hazard-stripe frame — the page's recurring signature */}
-      <div className={`relative group overflow-hidden transition-all duration-500 ${reversed ? "md:order-2 rounded-r-full" : "rounded-l-full"}`}>
-       
-          <img
-            src={service.image}
-            alt={service.alt}
-            className={`w-full h-[320px] md:h-[440px] object-cover grayscale-[15%] contrast-[1.05] group-hover:scale-110 transition-all duration-300 object-bottom-left ${theme === "dark" ? "dark:grayscale-[15%] dark:contrast-[1.05]" : ""}`}
-            loading="lazy"
-          />
+      <div
+        className={`relative group overflow-hidden transition-all duration-500 ${reversed ? "md:order-2 md:rounded-r-full" : "md:rounded-l-full"}`}
+      >
+        <img
+          src={service.image}
+          alt={service.alt}
+          className={`h-64 w-full object-cover object-bottom-left grayscale-[15%] contrast-[1.05] transition-all duration-300 group-hover:scale-110 sm:h-80 md:h-[440px] ${theme === "dark" ? "dark:grayscale-[15%] dark:contrast-[1.05]" : ""}`}
+          loading="lazy"
+        />
       </div>
 
       {/* Copy column */}
@@ -87,7 +90,9 @@ function ServiceRow({ service, reversed }) {
           {service.tag}
         </span>
 
-        <p className={`leading-relaxed mb-7 max-w-xl ${theme === "dark" ? "text-gray-300" : "text-gray-900"}`}>
+        <p
+          className={`leading-relaxed mb-7 max-w-xl ${theme === "dark" ? "text-gray-300" : "text-gray-900"}`}
+        >
           {service.body}
         </p>
 
@@ -134,7 +139,7 @@ function ServiceRow({ service, reversed }) {
 export default function ServiceGrid() {
   const { theme } = useTheme();
   return (
-    <section className="bg-dark-background px-6 md:px-10">
+    <section className="bg-dark-background px-4 sm:px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <div className="mt-20">
           <p
@@ -145,12 +150,18 @@ export default function ServiceGrid() {
             What we do
           </p>
           <h2
-            className={`text-4xl sm:text-5xl font-light transition-colors duration-300 w-2xl ${
+            className={`w-full max-w-2xl text-4xl font-light transition-colors duration-300 sm:text-5xl ${
               theme === "dark" ? "text-white" : "text-[#280905]"
             }`}
           >
-            Materials,<span className={` ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}> Equipment,</span> and
-            Expertise for the field.
+            Materials,
+            <span
+              className={` ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
+            >
+              {" "}
+              Equipment,
+            </span>{" "}
+            and Expertise for the field.
           </h2>
         </div>
 

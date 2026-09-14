@@ -2,15 +2,15 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { motion, useInView } from "framer-motion";
-import { 
-  ArrowRight, 
-  CheckCircle, 
-  Shield, 
-  Headphones, 
-  Globe, 
+import {
+  ArrowRight,
+  CheckCircle,
+  Shield,
+  Headphones,
+  Globe,
   Users,
   Package,
-  Truck
+  Truck,
 } from "lucide-react";
 
 const CTASection = () => {
@@ -77,7 +77,7 @@ const CTASection = () => {
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.4 + (i * 0.1),
+        delay: 0.4 + i * 0.1,
         duration: 0.5,
         ease: [0.6, -0.05, 0.01, 0.99],
       },
@@ -107,24 +107,25 @@ const CTASection = () => {
     >
       {/* Background Image - Package Delivery */}
       <div className="absolute inset-0 opacity-10 md:opacity-15">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80')",
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80')",
             backgroundBlendMode: "overlay",
           }}
         />
       </div>
 
       {/* Floating Delivery Icons */}
-      <motion.div 
+      <motion.div
         className="absolute top-10 left-10 text-white/10 hidden lg:block"
         variants={floatingIconVariants}
         animate="animate"
       >
         <Package className="w-20 h-20" strokeWidth={1} />
       </motion.div>
-      <motion.div 
+      <motion.div
         className="absolute bottom-10 right-10 text-white/10 hidden lg:block"
         variants={floatingIconVariants}
         animate="animate"
@@ -140,16 +141,21 @@ const CTASection = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Heading */}
-          <motion.h2 
+          <motion.h2
             variants={itemVariants}
             className="text-4xl sm:text-5xl font-light text-white mb-2"
           >
-            Ready to <span className={`${theme === 'dark' ? 'text-[#E6501B]' : 'text-white'}`}>Transform</span> Your
-            Connectivity?
+            Ready to{" "}
+            <span
+              className={`${theme === "dark" ? "text-[#E6501B]" : "text-white"}`}
+            >
+              Transform
+            </span>{" "}
+            Your Connectivity?
           </motion.h2>
 
           {/* Description */}
-          <motion.p 
+          <motion.p
             variants={itemVariants}
             className="text-base text-white/90 mb-6 max-w-2xl mx-auto"
           >
@@ -158,7 +164,7 @@ const CTASection = () => {
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
@@ -168,7 +174,7 @@ const CTASection = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/contact"
+                to="/signup"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#C3110C] hover:bg-[#E6501B] hover:text-white font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-2xl"
               >
                 Get Started Today
@@ -192,7 +198,7 @@ const CTASection = () => {
           </motion.div>
 
           {/* Trust Badges */}
-          <motion.div 
+          <motion.div
             className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8"
             variants={containerVariants}
             initial="hidden"
@@ -201,15 +207,17 @@ const CTASection = () => {
             {trustBadges.map((badge, index) => {
               const IconComponent = badge.icon;
               return (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   className="flex items-center gap-2 text-white/80 text-sm"
                   custom={index}
                   variants={badgeVariants}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <IconComponent className={`w-4 h-4 ${theme === 'dark' ? 'text-[#E6501B]' : 'text-white'}`} />
+                  <IconComponent
+                    className={`w-4 h-4 ${theme === "dark" ? "text-[#E6501B]" : "text-white"}`}
+                  />
                   <span>{badge.label}</span>
                 </motion.div>
               );
@@ -217,7 +225,7 @@ const CTASection = () => {
           </motion.div>
 
           {/* Delivery Guarantee Badge */}
-          <motion.div 
+          <motion.div
             className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -227,7 +235,9 @@ const CTASection = () => {
               ease: [0.6, -0.05, 0.01, 0.99],
             }}
           >
-            <CheckCircle className={`w-4 h-4 ${theme === 'dark' ? 'text-[#E6501B]' : 'text-white'}`} />
+            <CheckCircle
+              className={`w-4 h-4 ${theme === "dark" ? "text-[#E6501B]" : "text-white"}`}
+            />
             <span className="text-white/80 text-xs font-medium tracking-wider">
               Fast & Reliable Delivery Across Africa
             </span>
