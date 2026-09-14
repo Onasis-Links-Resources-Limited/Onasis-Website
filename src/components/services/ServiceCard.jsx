@@ -19,7 +19,7 @@ export default function ServiceCard() {
   const { theme } = useTheme();
 
   return (
-    <section className="relative h-100 overflow-hidden">
+    <section className="relative min-h-[28rem] overflow-hidden sm:min-h-[32rem] lg:min-h-[36rem]">
       {/* Background photograph */}
       {/* <img
         src={HERO_IMAGE}
@@ -32,15 +32,15 @@ export default function ServiceCard() {
         autoPlay
         loop
         muted
-        className={`absolute inset-0 h-full w-full mx-auto object-cover object-bottom ${theme === 'dark' ? 'brightness-50' : 'brightness-70'}`}
+        className={`absolute inset-0 h-full w-full object-cover object-bottom ${theme === "dark" ? "brightness-50" : "brightness-70"}`}
       >
         <source src="/video/Services_Hero.mp4" type="video/mp4" />
       </video>
 
       {/* Content */}
-      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-end pb-10">
-        <div className="">
-          <h1 className="text-5xl leading-tight md:text-7xl font-bold dark:text-white">
+      <div className="relative z-20 mx-auto flex min-h-[28rem] w-full max-w-5xl items-end px-4 pb-10 sm:min-h-[32rem] sm:px-6 lg:min-h-[36rem] lg:px-8 lg:pb-14">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl md:text-7xl">
             Our Services
           </h1>
 
@@ -51,14 +51,14 @@ export default function ServiceCard() {
             procurement, and project support for Oil &amp; Gas, Manufacturing,
             Construction, Utilities, and Infrastructure.
           </p>
-          <div className="flex flex-row w-fit gap-2 mt-2">
+          <div className="mt-4 flex w-full flex-wrap gap-2">
             {CAPABILITIES.map((c) => (
-                <span
-                  key={c}
-                  className="font-mono text-[10px] md:text-[11px] tracking-widest uppercase px-3 py-1.5 border border-white/20 text-white/85 rounded-full bg-white/[0.06] backdrop-blur-sm"
-                >
-                  {c}
-                </span>
+              <span
+                key={c}
+                className="rounded-full border border-white/20 bg-white/[0.06] px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-white/85 backdrop-blur-sm sm:text-[11px]"
+              >
+                {c}
+              </span>
             ))}
           </div>
         </div>
