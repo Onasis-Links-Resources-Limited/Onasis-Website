@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, LogIn, AlertCircle } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { theme } = useTheme();
@@ -44,10 +45,13 @@ const Login = () => {
     if (result.success) {
       navigate("/", { replace: true });
     } else {
-      if (
-        result.message?.includes("verify") ||
-        result.message?.includes("verified")
-      ) {
+      // ✅ Check if the error is about email verification
+      const errorMsg = result.message?.toLowerCase() || "";
+
+      if (errorMsg.includes("verify") || errorMsg.includes("verified")) {
+        toast.error("Please verify your email first. Check your inbox.", {
+          duration: 5000,
+        });
         navigate("/verify-email", {
           state: { email: formData.email, needsVerification: true },
         });

@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Failed to fetch user:', error);
       // Only logout if it's an auth error (401)
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
         logout();
       } else {
         setLoading(false);
@@ -79,13 +79,7 @@ const AuthProvider = ({ children }) => {
   const register = useCallback(async (userData) => {
     try {
       const response = await api.post('/auth/register', userData);
-      const { token: authToken, user: newUser } = response.data.data;
-
-      localStorage.setItem('onasis_token', authToken);
-      api.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
-      setUser(newUser);
-      setIsAuthenticated(true);
-      setLoading(false);
+      const { user: newUser } = response.data.data;
 
       return { success: true, data: newUser };
     } catch (error) {

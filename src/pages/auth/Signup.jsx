@@ -91,6 +91,17 @@ const SignUp = () => {
         return;
       }
 
+      // ✅ Show toast IMMEDIATELY
+      toast.success("Account created! Check your email for verification.", {
+        duration: 5000,
+      });
+
+      // ✅ Navigate FIRST — no landing page flash
+      navigate("/verify-email", {
+        state: { email: formData.email.toLowerCase() },
+        replace: true, // ✅ Prevents back button issues
+      });
+
       // ✅ Subscribe to newsletter if opted in (non-blocking)
       if (subscribeToNewsletter) {
         try {
@@ -108,15 +119,6 @@ const SignUp = () => {
           );
         }
       }
-
-      toast.success("Account created! Check your email for verification.", {
-        duration: 5000,
-      });
-
-      // ✅ Navigate to verify email
-      navigate("/verify-email", {
-        state: { email: formData.email.toLowerCase() },
-      });
     } catch (error) {
       setErrors({
         general:
@@ -177,7 +179,7 @@ const SignUp = () => {
               {/* General error */}
               {errors.general && (
                 <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-xs flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>{errors.general}</span>
                 </div>
               )}
