@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
     try {
       await api.post('/auth/forgot-password', { email });
-      setSubmitted(true);
+      setSubmitted(true); 
     } catch (error) {
       setErrors({ 
         general: error.response?.data?.message || 'Something went wrong. Please try again.' 

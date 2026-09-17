@@ -25,6 +25,7 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/Signup";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 // Fonts
 import "@fontsource/pacifico";
@@ -54,6 +55,7 @@ const AppContent = () => {
         <Route path="/signup" element={user ? <Navigate to="/" replace /> : <SignUp />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
