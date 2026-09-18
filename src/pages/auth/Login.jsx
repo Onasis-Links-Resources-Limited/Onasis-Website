@@ -4,6 +4,7 @@ import { Eye, EyeOff, LogIn, AlertCircle } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { theme } = useTheme();
@@ -84,6 +85,10 @@ const Login = () => {
     <div
       className={`min-h-screen pt-20 flex items-center justify-center ${isDark ? "bg-black" : "bg-gray-50"}`}
     >
+      <Helmet>
+        <title>Sign In | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div
         className={`w-full max-w-md p-8 rounded-2xl shadow-sm border ${isDark ? "bg-[#1A1A1A] border-[#2A2A2A]" : "bg-white border-gray-200"}`}
       >

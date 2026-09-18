@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   Home,
 } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const NewsletterUnsubscribe = () => {
   const { id } = useParams();
@@ -18,9 +19,7 @@ const NewsletterUnsubscribe = () => {
   const isDark = theme === "dark";
 
   const [status, setStatus] = useState(id ? "confirm" : "error"); // 'loading' | 'success' | 'error' | 'confirm'
-  const [error, setError] = useState(
-    id ? "" : "Invalid unsubscribe link."
-  );
+  const [error, setError] = useState(id ? "" : "Invalid unsubscribe link.");
   const [isUnsubscribing, setIsUnsubscribing] = useState(false);
 
   const handleUnsubscribe = async () => {
@@ -34,7 +33,7 @@ const NewsletterUnsubscribe = () => {
       setStatus("error");
       setError(
         err.response?.data?.message ||
-          "We could not process your unsubscribe request. Please try again."
+          "We could not process your unsubscribe request. Please try again.",
       );
     } finally {
       setIsUnsubscribing(false);
@@ -46,12 +45,20 @@ const NewsletterUnsubscribe = () => {
   // ============================================================
   if (status === "loading") {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${
-        isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
-      }`}>
-        <Loader2 className={`w-12 h-12 animate-spin ${
-          isDark ? "text-[#E6501B]" : "text-[#C3110C]"
-        }`} />
+      <div
+        className={`min-h-screen flex items-center justify-center ${
+          isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
+        }`}
+      >
+        <Helmet>
+          <title>Loading... | Onasis Links Resources Limited</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <Loader2
+          className={`w-12 h-12 animate-spin ${
+            isDark ? "text-[#E6501B]" : "text-[#C3110C]"
+          }`}
+        />
       </div>
     );
   }
@@ -61,29 +68,47 @@ const NewsletterUnsubscribe = () => {
   // ============================================================
   if (status === "success") {
     return (
-      <div className={`min-h-screen flex items-center justify-center px-4 py-20 ${
-        isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
-      }`}>
-        <div className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
-          isDark ? "bg-[#1A1A1A] border-[#2A2A2A]" : "bg-white border-gray-200"
-        }`}>
-          <div className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
-            isDark ? "bg-green-900/30 text-green-400" : "bg-green-100 text-green-600"
-          }`}>
+      <div
+        className={`min-h-screen flex items-center justify-center px-4 py-20 ${
+          isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
+        }`}
+      >
+        <Helmet>
+          <title>Unsubscribed | Onasis Links Resources Limited</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <div
+          className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
+            isDark
+              ? "bg-[#1A1A1A] border-[#2A2A2A]"
+              : "bg-white border-gray-200"
+          }`}
+        >
+          <div
+            className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
+              isDark
+                ? "bg-green-900/30 text-green-400"
+                : "bg-green-100 text-green-600"
+            }`}
+          >
             <CheckCircle className="h-10 w-10" />
           </div>
 
-          <h1 className={`text-3xl font-bold mb-3 ${
-            isDark ? "text-white" : "text-[#280905]"
-          }`}>
+          <h1
+            className={`text-3xl font-bold mb-3 ${
+              isDark ? "text-white" : "text-[#280905]"
+            }`}
+          >
             You've Been Unsubscribed
           </h1>
 
-          <p className={`text-base mb-8 ${
-            isDark ? "text-gray-400" : "text-gray-600"
-          }`}>
-            We're sorry to see you go. You will no longer receive our newsletter.
-            If this was a mistake, you can subscribe again anytime.
+          <p
+            className={`text-base mb-8 ${
+              isDark ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
+            We're sorry to see you go. You will no longer receive our
+            newsletter. If this was a mistake, you can subscribe again anytime.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -109,27 +134,43 @@ const NewsletterUnsubscribe = () => {
   // ============================================================
   if (status === "error") {
     return (
-      <div className={`min-h-screen flex items-center justify-center px-4 py-20 ${
-        isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
-      }`}>
-        <div className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
-          isDark ? "bg-[#1A1A1A] border-[#2A2A2A]" : "bg-white border-gray-200"
-        }`}>
-          <div className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
-            isDark ? "bg-red-900/30 text-red-400" : "bg-red-100 text-red-600"
-          }`}>
+      <div
+        className={`min-h-screen flex items-center justify-center px-4 py-20 ${
+          isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
+        }`}
+      >
+        <Helmet>
+          <title>Error | Onasis Links Resources Limited</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <div
+          className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
+            isDark
+              ? "bg-[#1A1A1A] border-[#2A2A2A]"
+              : "bg-white border-gray-200"
+          }`}
+        >
+          <div
+            className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
+              isDark ? "bg-red-900/30 text-red-400" : "bg-red-100 text-red-600"
+            }`}
+          >
             <XCircle className="h-10 w-10" />
           </div>
 
-          <h1 className={`text-3xl font-bold mb-3 ${
-            isDark ? "text-white" : "text-[#280905]"
-          }`}>
+          <h1
+            className={`text-3xl font-bold mb-3 ${
+              isDark ? "text-white" : "text-[#280905]"
+            }`}
+          >
             Something Went Wrong
           </h1>
 
-          <p className={`text-base mb-8 ${
-            isDark ? "text-gray-400" : "text-gray-600"
-          }`}>
+          <p
+            className={`text-base mb-8 ${
+              isDark ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             {error || "We couldn't process your unsubscribe request."}
           </p>
 
@@ -155,31 +196,46 @@ const NewsletterUnsubscribe = () => {
   // CONFIRM STATE (Default)
   // ============================================================
   return (
-    <div className={`min-h-screen flex items-center justify-center px-4 py-20 ${
-      isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
-    }`}>
-      <div className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
-        isDark ? "bg-[#1A1A1A] border-[#2A2A2A]" : "bg-white border-gray-200"
-      }`}>
-        <div className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border ${
-          isDark
-            ? "bg-[#E6501B]/10 border-[#E6501B]/30 text-[#E6501B]"
-            : "bg-[#C3110C]/5 border-[#C3110C]/20 text-[#C3110C]"
-        }`}>
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 py-20 ${
+        isDark ? "bg-[#090909]" : "bg-[#f7f7f5]"
+      }`}
+    >
+      <Helmet>
+        <title>Unsubscribe | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div
+        className={`w-full max-w-lg rounded-3xl p-8 sm:p-10 text-center shadow-sm border ${
+          isDark ? "bg-[#1A1A1A] border-[#2A2A2A]" : "bg-white border-gray-200"
+        }`}
+      >
+        <div
+          className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border ${
+            isDark
+              ? "bg-[#E6501B]/10 border-[#E6501B]/30 text-[#E6501B]"
+              : "bg-[#C3110C]/5 border-[#C3110C]/20 text-[#C3110C]"
+          }`}
+        >
           <Mail className="h-9 w-9" />
         </div>
 
-        <h1 className={`text-3xl font-bold mb-3 ${
-          isDark ? "text-white" : "text-[#280905]"
-        }`}>
+        <h1
+          className={`text-3xl font-bold mb-3 ${
+            isDark ? "text-white" : "text-[#280905]"
+          }`}
+        >
           Unsubscribe from Newsletter
         </h1>
 
-        <p className={`text-base mb-8 ${
-          isDark ? "text-gray-400" : "text-gray-600"
-        }`}>
+        <p
+          className={`text-base mb-8 ${
+            isDark ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Are you sure you want to unsubscribe from the Onasis Links newsletter?
-          You'll no longer receive product updates, industry insights, and special offers.
+          You'll no longer receive product updates, industry insights, and
+          special offers.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -218,9 +274,11 @@ const NewsletterUnsubscribe = () => {
           </button>
         </div>
 
-        <p className={`mt-6 text-xs ${
-          isDark ? "text-gray-500" : "text-gray-400"
-        }`}>
+        <p
+          className={`mt-6 text-xs ${
+            isDark ? "text-gray-500" : "text-gray-400"
+          }`}
+        >
           You can always subscribe again from the footer of our website.
         </p>
       </div>

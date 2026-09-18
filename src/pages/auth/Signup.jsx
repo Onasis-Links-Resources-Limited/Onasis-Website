@@ -18,6 +18,7 @@ import {
   Headphones,
 } from "lucide-react";
 import LegalModal from "../../components/common/LegalModal";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const { theme } = useTheme();
@@ -148,6 +149,10 @@ const SignUp = () => {
         isDark ? "bg-black" : "bg-gray-50"
       }`}
     >
+      <Helmet>
+        <title>Create Account | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="w-full max-w-6xl mx-auto px-4 py-4">
         <div className="grid md:grid-cols-2 gap-6">
           {/* Left Side - Form */}

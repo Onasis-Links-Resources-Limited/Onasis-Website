@@ -1,21 +1,23 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Send } from 'lucide-react';
-import AuthLayout from './components/AuthLayout';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import { api } from '../../api/client';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Send } from "lucide-react";
+import AuthLayout from "./components/AuthLayout";
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
+import { api } from "../../api/client";
+import { Helmet } from "react-helmet-async";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
   const validate = () => {
     const newErrors = {};
-    if (!email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = 'Please enter a valid email';
+    if (!email) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      newErrors.email = "Please enter a valid email";
     return newErrors;
   };
 
@@ -31,11 +33,13 @@ const ForgotPassword = () => {
     setErrors({});
 
     try {
-      await api.post('/auth/forgot-password', { email });
-      setSubmitted(true); 
+      await api.post("/auth/forgot-password", { email });
+      setSubmitted(true);
     } catch (error) {
-      setErrors({ 
-        general: error.response?.data?.message || 'Something went wrong. Please try again.' 
+      setErrors({
+        general:
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.",
       });
     }
     setLoading(false);
@@ -43,7 +47,7 @@ const ForgotPassword = () => {
 
   if (submitted) {
     return (
-      <AuthLayout 
+      <AuthLayout
         title="Check Your Email"
         subtitle="We've sent you a password reset link"
       >
@@ -55,7 +59,10 @@ const ForgotPassword = () => {
             Reset Link Sent!
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-            We've sent a password reset link to <strong className="text-gray-700 dark:text-gray-300">{email}</strong>
+            We've sent a password reset link to{" "}
+            <strong className="text-gray-700 dark:text-gray-300">
+              {email}
+            </strong>
             <br />
             Please check your inbox and follow the instructions.
           </p>
@@ -71,10 +78,14 @@ const ForgotPassword = () => {
   }
 
   return (
-    <AuthLayout 
+    <AuthLayout
       title="Forgot Password"
       subtitle="Enter your email to receive a reset link"
     >
+      <Helmet>
+        <title>Forgot Password | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <form onSubmit={handleSubmit} className="space-y-4">
         {errors.general && (
           <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
