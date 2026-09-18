@@ -35,6 +35,13 @@ const Footer = () => {
     amount: 0.1,
   });
 
+  const isAuthPage = [
+    "/login",
+    "/signup",
+    "/verify-email",
+    "/forgot-password",
+  ].includes(location.pathname);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
@@ -88,6 +95,8 @@ const Footer = () => {
       setIsSubscribing(false);
     }
   };
+
+  if (isAuthPage) return null;
 
   const services = [
     { name: "Fiber Optic Networks", href: "/services#fiber", icon: Wifi },
@@ -307,7 +316,7 @@ const Footer = () => {
                       className="flex flex-col"
                     >
                       <span
-                        className={`text-xs font-bold tracking-[0.1em] uppercase ${
+                        className={`text-xs font-bold tracking-widest uppercase ${
                           theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
                         }`}
                       >
@@ -320,7 +329,7 @@ const Footer = () => {
                         className="flex items-start gap-3 mt-1 group"
                       >
                         <IconComponent
-                          className={`w-4 h-4 flex-shrink-0 mt-0.5 transition-colors ${
+                          className={`w-4 h-4 shrink-0 mt-0.5 transition-colors ${
                             theme === "dark"
                               ? "text-[#E6501B]"
                               : "text-[#C3110C]"

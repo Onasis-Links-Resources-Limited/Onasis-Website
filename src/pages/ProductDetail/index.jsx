@@ -22,6 +22,7 @@ import {
   Users,
   Eye,
 } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 // Components
 import ProductGallery from "./ProductGallery";
@@ -57,6 +58,10 @@ const ProductDetail = () => {
       <div
         className={`min-h-screen pt-20 flex items-center justify-center ${darkBg}`}
       >
+        <Helmet>
+          <title>Loading… | Onasis Links Resources Limited</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-[#C3110C] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="mt-4 text-gray-500">Loading product...</p>
@@ -71,6 +76,10 @@ const ProductDetail = () => {
       <div
         className={`min-h-screen pt-20 flex items-center justify-center ${darkBg}`}
       >
+        <Helmet>
+          <title>Product Not Found | Onasis Links Resources Limited</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
         <div className="px-4 text-center">
           <PackageSearch
             className={`mx-auto mb-4 h-10 w-10 ${isDark ? "text-gray-600" : "text-gray-300"}`}
@@ -132,6 +141,40 @@ const ProductDetail = () => {
 
   return (
     <div className={`min-h-screen pt-20 ${darkBg}`}>
+      <Helmet>
+        <title>{`${product.name} | Onasis Links Resources Limited`}</title>
+        <meta
+          name="description"
+          content={
+            product.description?.slice(0, 155) ||
+            "Product details on Onasis Links Resources Limited."
+          }
+        />
+        <link
+          rel="canonical"
+          href={`https://onasisltd.com/products/category/${slug}/product/${id}`}
+        />
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content={product.name} />
+        <meta
+          property="og:description"
+          content={
+            product.description?.slice(0, 155) ||
+            "Product details on Onasis Links Resources Limited."
+          }
+        />
+        <meta
+          property="og:image"
+          content={
+            product.image_url ||
+            "https://onasisltd.com/images/og/product-default.jpg"
+          }
+        />
+        <meta
+          property="og:url"
+          content={`https://onasisltd.com/products/category/${slug}/product/${id}`}
+        />
+      </Helmet>
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <div className="mb-8 flex flex-wrap items-center gap-2 text-sm">
@@ -314,17 +357,17 @@ const ProductDetail = () => {
                 {product.brand || "Onasis"}
                 {product.Category?.name ? ` • ${product.Category.name}` : ""}
               </p>
-                {product.sku && (
-                  <p
-                    className={
-                      isDark
-                        ? "mt-2 text-sm text-gray-400 truncate"
-                        : "mt-2 text-sm text-gray-600 truncate"
-                    }
-                  >
-                    SKU: {product.sku}
-                  </p>
-                )}
+              {product.sku && (
+                <p
+                  className={
+                    isDark
+                      ? "mt-2 text-sm text-gray-400 truncate"
+                      : "mt-2 text-sm text-gray-600 truncate"
+                  }
+                >
+                  SKU: {product.sku}
+                </p>
+              )}
               {product.description && (
                 <p
                   className={`mt-3 text-base leading-relaxed ${isDark ? "text-gray-300" : "text-gray-600"}`}

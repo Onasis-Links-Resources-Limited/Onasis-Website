@@ -14,6 +14,7 @@ import {
 import AuthLayout from "./components/AuthLayout";
 import Button from "../../components/common/Button";
 import { api } from "../../api/client";
+import { Helmet } from "react-helmet-async";
 
 const PasswordRequirement = ({ met, text }) => (
   <div
@@ -216,10 +217,14 @@ const ResetPassword = () => {
   // ============================================================
   return (
     <AuthLayout title="Reset Password" subtitle="Enter your new password below">
+      <Helmet>
+        <title>Reset Password | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <form onSubmit={handleSubmit} className="space-y-4">
         {errors.general && (
           <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{errors.general}</span>
           </div>
         )}

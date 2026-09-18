@@ -1,43 +1,52 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Mail, CheckCircle, Send, ArrowLeft, AlertCircle } from 'lucide-react';
-import AuthLayout from './components/AuthLayout';
-import Button from '../../components/common/Button';
-import { api } from '../../api/client';
+import { useState, useEffect, useCallback } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Mail, CheckCircle, Send, ArrowLeft, AlertCircle } from "lucide-react";
+import AuthLayout from "./components/AuthLayout";
+import Button from "../../components/common/Button";
+import { api } from "../../api/client";
+import { Helmet } from "react-helmet-async";
 
 const VerifyEmail = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState(() => location.state?.email || '');
+  const [email, setEmail] = useState(() => location.state?.email || "");
   const [loading, setLoading] = useState(false);
   const [verifying, setVerifying] = useState(true);
   const [resendSuccess, setResendSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [verificationStatus, setVerificationStatus] = useState(null); // 'success', 'error', 'idle'
 
   // Get token from URL query params
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  const token = queryParams.get("token");
 
   // Check if we have an email from location state (for resend)
   const stateEmail = location.state?.email;
   const needsVerification = location.state?.needsVerification || false;
 
-  const verifyEmail = useCallback(async (verificationToken) => {
-    setVerifying(true);
-    setError('');
+  const verifyEmail = useCallback(
+    async (verificationToken) => {
+      setVerifying(true);
+      setError("");
 
-    try {
-      const response = await api.get(`/auth/verify-email/${verificationToken}`);
-      setVerificationStatus('success');
-      setEmail(response.data?.email || stateEmail || '');
-    } catch (err) {
-      setVerificationStatus('error');
-      setError(err.response?.data?.message || 'Invalid or expired verification token');
-    } finally {
-      setVerifying(false);
-    }
-  }, [stateEmail]);
+      try {
+        const response = await api.get(
+          `/auth/verify-email/${verificationToken}`,
+        );
+        setVerificationStatus("success");
+        setEmail(response.data?.email || stateEmail || "");
+      } catch (err) {
+        setVerificationStatus("error");
+        setError(
+          err.response?.data?.message ||
+            "Invalid or expired verification token",
+        );
+      } finally {
+        setVerifying(false);
+      }
+    },
+    [stateEmail],
+  );
 
   useEffect(() => {
     // If we have a token, verify the email
@@ -47,20 +56,22 @@ const VerifyEmail = () => {
       return () => clearTimeout(verificationTimer);
     } else if (!stateEmail && !needsVerification) {
       // No token and no email state - redirect to signup
-      navigate('/signup');
+      navigate("/signup");
     }
   }, [token, stateEmail, needsVerification, navigate, verifyEmail]);
 
   const handleResend = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     setResendSuccess(false);
 
     try {
-      await api.post('/auth/resend-verification', { email });
+      await api.post("/auth/resend-verification", { email });
       setResendSuccess(true);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to resend verification email');
+      setError(
+        err.response?.data?.message || "Failed to resend verification email",
+      );
     }
     setLoading(false);
   };
@@ -68,22 +79,24 @@ const VerifyEmail = () => {
   // Show loading state while verifying
   if (verifying && token) {
     return (
-      <AuthLayout 
+      <AuthLayout
         title="Verifying Your Email"
         subtitle="Please wait while we verify your account"
       >
         <div className="text-center py-12">
           <div className="w-16 h-16 mx-auto border-4 border-[#C3110C] border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-500 dark:text-gray-400">Verifying your email address...</p>
+          <p className="text-gray-500 dark:text-gray-400">
+            Verifying your email address...
+          </p>
         </div>
       </AuthLayout>
     );
   }
 
   // Show verification result
-  if (verificationStatus === 'success') {
+  if (verificationStatus === "success") {
     return (
-      <AuthLayout 
+      <AuthLayout
         title="Email Verified!"
         subtitle="Your account has been successfully verified"
       >
@@ -102,7 +115,7 @@ const VerifyEmail = () => {
 
           <Button
             variant="primary"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             className="w-full"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -113,9 +126,9 @@ const VerifyEmail = () => {
     );
   }
 
-  if (verificationStatus === 'error') {
+  if (verificationStatus === "error") {
     return (
-      <AuthLayout 
+      <AuthLayout
         title="Verification Failed"
         subtitle="Unable to verify your email address"
       >
@@ -128,9 +141,7 @@ const VerifyEmail = () => {
             Invalid or Expired Link
           </h3>
 
-          <p className="text-sm text-red-500 dark:text-red-400 mb-4">
-            {error}
-          </p>
+          <p className="text-sm text-red-500 dark:text-red-400 mb-4">{error}</p>
 
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
             Please request a new verification link below.
@@ -164,10 +175,18 @@ const VerifyEmail = () => {
 
   // Default view - show verification prompt with resend option
   return (
-    <AuthLayout 
+    <AuthLayout
       title="Verify Your Email"
-      subtitle={needsVerification ? 'Please verify your email to continue' : 'Check your inbox for the verification link'}
+      subtitle={
+        needsVerification
+          ? "Please verify your email to continue"
+          : "Check your inbox for the verification link"
+      }
     >
+      <Helmet>
+        <title>Verify Email | Onasis Links Resources Limited</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="text-center py-6">
         {/* Icon */}
         <div className="w-20 h-20 mx-auto bg-[#C3110C]/10 dark:bg-[#E6501B]/10 rounded-full flex items-center justify-center mb-4">
@@ -179,7 +198,9 @@ const VerifyEmail = () => {
         </div>
 
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-          {resendSuccess ? 'Verification Email Sent!' : 'Verify Your Email Address'}
+          {resendSuccess
+            ? "Verification Email Sent!"
+            : "Verify Your Email Address"}
         </h3>
 
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -187,7 +208,10 @@ const VerifyEmail = () => {
             `We've sent a verification link to ${email}`
           ) : (
             <>
-              We've sent a verification link to <strong className="text-gray-700 dark:text-gray-300">{email}</strong>
+              We've sent a verification link to{" "}
+              <strong className="text-gray-700 dark:text-gray-300">
+                {email}
+              </strong>
               <br />
               Please check your inbox and click the link to verify your account.
             </>
@@ -198,7 +222,8 @@ const VerifyEmail = () => {
         {!resendSuccess && (
           <div className="space-y-4">
             <p className="text-xs text-gray-400 dark:text-gray-500">
-              Didn't receive the email? Check your spam folder or click below to resend.
+              Didn't receive the email? Check your spam folder or click below to
+              resend.
             </p>
 
             {error && (
@@ -223,7 +248,7 @@ const VerifyEmail = () => {
         {resendSuccess && (
           <Button
             variant="outline"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             className="w-full"
           >
             <ArrowLeft className="w-4 h-4" />
