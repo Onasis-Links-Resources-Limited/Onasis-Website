@@ -11,13 +11,13 @@ const ContactInfo = () => {
       title: "Office Address",
       details: (
         <>
-          Plot 78A,
+          74A,
           <br />
           Eleganza Gardens,
           <br />
           Lekki-Epe Expressway,
           <br />
-          Lagos.
+          Lagos Nigeria.
         </>
       ),
     },
@@ -57,19 +57,15 @@ const ContactInfo = () => {
     >
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
-          <p
-            className={`uppercase tracking-[0.2em] text-sm mb-4 font-bold transition-colors duration-300 ${
-              isDark ? "text-[#E6501B]" : "text-[#C3110C]"
-            }`}
-          >
-            CONTACT DETAILS
-          </p>
           <h2
             className={`text-5xl font-light transition-colors duration-300 ${
               isDark ? "text-white" : "text-black"
             }`}
           >
-            Visit or <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Reach Us</span>
+            Visit or{" "}
+            <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>
+              Reach Us
+            </span>
           </h2>
         </div>
 

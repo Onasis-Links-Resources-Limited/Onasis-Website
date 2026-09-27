@@ -160,15 +160,8 @@ const WhyChooseUsSection = () => {
           }}
           className="text-center mb-12"
         >
-          <span
-            className={`text-sm font-bold tracking-[0.2em] uppercase ${
-              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-            }`}
-          >
-            Why Choose Us
-          </span>
           <h2
-            className={`text-3xl sm:text-4xl font-light mt-2 ${
+            className={`text-3xl sm:text-4xl font-light ${
               theme === "dark" ? "text-white" : "text-[#280905]"
             }`}
           >

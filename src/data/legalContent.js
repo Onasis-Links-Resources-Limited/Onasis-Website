@@ -69,13 +69,13 @@ export const TERMS_OF_SERVICE = {
       number: 11,
       title: "Contact Us",
       content:
-        "Onasis Links Resources Limited\nPlot 78A Eleganza Gardens, Lekki-Epe Expressway, Lagos, Nigeria\nEmail: support@onasisltd.com\nTel:",
+        "Onasis Links Resources Limited\n74A, Eleganza Gardens, Lekki-Epe Expressway, Lagos Nigeria\nEmail: support@onasisltd.com\nTel:",
     },
   ],
 
   contact: {
     company: "Onasis Links Resources Limited",
-    address: "Plot 78A Eleganza Gardens, Lekki-Epe Expressway, Lagos, Nigeria",
+    address: "74A, Eleganza Gardens, Lekki-Epe Expressway, Lagos Nigeria",
     email: "support@onasisltd.com",
     phone: "",
   },
@@ -161,7 +161,7 @@ export const PRIVACY_POLICY = {
   contact: {
     company: "Onasis Links Resources Limited",
     rc: "RC: 623670",
-    address: "Plot 78A Eleganza Gardens, Lekki-Epe Expressway, Lagos, Nigeria",
+    address: "74A, Eleganza Gardens, Lekki-Epe Expressway, Lagos Nigeria",
     email: "support@onasisltd.com",
     phone: "+234 803 049 5649",
   },

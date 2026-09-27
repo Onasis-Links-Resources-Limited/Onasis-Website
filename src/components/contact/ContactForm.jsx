@@ -32,7 +32,8 @@ const ContactForm = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -61,10 +62,13 @@ const ContactForm = () => {
         message: formData.message,
       });
 
-      toast.success("Your inquiry has been sent! We'll get back to you shortly.", {
-        duration: 5000,
-        position: "bottom-center",
-      });
+      toast.success(
+        "Your inquiry has been sent! We'll get back to you shortly.",
+        {
+          duration: 5000,
+          position: "bottom-center",
+        },
+      );
 
       setSubmitted(true);
       setFormData({
@@ -78,7 +82,9 @@ const ContactForm = () => {
         agreed: false,
       });
     } catch (error) {
-      const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
+      const errorMsg =
+        error.response?.data?.message ||
+        "Something went wrong. Please try again.";
       toast.error(errorMsg, {
         duration: 4000,
         position: "bottom-center",
@@ -105,16 +111,25 @@ const ContactForm = () => {
       >
         <div className="mx-auto max-w-5xl rounded-2xl p-8 lg:p-16">
           <div className="text-center py-12">
-            <div className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
-              isDark ? "bg-green-900/30" : "bg-green-100"
-            }`}>
-              <CheckCircle className={`h-10 w-10 ${isDark ? "text-green-400" : "text-green-600"}`} />
+            <div
+              className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full ${
+                isDark ? "bg-green-900/30" : "bg-green-100"
+              }`}
+            >
+              <CheckCircle
+                className={`h-10 w-10 ${isDark ? "text-green-400" : "text-green-600"}`}
+              />
             </div>
-            <h2 className={`text-3xl font-bold mb-4 ${isDark ? "text-white" : "text-black"}`}>
+            <h2
+              className={`text-3xl font-bold mb-4 ${isDark ? "text-white" : "text-black"}`}
+            >
               Thank You!
             </h2>
-            <p className={`text-lg mb-6 ${isDark ? "text-gray-400" : "text-gray-600"}`}>
-              Your inquiry has been sent successfully. Our team will review it and get back to you within 24 hours.
+            <p
+              className={`text-lg mb-6 ${isDark ? "text-gray-400" : "text-gray-600"}`}
+            >
+              Your inquiry has been sent successfully. Our team will review it
+              and get back to you within 24 hours.
             </p>
             <button
               onClick={() => setSubmitted(false)}
@@ -143,23 +158,23 @@ const ContactForm = () => {
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Left Side */}
           <div>
-            <p className={`text-sm uppercase tracking-[0.2em] ${
-              isDark ? "text-[#E6501B]" : "text-[#ED7D00]"
-            } font-bold mb-4`}>
-              Get In Touch
-            </p>
-
-            <h2 className={`text-5xl font-light leading-tight mb-8 transition-colors duration-300 ${
-              isDark ? "text-white" : "text-black"
-            }`}>
-              Let <span className={isDark ? "text-[#E6501B]" : "text-[#ED7D00]"}>Us Know</span>
-              <br />
-              How We Can Help
+            <h2
+              className={`text-5xl font-light leading-tight mb-8 transition-colors duration-300 ${
+                isDark ? "text-white" : "text-black"
+              }`}
+            >
+              Let{" "}
+              <span className={isDark ? "text-[#E6501B]" : "text-[#ED7D00]"}>
+                Us Know
+              </span>{" "}
+              How We Can Help You
             </h2>
 
-            <p className={`leading-8 transition-colors duration-300 ${
-              isDark ? "text-gray-400" : "text-gray-700"
-            }`}>
+            <p
+              className={`leading-8 transition-colors duration-300 ${
+                isDark ? "text-gray-400" : "text-gray-700"
+              }`}
+            >
               Onasis Links Resources Limited maintains a focused approach to
               communication. Our team reviews every enquiry and responds where
               appropriate.
@@ -180,7 +195,8 @@ const ContactForm = () => {
                 />
                 {errors.firstName && (
                   <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />{errors.firstName}
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.firstName}
                   </p>
                 )}
               </div>
@@ -196,7 +212,8 @@ const ContactForm = () => {
                 />
                 {errors.lastName && (
                   <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />{errors.lastName}
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.lastName}
                   </p>
                 )}
               </div>
@@ -212,7 +229,8 @@ const ContactForm = () => {
                 />
                 {errors.email && (
                   <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />{errors.email}
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.email}
                   </p>
                 )}
               </div>
@@ -266,15 +284,18 @@ const ContactForm = () => {
               />
               {errors.message && (
                 <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" />{errors.message}
+                  <AlertCircle className="w-3 h-3" />
+                  {errors.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label className={`flex items-center gap-3 text-sm transition-colors duration-300 ${
-                isDark ? "text-gray-400" : "text-gray-400"
-              }`}>
+              <label
+                className={`flex items-center gap-3 text-sm transition-colors duration-300 ${
+                  isDark ? "text-gray-400" : "text-gray-400"
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={formData.agreed}
