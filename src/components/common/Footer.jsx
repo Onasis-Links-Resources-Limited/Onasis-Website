@@ -114,9 +114,9 @@ const Footer = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      text: "Plot 75B Eleganza Gardens, Lekki Lagos",
+      text: "74A, Eleganza Gardens, Lekki-Epe Expressway, Lagos Nigeria",
       label: "FIND US",
-      href: "https://maps.google.com/?q=Plot+75B+Eleganza+Gardens+Lekki+Lagos",
+      href: "https://maps.google.com/?q=74A%2C+Eleganza+Gardens%2C+Lekki-Epe+Expressway%2C+Lagos+Nigeria",
       external: true,
     },
     {
@@ -207,7 +207,7 @@ const Footer = () => {
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
             >
-              <Link to="/" className="inline-block mb-4">
+              {/* <Link to="/" className="inline-block mb-4">
                 {theme === "dark" ? (
                   <img
                     src="/images/logo-dark.png"
@@ -221,7 +221,7 @@ const Footer = () => {
                     className="h-12 w-auto"
                   />
                 )}
-              </Link>
+              </Link> */}
               <p
                 className={`text-sm leading-relaxed ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
               >
