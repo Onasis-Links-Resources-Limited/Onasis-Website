@@ -139,13 +139,13 @@ const ProcessSection = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span
+          {/* <span
             className={`text-sm font-bold tracking-[0.2em] uppercase ${
               theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
             }`}
           >
             Our Process
-          </span>
+          </span> */}
           <h2
             className={`text-4xl sm:text-5xl font-light mt-2 ${
               theme === "dark" ? "text-white" : "text-[#280905]"
