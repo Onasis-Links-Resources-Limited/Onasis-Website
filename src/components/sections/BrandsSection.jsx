@@ -88,11 +88,16 @@ const BrandsSection = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2
-            className={`text-4xl sm:text-5xl font-light ${
+            className={`text-4xl sm:text-5xl font-light mt-2 ${
               theme === "dark" ? "text-white" : "text-[#280905]"
             }`}
           >
-            How We Deliver Excellence
+            Trusted by{" "}
+            <span
+              className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
+            >
+              Industry Leaders
+            </span>
           </h2>
           <p
             className={`mt-4 text-base ${
