@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  // Navigate,
+} from "react-router-dom";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from "./hooks/useAuth";
@@ -33,7 +38,7 @@ import "@fontsource/dancing-script";
 
 const AppContent = () => {
   const { theme } = useTheme();
-  const { loading, user } = useAuth();
+  const { loading } = useAuth();
 
   // ✅ Show loading spinner while auth is initializing
   if (loading) {
@@ -45,14 +50,16 @@ const AppContent = () => {
   }
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
-    }`}>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        theme === "dark" ? "bg-[#0a0a0a]" : "bg-white"
+      }`}
+    >
       <Navbar />
       <Routes>
         {/* Auth Routes - redirect if already logged in */}
-        <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
-        <Route path="/signup" element={user ? <Navigate to="/" replace /> : <SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
@@ -63,10 +70,23 @@ const AppContent = () => {
         <Route path="/services" element={<Services />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/category/:slug" element={<CategoryProducts />} />
-        <Route path="/products/category/:slug/product/:id" element={<ProductDetail />} />
+        <Route
+          path="/products/category/:slug/product/:id"
+          element={
+            <ProductDetail
+              onActionClick={(action, product) => {
+                console.log("User clicked:", action, "for", product.name);
+                // do whatever — analytics, close a modal, navigate, etc.
+              }}
+            />
+          }
+        />
         <Route path="/quote-list" element={<QuoteList />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/newsletter/unsubscribe/:id" element={<NewsletterUnsubscribe />} />
+        <Route
+          path="/newsletter/unsubscribe/:id"
+          element={<NewsletterUnsubscribe />}
+        />
 
         {/* 404 Catch-All Route */}
         <Route path="*" element={<NotFound />} />
@@ -82,11 +102,11 @@ function App() {
       <AuthProvider>
         <CategoryProvider>
           <ProductProvider>
-          <QuoteProvider>
-            <Router>
-              <AppContent />
-            </Router>
-          </QuoteProvider>
+            <QuoteProvider>
+              <Router>
+                <AppContent />
+              </Router>
+            </QuoteProvider>
           </ProductProvider>
         </CategoryProvider>
       </AuthProvider>

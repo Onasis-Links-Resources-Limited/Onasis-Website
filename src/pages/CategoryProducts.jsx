@@ -12,7 +12,7 @@ import {
   SlidersHorizontal,
   X,
 } from "lucide-react";
-import ProductSidebar from "../components/common/ProductSidebar";
+// import ProductSidebar from "../components/common/ProductSidebar";
 import { Helmet } from "react-helmet-async";
 
 // ✅ Fallback image
@@ -45,14 +45,14 @@ const CategoryProducts = () => {
       .join(" ") ||
     "Category";
 
-  console.log(
-    "CategoryProducts: slug =",
-    slug,
-    "category =",
-    category?.name,
-    "categoryName =",
-    categoryName,
-  );
+  // console.log(
+  //   "CategoryProducts: slug =",
+  //   slug,
+  //   "category =",
+  //   category?.name,
+  //   "categoryName =",
+  //   categoryName,
+  // );
 
   // ✅ Get products for this category
   const categoryProducts = useMemo(() => {
@@ -361,7 +361,7 @@ const CategoryProducts = () => {
               </button>
 
               {/* Sub-Heading Filter - Desktop */}
-              {subHeadings.length > 0 && (
+              {/* {subHeadings.length > 0 && (
                 <div className="relative hidden sm:block">
                   <Filter
                     className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 ${theme === "dark" ? "text-gray-400" : "text-gray-400"}`}
@@ -383,7 +383,7 @@ const CategoryProducts = () => {
                     ))}
                   </select>
                 </div>
-              )}
+              )} */}
 
               {/* Sort By */}
               <div className="relative">
@@ -497,14 +497,14 @@ const CategoryProducts = () => {
         {/* Main Content */}
         <div className="flex gap-8">
           {/* Sidebar */}
-          <div className="hidden lg:block lg:w-48 lg:shrink-0">
+          {/* <div className="hidden lg:block lg:w-48 lg:shrink-0">
             <ProductSidebar
               subHeadings={["All", ...subHeadings]}
               selectedSubHeading={filterSubHeading}
               onSubHeadingChange={(heading) => setFilterSubHeading(heading)}
               onClearFilters={handleClearFilters}
             />
-          </div>
+          </div> */}
 
           {/* Products Area */}
           <div className="flex-1 min-w-0">
@@ -687,7 +687,7 @@ const CategoryProducts = () => {
         </div>
       </div>
       {/* Mobile Filter Drawer */}
-      {isMobileFilterOpen && (
+      {/* {isMobileFilterOpen && (
         <div className="lg:hidden">
           <ProductSidebar
             subHeadings={["All", ...subHeadings]}
@@ -698,7 +698,7 @@ const CategoryProducts = () => {
             onClose={() => setIsMobileFilterOpen(false)}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

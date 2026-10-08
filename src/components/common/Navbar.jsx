@@ -363,7 +363,7 @@ const Navbar = () => {
                 to="/signup"
                 title="Create your Onasis Links account"
                 aria-label="Create your Onasis Links account"
-                className="hidden md:inline-block px-6 py-2.5 bg-[#C3110C] hover:bg-[#E6501B] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-sm"
+                className="hidden md:inline-block lg:px-6 px-3 py-2.5 bg-[#C3110C] hover:bg-[#E6501B] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-sm whitespace-nowrap"
               >
                 Get Started
               </Link>

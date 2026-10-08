@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, LogIn, AlertCircle } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
@@ -10,8 +10,10 @@ const Login = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const { login } = useAuth();
+  const {user, login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -20,6 +22,12 @@ const Login = () => {
     password: "",
     remember: false,
   });
+
+useEffect(() => {
+  if (user) {
+    navigate(from, { replace: true });
+  }
+}, [user, from, navigate]);
 
   const validate = () => {
     const newErrors = {};
@@ -44,7 +52,7 @@ const Login = () => {
     const result = await login(formData.email, formData.password);
 
     if (result.success) {
-      navigate("/", { replace: true });
+      navigate(from, { replace: true });
     } else {
       // ✅ Check if the error is about email verification
       const errorMsg = result.message?.toLowerCase() || "";

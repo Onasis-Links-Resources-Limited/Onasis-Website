@@ -47,12 +47,12 @@ const SimilarProducts = ({ currentProduct, isDark }) => {
       <h2 className={`mb-5 text-2xl font-bold ${isDark ? "text-white" : "text-[#280905]"}`}>
         Similar Products
       </h2>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-3 xl:grid-cols-4">
         {similar.map((item) => (
           <button
             key={item.id}
-            onClick={() => navigate(`/products/product/${item.id}`)}
-            className={`overflow-hidden rounded-2xl border text-left transition hover:-translate-y-0.5 ${
+            onClick={() => navigate(`/products/category/${item.category_id}/product/${item.id}`)}
+            className={`overflow-hidden rounded-2xl border text-left transition hover:-translate-y-0.5 cursor-pointer ${
               isDark 
                 ? "border-[#2A2A2A] bg-[#1A1A1A] hover:border-[#E6501B]/30" 
                 : "border-gray-200 bg-white shadow-sm hover:border-gray-300"

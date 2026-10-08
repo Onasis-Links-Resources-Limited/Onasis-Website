@@ -1,24 +1,25 @@
 import { Link } from "react-router-dom";
+import { useTheme } from "../../context/ThemeContext";
 
 const ProductsHero = () => {
+  const { theme } = useTheme();
+
   return (
-    <section className="relative w-full h-100 flex items-center overflow-hidden  dark:bg-black">
+    <section className="relative h-100 overflow-hidden">
       {/* Background Image (REPLACED VIDEO WITH IMAGE) */}
       <img
         src="/images/products-hero.jpg"
         alt="Technology and infrastructure background"
-        className="absolute inset-0 w-full h-full object-cover opacity-60 dark:opacity-40"
+        className={`absolute inset-0 h-full w-full object-cover object-middle ${theme === "dark" ? "brightness-30" : "brightness-70"}`}
       />
 
-      {/* Dark Overlay for Readability */}
-
       {/* Content */}
-      <div className="relative z-20 mx-auto flex h-full max-w-5xl mb-8 items-end pr-130">
+      <div className="relative z-20 mx-auto flex h-full max-w-5xl pb-8 items-end px-4">
         <div className="">
-          <h1 className="text-5xl leading-tight md:text-7xl font-bold dark:text-white">
+          <h1 className="text-4xl sm:text-5xl leading-tight md:text-7xl font-bold dark:text-white">
             Our Products
           </h1>
-          <div className="mt-4 h-1 w-24 rounded-full bg-[#E6501B] mb-2"></div>
+          <div className="mt-2 h-1 w-24 rounded-full bg-[#E6501B] mb-2"></div>
 
           {/* SHORT DESCRIPTION */}
           <p className="mt-4 max-w-xl text-base text-gray-200  mb-6">
@@ -27,7 +28,7 @@ const ProductsHero = () => {
           </p>
 
           {/* HERO BUTTONS */}
-          <div className="flex flex-wrap gap-4">
+          <div className="lg:flex hidden flex-wrap gap-4">
             <a
               href="#product-categories"
               className="flex items-center gap-2 rounded-full bg-[#E6501B] px-4 py-4 text-sm font-bold tracking-widest text-white transition-all duration-500 hover:bg-[#C2410C]"
