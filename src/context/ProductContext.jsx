@@ -16,7 +16,7 @@ export const ProductProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await api.get('/products');
+      const response = await api.get('/products', { params: { page: 1, limit: 1000 } });
       const data = response.data?.data || response.data || [];
       setProducts(data);
       return data;

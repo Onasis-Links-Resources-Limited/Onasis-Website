@@ -16,11 +16,11 @@ const ProductGallery = ({ product, isDark }) => {
 
   return (
     <div className="space-y-4">
-      <div className={`mx-auto max-w-[520px] overflow-hidden rounded-2xl border transition-all duration-300 ${darkClasses}`}>
+      <div className={`mx-auto max-w-full overflow-hidden rounded-2xl border transition-all duration-300 ${darkClasses}`}>
         <img
           src={displayedImage}
           alt={product?.name || "Product"}
-          className="h-[380px] w-full object-cover transition duration-300 ease-out hover:scale-[1.03] hover:shadow-xl sm:h-[440px] lg:h-[480px]"
+          className=" w-full object-cover transition duration-300 ease-out hover:scale-[1.03] hover:shadow-xl"
           onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
         />
       </div>

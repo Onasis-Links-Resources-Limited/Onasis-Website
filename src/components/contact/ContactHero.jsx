@@ -16,10 +16,10 @@ const ContactHero = () => {
       </video>
 
       {/* Content */}
-      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-center">
+      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-center pt-15 px-4">
         <div className="max-w-2xl">
 
-          <h1 className="text-5xl leading-tight md:text-7xl font-bold dark:text-white">
+          <h1 className="text-4xl sm:text-5xl leading-tight md:text-7xl font-bold dark:text-white">
             Contact Us
           </h1>
 
@@ -34,7 +34,7 @@ const ContactHero = () => {
       </div>
 
       {/* Bottom Accent Line */}
-      <div className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E6501B] via-[#C3110C] to-transparent"></div>
+      {/* <div className="absolute bottom-0 left-0 h-0.5 w-full bg-gradient-to-r from-[#E6501B] via-[#C3110C] to-transparent"></div> */}
     </section>
   );
 };

@@ -174,10 +174,10 @@ const CTASection = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Link
-                to="/signup"
+                to="/products"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#C3110C] hover:bg-[#E6501B] hover:text-white font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-2xl"
               >
-                Get Started Today
+                View Products
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>

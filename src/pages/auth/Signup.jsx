@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
@@ -24,7 +24,8 @@ const SignUp = () => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const from = location.state?.from || "/";
+  const {user, register } = useAuth();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -60,6 +61,12 @@ const SignUp = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  useEffect(() => {
+  if (user) {
+    navigate(from, { replace: true });
+  }
+}, [user, from, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

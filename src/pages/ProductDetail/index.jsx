@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import { useQuote } from "../../context/QuoteContext";
@@ -30,7 +30,7 @@ import SimilarProducts from "./SimilarProducts";
 import BulkQuoteForm from "./BulkQuoteForm";
 import { useProductDetail } from "./useProductDetail";
 
-const ProductDetail = () => {
+const ProductDetail = ({ onActionClick }) => {
   const { slug, id } = useParams();
   const { theme } = useTheme();
   const { isAuthenticated } = useAuth();
@@ -43,6 +43,7 @@ const ProductDetail = () => {
   const [showBulkForm, setShowBulkForm] = useState(false);
   const [addedToQuote, setAddedToQuote] = useState(false);
   const [successSummary, setSuccessSummary] = useState(null);
+  const location = useLocation();
 
   // Dark theme classes
   const darkBg = isDark
@@ -117,7 +118,7 @@ const ProductDetail = () => {
     if (!isAuthenticated) {
       toast.error("Please sign in to add items to your quote list");
       navigate("/login", {
-        state: { from: `/products/product/${product.id}` },
+        state: { from: location.pathname + location.search },
       });
       return;
     }
@@ -132,7 +133,7 @@ const ProductDetail = () => {
     if (!isAuthenticated) {
       toast.error("Please sign in to request a bulk quote");
       navigate("/login", {
-        state: { from: `/products/product/${product.id}` },
+        state: { from: location.pathname + location.search },
       });
       return;
     }
@@ -222,7 +223,7 @@ const ProductDetail = () => {
           </span>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid gap-8 lg:grid-cols-2">
           {/* Left Column */}
           <div className="space-y-6">
             <ProductGallery product={product} isDark={isDark} />
@@ -232,7 +233,10 @@ const ProductDetail = () => {
               className={`flex items-center gap-2 text-sm ${isDark ? "text-gray-400" : "text-gray-500"}`}
             >
               <Eye className="h-4 w-4" />
-              <span>{product.view_count || 0} views</span>
+              <span>
+                {product.view_count || 0} view
+                {product.view_count !== 1 ? "s" : ""}
+              </span>
             </div>
 
             {/* Specifications */}
@@ -485,7 +489,10 @@ const ProductDetail = () => {
                 {/* Action Buttons */}
                 <div className="grid gap-3 sm:grid-cols-2">
                   <button
-                    onClick={handleAddToQuote}
+                    onClick={(e) => {
+                      onActionClick?.("add-to-quote", product);
+                      handleAddToQuote(e);
+                    }}
                     disabled={
                       !product.stock_quantity || product.stock_quantity < 1
                     }
@@ -499,7 +506,10 @@ const ProductDetail = () => {
                     {addedToQuote ? "Added" : "Add to Quote"}
                   </button>
                   <button
-                    onClick={handleBulkQuote}
+                    onClick={(e) => {
+                      onActionClick?.("bulk-quote", product);
+                      handleBulkQuote(e);
+                    }}
                     className={
                       isDark
                         ? "flex items-center justify-center gap-2 rounded-xl border border-[#E6501B]/40 bg-[#E6501B]/10 px-5 py-4 text-sm font-bold text-[#FDBA74] hover:bg-[#E6501B]/20 text-nowrap cursor-pointer"
@@ -514,7 +524,7 @@ const ProductDetail = () => {
 
               {/* Trust Badges */}
               <div
-                className={`grid gap-2 border-t pt-6 sm:grid-cols-2 ${isDark ? "border-[#2A2A2A]" : "border-gray-200"}`}
+                className={`grid gap-2 pt-6 sm:grid-cols-2 ${isDark ? "border-[#2A2A2A]" : "border-gray-200"}`}
               >
                 {[
                   { icon: Shield, label: "Genuine products" },

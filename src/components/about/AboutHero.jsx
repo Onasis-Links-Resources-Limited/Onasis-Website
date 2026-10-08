@@ -9,10 +9,10 @@ const AboutHero = () => {
       <img src="/images/about-us.png" alt="about-us" className={`absolute inset-0 h-full w-full object-cover object-middle ${theme === 'dark' ? 'brightness-30' : 'brightness-70'}`} />
       
       {/* Content */}
-      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-end pb-10">
+      <div className="relative z-20 mx-auto flex h-full max-w-5xl items-end pb-10 px-4">
         <div className="max-w-2xl">
 
-          <h1 className="text-5xl leading-tight md:text-7xl font-bold dark:text-white">
+          <h1 className="text-4xl sm:text-5xlleading-tight md:text-7xl font-bold dark:text-white">
             About Us
           </h1>
 
