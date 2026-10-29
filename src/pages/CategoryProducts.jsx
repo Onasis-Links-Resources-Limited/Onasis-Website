@@ -581,7 +581,7 @@ const CategoryProducts = () => {
                             : "space-y-4"
                         }
                       >
-                        {products.map((product) => (
+                        {(products || []).map((product) => (
                           <Link
                             key={product.id}
                             to={`/products/category/${slug}/product/${product.id}`}

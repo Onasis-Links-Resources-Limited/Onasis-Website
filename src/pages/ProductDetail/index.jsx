@@ -175,6 +175,30 @@ const ProductDetail = ({ onActionClick }) => {
           property="og:url"
           content={`https://onasisltd.com/products/category/${slug}/product/${id}`}
         />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            name: product.name,
+            image: product.image_url,
+            description: product.description,
+            sku: product.sku,
+            brand: {
+              "@type": "Brand",
+              name: product.brand || "Onasis Links",
+            },
+            offers: {
+              "@type": "Offer",
+              url: window.location.href,
+              priceCurrency: "NGN",
+              price: product.price || "0",
+              availability:
+                product.stock_quantity > 0
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/OutOfStock",
+            },
+          })}
+        </script>
       </Helmet>
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
