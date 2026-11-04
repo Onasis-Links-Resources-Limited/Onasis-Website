@@ -9,8 +9,7 @@ const SERVICES = [
   {
     id: "supply",
     tag: "Supply",
-    accent: "#E6501B",
-    hazardClass: "bg-hazard-orange",
+    accent: "#ED7D00",
     body: "We partner with individuals and organisations on their product needs. We supply quality materials timely for your projects. We are always open for partnership. Contact us today.",
     image:
       "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80",
@@ -26,8 +25,7 @@ const SERVICES = [
   {
     id: "sales",
     tag: "Sales",
-    accent: "#C3110C",
-    hazardClass: "bg-hazard-red",
+    accent: "#ED7D00",
     body: "We supply high-quality Telecommunications, Power, and Electrical Equipment to individuals and organizations at competitive prices. All our products are backed by a manufacturer's warranty, ensuring quality, reliability, and peace of mind.",
     image:
       "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -43,8 +41,7 @@ const SERVICES = [
   {
     id: "technical-support",
     tag: "Technical Support",
-    accent: "#740A03",
-    hazardClass: "bg-hazard-burgundy",
+    accent: "#ED7D00",
     body: "Our experienced technical team provides expert advice and recommendations to help you select the right materials for your project. Contact us today.",
     image:
       "https://images.unsplash.com/photo-1531497258014-b5736f376b1b?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -142,11 +139,7 @@ export default function ServiceGrid() {
     <section className="bg-dark-background px-4 sm:px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <div className="mt-20">
-          <p
-            className={`text-sm uppercase tracking-[0.2em] ${
-              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-            } font-bold mb-4`}
-          >
+          <p className="text-sm uppercase tracking-[0.2em] text-[#E6501B] font-bold mb-4">
             What we do
           </p>
           <h2
@@ -155,13 +148,8 @@ export default function ServiceGrid() {
             }`}
           >
             Materials,
-            <span
-              className={` ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
-            >
-              {" "}
-              Equipment,
-            </span>{" "}
-            and Expertise for the field.
+            <span className="text-[#E6501B]"> Equipment,</span> and Expertise
+            for the field.
           </h2>
         </div>
 

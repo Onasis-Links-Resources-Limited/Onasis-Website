@@ -117,7 +117,7 @@ const ServicesSection = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header - Left: Title, Right: Description + Button */}
         <motion.div
-          className="grid md:grid-cols-2 gap-8 items-start mb-16"
+          className="grid gap-6 items-center mb-16 md:grid-cols-[1fr_auto_1fr] md:gap-8"
           initial={{ opacity: 0, y: -30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{
@@ -127,15 +127,8 @@ const ServicesSection = () => {
         >
           {/* Left - Title */}
           <div>
-            <span
-              className={`text-sm font-bold tracking-[0.2em] uppercase ${
-                theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-              }`}
-            >
-              Our Services
-            </span>
             <h2
-              className={`text-4xl sm:text-5xl font-light mt-2 ${
+              className={`text-4xl sm:text-5xl font-light ${
                 theme === "dark" ? "text-white" : "text-[#280905]"
               }`}
             >
@@ -145,7 +138,6 @@ const ServicesSection = () => {
               >
                 We
               </span>{" "}
-              <br />{" "}
               <span
                 className={`${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
               >
@@ -155,8 +147,23 @@ const ServicesSection = () => {
             </h2>
           </div>
 
+          <svg
+            className={`hidden h-8 w-12 md:block md:-translate-x-8 ${theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 48 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M2 12h42m0 0L34 3m10 9-10 9"
+            />
+          </svg>
+
           {/* Right - Description + Button */}
-          <div className="">
+          <div>
             <p
               className={`text-base leading-relaxed ${
                 theme === "dark" ? "text-gray-300" : "text-gray-600"
@@ -176,19 +183,6 @@ const ServicesSection = () => {
               transition={{ duration: 0.2 }}
             >
               See Our Services
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
             </motion.a>
           </div>
         </motion.div>

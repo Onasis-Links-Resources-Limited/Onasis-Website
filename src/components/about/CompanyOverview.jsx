@@ -95,13 +95,6 @@ const CompanyOverview = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          <span
-            className={`uppercase tracking-[0.2em] text-sm mb-4 font-bold inline-block ${
-              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-            }`}
-          >
-            Our Story
-          </span>
           <h2
             className={`text-4xl sm:text-5xl font-light transition-colors duration-300 ${
               theme === "dark" ? "text-white" : "text-[#280905]"

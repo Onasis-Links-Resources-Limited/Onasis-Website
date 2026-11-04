@@ -13,19 +13,15 @@ const ContactMap = () => {
     >
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16 mt-24">
-          <p
-            className={`uppercase tracking-[0.2em] font-bold text-sm mb-3 transition-colors duration-300 ${
-              isDark ? "text-[#E6501B]" : "text-[#C3110C]"
-            }`}
-          >
-            Visit Our Office
-          </p>
           <h2
             className={`text-5xl font-light transition-colors duration-300 ${
               isDark ? "text-white" : "text-black"
             }`}
           >
-            How to <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>Find Us</span>
+            How to{" "}
+            <span className={`${isDark ? "text-[#E6501B]" : "text-[#C3110C]"}`}>
+              Find Us
+            </span>
           </h2>
         </div>
 
@@ -67,11 +63,11 @@ const ContactMap = () => {
                   isDark ? "text-gray-400" : "text-gray-600"
                 }`}
               >
-                Plot 78A, Eleganza Gardens
+                74A, Eleganza Gardens
                 <br />
                 Lekki–Epe Expressway
                 <br />
-                Lagos, Nigeria
+                Lagos Nigeria
               </p>
             </div>
 

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { Award, BadgeCheck, Handshake } from "lucide-react";
 
-
 const BrandsSection = () => {
   const { theme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
@@ -88,13 +87,6 @@ const BrandsSection = () => {
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span
-            className={`text-sm font-bold tracking-widest uppercase ${
-              theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
-            }`}
-          >
-            Our Partners & Clients
-          </span>
           <h2
             className={`text-4xl sm:text-5xl font-light mt-2 ${
               theme === "dark" ? "text-white" : "text-[#280905]"
@@ -174,12 +166,14 @@ const BrandsSection = () => {
             }`}
           >
             <div className="flex justify-center mb-3">
-  <Award
-    size={42}
-    className={theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}
-    strokeWidth={2}
-  />
-</div>
+              <Award
+                size={42}
+                className={
+                  theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                }
+                strokeWidth={2}
+              />
+            </div>
             <h4
               className={`font-bold ${
                 theme === "dark" ? "text-white" : "text-[#280905]"
@@ -203,12 +197,14 @@ const BrandsSection = () => {
             }`}
           >
             <div className="flex justify-center mb-3">
-  <BadgeCheck
-    size={42}
-    className={theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}
-    strokeWidth={2}
-  />
-</div>
+              <BadgeCheck
+                size={42}
+                className={
+                  theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                }
+                strokeWidth={2}
+              />
+            </div>
             <h4
               className={`font-bold ${
                 theme === "dark" ? "text-white" : "text-[#280905]"
@@ -232,12 +228,14 @@ const BrandsSection = () => {
             }`}
           >
             <div className="flex justify-center mb-3">
-  <Handshake
-    size={42}
-    className={theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"}
-    strokeWidth={2}
-  />
-</div>
+              <Handshake
+                size={42}
+                className={
+                  theme === "dark" ? "text-[#E6501B]" : "text-[#C3110C]"
+                }
+                strokeWidth={2}
+              />
+            </div>
             <h4
               className={`font-bold ${
                 theme === "dark" ? "text-white" : "text-[#280905]"
