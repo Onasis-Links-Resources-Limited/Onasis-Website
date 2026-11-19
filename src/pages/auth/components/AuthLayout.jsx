@@ -13,7 +13,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
             <img
               src={theme === 'dark' ? '/images/logo-dark.png' : '/images/logo-light.png'}
               alt="Onasis Links"
-              className="h-12 w-auto mx-auto"
+              className="h-12 w-32 object-contain mx-auto"
             />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mt-4">

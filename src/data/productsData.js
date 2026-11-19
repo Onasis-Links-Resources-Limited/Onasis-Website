@@ -46,6 +46,13 @@ export const CATEGORIES = [
   },
 ];
 
+export const normalizeCategorySlug = (value = "") =>
+  value
+    .toLowerCase()
+    .replace(/fibre/g, "fiber")
+    .replace(/optical/g, "optic")
+    .replace(/[^a-z0-9]+/g, "-");
+
 // Helper function for product images - uses placeholder if image doesn't exist
 // const getProductImage = (productName, imagePath) => {
 //   // If image path is provided, use it

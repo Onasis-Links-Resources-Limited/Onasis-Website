@@ -2,10 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
+import { useCategories } from "../../context/CategoryContext";
 import ThemeToggle from "./ThemeToggle";
 import { LogOut, FileText, ChevronDown, ShoppingCartIcon } from "lucide-react";
 import { useQuote } from "../../context/QuoteContext";
-import { CATEGORIES, getProductSubHeadings } from "../../data/productsData";
+import {
+  CATEGORIES,
+  getProductSubHeadings,
+  normalizeCategorySlug,
+} from "../../data/productsData";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +20,7 @@ const Navbar = () => {
   const productsMenuCloseTimer = useRef(null);
   const { theme } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
+  const { categories: productCategories } = useCategories();
   const location = useLocation();
   const { itemCount } = useQuote();
 
@@ -149,13 +155,13 @@ const Navbar = () => {
               <img
                 src="/images/logo-dark.png"
                 alt="Onasis Links Resources Limited"
-                className="h-12 w-auto"
+                className="h-12 w-32 object-contain"
               />
             ) : (
               <img
                 src="/images/logo-light.png"
                 alt="Onasis Links Resources Limited"
-                className="h-12 w-auto"
+                className="h-12 w-32 object-contain"
               />
             )}
           </Link>
@@ -250,10 +256,31 @@ const Navbar = () => {
                       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-7 lg:grid-cols-3">
                         {CATEGORIES.map((category) => {
                           const subcategories = getProductSubHeadings(category.slug);
+                          const productCategory =
+                            productCategories.find(
+                              (candidate) =>
+                                candidate.name?.trim().toLowerCase() ===
+                                category.name.toLowerCase(),
+                            ) ||
+                            productCategories.find(
+                              (candidate) =>
+                                normalizeCategorySlug(candidate.name) ===
+                                normalizeCategorySlug(category.name),
+                            ) ||
+                            productCategories.find(
+                              (candidate) =>
+                                normalizeCategorySlug(candidate.slug) ===
+                                normalizeCategorySlug(category.slug),
+                            );
+                          const categorySlug =
+                            productCategory?.slug ||
+                            productCategory?.id ||
+                            category.slug;
+
                           return (
                             <div key={category.slug} className="min-w-0">
                               <Link
-                                to={`/products/category/${category.slug}`}
+                                to={`/products/category/${categorySlug}`}
                                 onClick={closeProductsMenu}
                                 title={`Browse all ${category.name}`}
                                 aria-label={`Browse all ${category.name}`}
@@ -269,10 +296,6 @@ const Navbar = () => {
                                 {subcategories.map((subcategory) => (
                                   <div
                                     key={`${category.slug}-${subcategory}`}
-                                    // to={`/products/category/${category.slug}?subCategory=${encodeURIComponent(subcategory)}`}
-                                    // onClick={closeProductsMenu}
-                                    // title={`View ${subcategory}`}
-                                    // aria-label={`View ${subcategory} in ${category.name}`}
                                     className={`block text-xs transition-colors ${
                                       theme === "dark"
                                         ? "text-gray-400"
