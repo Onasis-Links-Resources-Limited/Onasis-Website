@@ -9,7 +9,7 @@ const HeroSection = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, {
+  const isInView = useInView(sectionRef, { 
     once: false,
     amount: 0.1,
   });

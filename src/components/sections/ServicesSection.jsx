@@ -23,7 +23,7 @@ const ServicesSection = () => {
         "High-speed fiber optic infrastructure for seamless connectivity.",
       image:
         "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
-      categorySlug: "fiber-optical",
+      categorySlug: "fibre-optics",
       color: "#E6501B",
     },
     {
@@ -34,7 +34,7 @@ const ServicesSection = () => {
         "Next-generation wireless networks for ultra-fast communication.",
       image:
         "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-      categorySlug: "network-materials",
+      categorySlug: "network-material",
       color: "#E6501B",
     },
     {
@@ -56,7 +56,7 @@ const ServicesSection = () => {
         "Connecting remote areas with reliable satellite technology.",
       image:
         "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
-      categorySlug: "network-materials",
+      categorySlug: "network-material",
       color: "#E6501B",
     },
     {

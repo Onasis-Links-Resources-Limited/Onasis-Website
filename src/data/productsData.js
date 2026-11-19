@@ -20,7 +20,7 @@ export const CATEGORIES = [
   {
     id: 3,
     name: "Fiber Optical Materials",
-    slug: "fiber-optical",
+    slug: "fibre-optics",
     icon: "🔦",
     image: "/images/Categories/fiber-optical.jpg",
     description: "Fiber optic cables, transceivers, and accessories",
@@ -38,7 +38,7 @@ export const CATEGORIES = [
   {
     id: 5,
     name: "Network Materials",
-    slug: "network-materials",
+    slug: "network-material",
     icon: "🌐",
     image: "/images/Categories/network-materials.jpg",
     description: "Network switches, routers, and infrastructure",
