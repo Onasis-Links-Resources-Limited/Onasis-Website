@@ -31,7 +31,7 @@ const CategoryProducts = () => {
   const [filterSubHeading, setFilterSubHeading] = useState("All");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // console.log("CategoryProducts: slug =", slug, "categories =", categories, "products =", products);
+  console.log("CategoryProducts: slug =", slug, "categories =", categories, "products =", products);
 
   const category = useMemo(() => {
     return categories.find((c) => c.slug === slug) || null;
