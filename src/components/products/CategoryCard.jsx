@@ -26,7 +26,7 @@ const CategoryCard = ({ category }) => {
   };
 
   const imageSrc =
-    !category.image || imgError ? getFallbackImage() : category.image;
+    !category.image_url || imgError ? getFallbackImage() : category.image_url;
 
   return (
     <Link
