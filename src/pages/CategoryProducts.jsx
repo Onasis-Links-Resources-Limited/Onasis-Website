@@ -30,8 +30,8 @@ const CategoryProducts = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("name");
-  const [filterSubHeading, setFilterSubHeading] = useState("All");
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  // const [filterSubHeading, setFilterSubHeading] = useState("All");
+  // const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   console.log("CategoryProducts: slug =", slug, "categories =", categories, "products =", products);
 
